@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&family=Tangerine:wght@400;700&display=swap');
+:root {
+  color-scheme: dark;
+  font-family: "Josefin Sans", serif !important;   /* Great Vibes, Playfair Display, Tangerine, Great Vibes, Quicksand */
+  font-synthesis: none;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::selection{
+  color: #000;
+  background-color: #ffffffa6;
+}
+::-webkit-scrollbar{
+  scrollbar-width: none;
+}
+.red{
+  color: red;
+  text-transform: capitalize;
+}
+img{
+  z-index: -1;
+}
+svg:active{
+  transform: scale(.9);
+}
+.close{
+  float: inline-end;
+  color: #0000eb;
+  text-shadow: 0 0 10px black;
+  font-weight: 800;
+  cursor: pointer;
+}
+.close:active{
+  transform: scale(0.9);
+}
+.price {
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  .navbar,.footer{
+    color: #333;
+    background-color: #FFF;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #ffffff;
+    background-color: #242424;
+  }
+  .navbar,.footer{
+    color: #FFF;
+    background-color: #333;
+  }
+}
+@media (min-width: 600px) {
+  ::-webkit-scrollbar{
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+  }
+  ::-webkit-scrollbar-button{
+    display: none;
+  }
+  ::-webkit-scrollbar-corner{
+    background: #333
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: dimgrey;
+    border-radius: 1rem;
+  }
+  ::-webkit-scrollbar-track{
+    background-color: darkgray;
+  }
+}
+/* Extra small devices (phones, 600px and down) */
+/* Medium devices (landscape tablets, 768px and up) */
+/* Large devices (laptops/desktops, 992px and up) */
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (max-width: 600px) {} */

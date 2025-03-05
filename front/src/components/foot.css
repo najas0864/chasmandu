@@ -1,0 +1,39 @@
+footer {
+  display: flex;
+  color: white;
+  padding: 40px 20px;
+  background-color: #333;
+  justify-content: space-between;
+}
+footer>div{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.footLogo {
+  justify-content: center;
+  align-items: center;
+}
+.footLogo .logo a{
+  color: #fff;
+  font-size: 1.8rem;
+  text-decoration: none;
+  font-family: "Tangerine", serif;
+  font-weight: 800;
+}
+.contactUs>a{
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+.contactUs:hover a:not(:hover) {
+  filter: blur(1px);
+  opacity: 0.5;
+}
+.contactIcon{
+  height: 2rem;
+  width: 2rem;
+}

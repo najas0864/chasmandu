@@ -1,0 +1,42 @@
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { createRoot } from 'react-dom/client'
+
+import './index.css'
+import Home from './views/home';
+import Lences from './views/lencs';
+import NotFound from './views/404';
+import Catagory from './views/catagoryes';
+import AdminPage from './views/adminPage';
+import SinglePage from './views/singlePage';
+import Login from './other/signHandel/login';
+import Sign from './other/signHandel/signup';
+import axios from 'axios';
+
+
+const PrivateRoute = ({ children }) => {
+    const [cooke, setCooke] = useState(undefined);
+    useEffect(() => {
+      axios.get("http://localhost:8000/validate-cookie", { withCredentials: true })
+      .then((res) => {
+        (res.data.valid) ? setCooke(true) : setCooke(false);
+      })
+      .catch(() => setCooke(false));
+    }, []);
+    if (cooke === undefined) {return <div>Loading...</div>}
+  return cooke? children : <Navigate to="/login" />;
+};
+createRoot(document.getElementById('root')).render(
+  <BrowserRouter>
+    <Routes>
+      <Route path='/' index element={<PrivateRoute><Home/></PrivateRoute>}/>
+      <Route path='/signup' element={<Sign/>}/>
+      <Route path='/login' element={<Login />}/>
+      <Route path='/admin' element={<AdminPage/>}/>
+      <Route path='/catagoryes' element={<PrivateRoute><Catagory/></PrivateRoute>}/>
+      <Route path='/contact-lence' element={<PrivateRoute><Lences/></PrivateRoute>}/>
+      <Route path='/single_product/:id' element={<PrivateRoute><SinglePage/></PrivateRoute>}/>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </BrowserRouter>
+);

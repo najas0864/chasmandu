@@ -1,0 +1,131 @@
+  .cart-lists {
+    position: fixed;
+    top: 0;
+    right: 0;
+    gap: 1rem;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    height: 100vh;
+    padding: 0 1rem;
+    min-width: 20rem;
+    list-style: none;
+    flex-direction: column;
+    transform: translateX(20rem);
+    transition: transform .3s linear;
+    background-color: rgba(3, 3, 3, 0.9);
+  }
+  
+  .cart-lists.active {
+    transform: translateX(0);
+  }  
+  
+  .cartItems{
+      display: flex;
+      border-radius: 6px;
+      padding: 7px;
+  }
+  .cartItems:hover{
+    box-shadow: inset 0 0 5px #fff;
+  }
+  .groupping{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 7px;
+  }
+  .order_item{
+    cursor: pointer;
+    background: #0056b3;
+    border: navajowhite;
+    transition: scale .2s ease-in-out;
+    border-radius: 7px;
+    padding: 8px 12px;
+  }
+  .order_item:active{
+    transform: scale(.9);
+  }
+  .itemCostumize{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .qtyAlter{
+    display: flex;
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  .qtyAlter>input[type=button]{
+    width: 2rem;
+    cursor: pointer;
+    border: none;
+    color: #FFFFFF;
+    font-size: larger;
+    font-variant: small-caps;
+  }
+  .qtyAlter>button::selection{
+    display: none;
+  }
+  .qtyBox{
+    width: 3rem;
+    background-color: transparent;
+    border: 2px solid #FFF;
+    border-radius: 7px;
+    text-align: center;
+  }
+
+  .productInfo{
+    display: flex;
+    justify-content: space-between;
+}
+.productInfo p:nth-child(1){
+    overflow: hidden;
+    word-break: break-all;
+    max-width: 10rem;
+    max-height: 35px;
+  }
+  .productInfo>p{
+    color: #fff;
+  }
+  .cartItemImage {
+    height: 4rem;
+    width: 4rem;
+    border: 2px solid #fff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.cartIcon{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.redDot::after {
+  content: attr(data-qty);
+  position: absolute;
+  top: -5px;
+  right: -15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.cartTitle{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.cartItemRapper {
+  overflow: auto;
+  flex: 1;
+}
+    @media (max-width: 360px) {
+      .cart-lists {
+        width: 100%;
+      }
+    }

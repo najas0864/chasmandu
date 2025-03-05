@@ -1,0 +1,91 @@
+.sliderContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.tabsBox {
+    display: flex;
+    overflow-x: auto;
+    transition: transform 0.3s ease;
+}
+.tabs {
+    min-width: 20rem;
+    background-repeat: no-repeat;
+    min-height: 10rem;
+    box-shadow: inset 0 0 5px #FFF;
+    border-radius: 14px;
+    margin: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-position: center;
+    background-size: 80%;
+    position: relative;
+    overflow: hidden;
+    transition: background-size .2s ease-in-out;
+}
+.tabs:hover .tabContent{
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 0 10px rgba(0, 0, 0, 0.5);
+}
+.tabContent {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    transition: all .3s ease-in-out;
+}
+
+
+@media (max-width: 600px) {
+    .tabs {
+        min-width: 13rem;
+    }
+    .tabContent h3 {
+        font-size: 20px;
+    }
+
+    .tabContent p {
+        font-size: 14px;
+    }
+}
+
+
+
+
+
+
+.flickityBtn{
+    width: 40px;
+    height: 40px;
+    border: none;
+    color: #ffffff;
+    background: #0f0f0fab;
+    display: inline-block;
+    position: absolute;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 0;
+}
+.flickityBtn:hover, .flickityBtn:active{
+    background-color: #000;
+    box-shadow: 0 0 5px #FFF;
+}
+.flickityBtn>svg{
+    position: absolute;
+    left: 35%;
+    top: 35%;
+    width: 30%;
+    height: 30%;
+    fill: currentColor;
+}
+.flickity-next-button{
+    left: 10px;
+    top: calc(50% - 20px);
+}
+.flickity-prev-button{
+    right: 10px;
+    top: calc(50% - 20px);
+}

@@ -1,0 +1,176 @@
+.mainBox{
+    display: flex;
+    flex-direction: column;
+}
+.spContainer {
+    display: flex;
+    max-width: 70rem;
+    gap: 1rem;
+}
+.spContainer>div{
+    width: 50%;
+}
+.spImage{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
+}
+.spImageBox {
+    border: 4px double #fff;
+    height: 30vh;
+}
+.slider-image {
+    width: 100%;
+    height: 100%;
+
+}
+.spInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.proVariant{
+    display: flex;
+}
+.proVariant>img{
+    flex: 1;
+    width: 4rem;
+}
+
+
+.prductRelateds {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.discReviews{
+    margin-top: 3rem;
+    height: 15rem;
+    overflow: auto;
+}
+.descBox,.reviewbox{
+    height: 10rem;
+    overflow-y: scroll;
+}
+.flipButtons{
+    display: flex;
+}
+.tabButton{
+    color: #000;
+    padding: 10px 20px;
+    border:rgba(0, 0, 0, 0.505)e;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #004c9e74;
+    font-weight: 700;
+    text-decoration: none;
+}
+.tabButton.active {
+    color: white;
+    background-color: #007bff;
+}
+@media only screen and (max-width: 600px) {
+    .spContainer{
+        flex-direction: column;
+    }
+    .spContainer>div {
+        width: 100%;
+    }
+    .scrollBtn.right {
+        right: 0;
+    }
+    .scrollBtn.left {
+        left: 0;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tabBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.tabCover {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-stop: always;
+    scroll-snap-type: x mandatory;
+    width: 90%;
+    border-radius: 0 5px 5px 0;
+    gap: 10px;
+    scrollbar-width: thin;
+}
+.tabCover>img{
+    z-index: 0;
+}
+
+.tabCover::-webkit-scrollbar {
+    display: none;
+}
+
+.tab {
+    flex: 0 0 auto;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.scrollBtn {
+    background-color: #333;
+    color: white;
+    font-weight: 800;
+    height: 2rem;
+    width: 2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    border: 2px solid #FFF;
+    z-index: 2;
+}
+.scrollBtn>svg{
+    position: absolute;
+    left: 35%;
+    top: 35%;
+    width: 30%;
+    height: 30%;
+    fill: currentColor;
+}
+
+.scrollBtn:hover {
+    background-color: #0056b3;
+}
+
+.scrollBtn.left {
+    left: 0;
+}
+
+.scrollBtn.right {
+    right: 0;
+}
