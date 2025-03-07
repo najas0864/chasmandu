@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import "./header.css";
 
 const Header = () => {
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [user, setUser] = useState('');
+  
   const images = [
     "/banner-873111_1280.jpg",
     "/banner-1763470_640.jpg",
@@ -12,10 +15,13 @@ const Header = () => {
     "/bears-garlic-1370581_640.jpg",
     "/decorative-header-1277841_1280.webp",
   ];
-
-  const [currentIndex, setCurrentIndex] = useState(1);
   const totSld = images.length;
-  
+
+  useEffect(()=>{
+    const user = localStorage.getItem('user')||'User';
+    setUser(JSON.parse(user.toUpperCase()));
+  },[])
+
   useEffect(() => {
     if (totSld>1) {
       const interval = setInterval(() => {
@@ -27,6 +33,7 @@ const Header = () => {
   
   return (
     <header className="header">
+      <p style={{position:'absolute',zIndex: '1',right: "50%",  transform: 'translate(50%, 50%)',textShadow:"0 0 5px black"}}>Wellcome {user}</p>
       {totSld > 0 ? (
         <div 
           className="headImgBox"

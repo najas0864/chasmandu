@@ -21,10 +21,11 @@ const ReviewSchema = new Schema({
     itemId:{type: Schema.Types.ObjectId,ref: "Item",require:true },
 });
 const UserSchema = new Schema({
-    otp:{type:Number,default: null},
     name:{type:String,require:true},
+    otp:{type:Number,default: null},
     gender:{type:String,require:true},
     password:{type:String,require:true},
+    verified:{type:String,default: null},
     email:{type:String,require:true,unique: true,},
     orderItem:[{type:String}],
 },{timestamps:true});

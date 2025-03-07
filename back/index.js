@@ -156,17 +156,37 @@ app.post("/items/:id", upload.array("file", 20), async (req, res) => {
 });
 /*sign-log*/
 app.get("/validate-cookie", (req, res) => {
-  const token = req.cookies.User; // Access the cookie
-  if (!token) {
-    return res.status(401).json({ valid: false });
-  }
   try {
+    const token = req.cookies.User; // Access the cookie
+    console.log(req.cookies);
     const decoded = jwt.verify(token, MY_SECRET);
     res.json({ valid: true, userId: decoded.id });
   } catch (error) {
     res.status(401).json({ valid: false });
   }
 });
+app.post('/auth/verify-otp', async (req, res) => {
+  const { otp } = req.body;
+  if (!otp) return res.json({ success: false, message: 'Enter OTP First!' });
+  const user = await User.findOne({ otp });
+  if (!user) return res.json({ success: false, message: 'Invalid OTP !' });
+  const token = jwt.sign({ id: user._id }, MY_SECRET, {expiresIn: "96h"});
+  res.cookie("User", token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure:true,
+    maxAge: 96 * 60 * 60 * 1000,
+  });
+  user.otp = '';
+  user.verified=true;
+  const verifiedUser = await user.save();
+  if(!verifiedUser){
+    return res.status(500).json({sucess: false,message: 'An error occurred during OTP verification'});
+  }else{
+    res.json({ sucess: true, message: 'OTP veryfied' });
+  }
+});
+
 app.post("/signup", async (req, res) => {
   const { name, email, password, gender } = req.body;
   const existingUser = await User.findOne({ email });
@@ -177,19 +197,11 @@ app.post("/signup", async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword, gender });
     const generatedOtp = randomize('0', 6);
     newUser.otp = generatedOtp;
-    const data = await newUser.save();
-    const token = jwt.sign({ userId: data._id }, MY_SECRET, {
-      expiresIn: "96h",
-    });
+    await newUser.save();
     sendOtpEmail(email, generatedOtp);
-    res.cookie("User", token, {
-      httpOnly: true,
-      sameSite: "lax",
-      maxAge: 24 * 60 * 60 * 4000,
-    });
-    res.json({ message:'Sign_up Sucessfully.',sucess:true });
+    res.json({ message:'Sign up Sucessfully.',sucess:true, email });
   } catch (error) {
-    res.status(400).json({ error: "User already exists!"+error,sucess:false });
+    res.status(400).json({ error: "User already exists!",sucess:false });
   }
 });
 app.post("/login", async (req, res) => {
@@ -203,7 +215,7 @@ app.post("/login", async (req, res) => {
     res.cookie("User", token, {
       httpOnly: true,
       sameSite: "lax",
-      maxAge: 24 * 60 * 60 * 4000,
+      maxAge: 96 * 60 * 60 * 1000,
     });
     res.status(201).json({ message:'login sucess.',data:token,cooke:token });
   } catch (error) {
@@ -220,25 +232,12 @@ app.post('/forget-password',async(req,res)=>{
   await user.save();
   res.json({message:'OTP Sent',sucess:true})
 })
-app.post('/auth/verify-otp', async (req, res) => {
-  const { otp } = req.body;
-  try {
-      const user = await User.findOne({ otp });
-      if (!user) return res.json({ success: false, message: 'Invalid OTP' });
-      user.otp = '';
-      await user.save();
-      return res.json({ success: true, message: 'OTP veryfied' });
-  } catch (error) {
-      return res.status(500).json({success: false,message: 'An error occurred during OTP verification'});
-  }
-});
 app.post('/update-password',async(req,res)=>{
   const {password, rePassword, email} = req.body;
   if(!password||!rePassword||!email) return res.json("Both field required.");
   if(password!== rePassword) return res.json("Password dosen't matched.");
   const user = await User.findOne({email});
   const hashedPassword = await bcrypt.hash(password, 10);
-
   user.password=hashedPassword;
   await user.save();
   res.json({message:'Password Reset Sucess.',sucess:true})
@@ -306,4 +305,4 @@ app.delete("/delete/:id/:filename", async(req, res) => {
     console.error("Error removing file:", error);
   }
 });
-server.listen(PORT,"0.0.0.0", () => console.log(`http://${host}:${PORT}`));
+server.listen(PORT,host, () => console.log(`http://${host}:${PORT}`));

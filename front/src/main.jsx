@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { createRoot } from 'react-dom/client'
+import axios from 'axios';
 
 import './index.css'
 import Home from './views/home';
@@ -11,17 +12,14 @@ import AdminPage from './views/adminPage';
 import SinglePage from './views/singlePage';
 import Login from './other/signHandel/login';
 import Sign from './other/signHandel/signup';
-import axios from 'axios';
 
 
 const PrivateRoute = ({ children }) => {
     const [cooke, setCooke] = useState(undefined);
     useEffect(() => {
       axios.get("http://localhost:8000/validate-cookie", { withCredentials: true })
-      .then((res) => {
-        (res.data.valid) ? setCooke(true) : setCooke(false);
-      })
-      .catch(() => setCooke(false));
+      .then((res) => (res.data.valid) ? setCooke(true) : setCooke(false))
+      .catch(() =>setCooke(false))
     }, []);
     if (cooke === undefined) {return <div>Loading...</div>}
   return cooke? children : <Navigate to="/login" />;

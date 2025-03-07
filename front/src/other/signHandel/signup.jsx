@@ -13,6 +13,7 @@ const Sign = () =>{
     const [message, setMessage]=useState('');
     const [isMasked, setIsMasked] = useState(true);
     const [values, setValues] = useState({name: "",email: "",password: "",gender: "",});
+    const [userEmail, setUserEmail] = useState('');
     const [showOtpField, setShowOtpField] = useState(false);
 
     useEffect(() => {
@@ -31,30 +32,28 @@ const Sign = () =>{
         }
         if (!(emailRegex.test(values.email))) return setMessage("Invalid email format");
         try {
-            const responce = await axios.post('http://localhost:8000/signup',values,{
-                headers:{"Content-Type":"application/json"},
-                withCredentials: true,
-            })
-            if(responce.data.sucess){
+            const responce = await axios.post('http://localhost:8000/signup',values,{headers:{"Content-Type":"application/json"}})
+            if(responce?.data?.sucess){
                 setShowOtpField(true);
-                setMessage(`${responce.data.message}`);
+                localStorage.setItem("user",JSON.stringify(values.name));
+                setMessage(`${responce?.data?.message}`);
+                setUserEmail(values.email)
                 setValues({name: "",email: "",password: "",gender: ""});
             }
-        } catch (error) {setMessage(error.response?.data?.error);}
+        } catch (error) {
+            setMessage(error.response?.data?.error);
+        }
         
     }
     const handleOtpVerification = async () => {
-        try {
-            const otpResponse = await axios.post('http://localhost:8000/auth/verify-otp',{otp});
-            if (otpResponse.data.success) {
-                setShowOtpField(false)
-                // setShowPswField(true)
-                navigate("/");
-            }
-        } catch (error) {
-            console.error('Error during OTP verification:', error.message);
-            setMessage(`${error.message}`);
-
+        if(!otp) return setMessage("Enter OTP first.");
+        const otpResponse = await axios.post('http://localhost:8000/auth/verify-otp',{otp},{withCredentials: true})
+        if(otpResponse.data.sucess){
+            // setShowPswField(true)
+            setShowOtpField(false)
+            navigate("/");
+        }else{
+            setMessage(`${otpResponse.data.message}`);
         }
     };
     const toggleType = () =>{
@@ -132,11 +131,11 @@ const Sign = () =>{
                 )}
                 {showOtpField && (
                 <>
-                    <h4>we sent a OTP in your email plese use OTP to veryfi email for your own security.</h4>
+                    <h4>OTP sent to {`${userEmail}`}.</h4>
                     <input 
-                        type="text"
+                        type="number"
                         value={otp}
-                        placeholder="OTP"
+                        placeholder="Enter OTP to verify"
                         onChange={(e) =>setOtp(e.target.value)}
                     />
                     <button className="login-button"

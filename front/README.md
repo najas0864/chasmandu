@@ -7,6 +7,7 @@
 <!-- 4 admin:::> notification,email, headerImageChange[first] *fix the library--- first* or change it   1 -->
 <!-- 6 save cartdata in cookie from frontend.    -->
 2   pop the data if order is fulfilled dessibale or cancle order----------------------now show itemd on enter push in search
+2nd   signup fix with token
 
 <!-- 8 search items by keywords or tags    3 -->
 7 filter items    4
