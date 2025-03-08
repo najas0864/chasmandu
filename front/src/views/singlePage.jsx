@@ -11,6 +11,7 @@ import "./singlePage.css";
 
 
 const AddToCart = ({item}) => {
+  const host = import.meta.env.VITE_API_HOST;
   const [isVisible, setIsVisible] = useState(false);
   const [productName, setProductName] = useState('');
   
@@ -57,7 +58,7 @@ const SinglePage = () =>{
 
     const fetchItems = async () => {
         try {
-          const response = await axios.get(`http://localhost:8000/items/${id}`);
+          const response = await axios.get(`${host}/items/${id}`);
           setProduct(response.data);
         } catch (error) {
           console.error("Error fetching items:", error);
@@ -80,14 +81,14 @@ const SinglePage = () =>{
                         <div className="spImageBox">
                             <img
                                 className="slider-image"
-                                src={`http://localhost:8000/uploads/${products.files?.[activeImage]}`|| 'icon.svg'}
+                                src={`${host}/uploads/${products.files?.[activeImage]}`|| 'icon.svg'}
                                 alt={products?.name||"Image not found"} 
                             />
                         </div>
                         <div className="tabBox">
                             <div className="tabCover">
                                 {products.files?.map((path,index) =>(
-                                    <img onClick={()=>setActiveImage(index)} src={`http://localhost:8000/uploads/${path}`} className="tab" key={index}/>
+                                    <img onClick={()=>setActiveImage(index)} src={`${host}/uploads/${path}`} className="tab" key={index}/>
                                 ))}
                             </div>
                         </div>

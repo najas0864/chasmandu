@@ -15,9 +15,10 @@ import Sign from './other/signHandel/signup';
 
 
 const PrivateRoute = ({ children }) => {
-    const [cooke, setCooke] = useState(undefined);
+  const host = import.meta.env.VITE_API_HOST;
+  const [cooke, setCooke] = useState(undefined);
     useEffect(() => {
-      axios.get("http://localhost:8000/validate-cookie", { withCredentials: true })
+      axios.get(`${host}/validate-cookie`, { withCredentials: true })
       .then((res) => (res.data.valid) ? setCooke(true) : setCooke(false))
       .catch(() =>setCooke(false))
     }, []);

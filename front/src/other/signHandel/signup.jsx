@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import ForgetPass from "./forgetPass";
 import axios from "axios";
 import "./signup.css";
-// import Gbutton from "./signEasy";
+import Gbutton from "./signEasy";
 
 
 const Sign = () =>{
-    const navigate = useNavigate();
+  const host = import.meta.env.VITE_API_HOST;
+  const navigate = useNavigate();
     const signPassInp = useRef(null);
     const [otp, setOtp] = useState('');
     const [message, setMessage]=useState('');
@@ -32,7 +33,7 @@ const Sign = () =>{
         }
         if (!(emailRegex.test(values.email))) return setMessage("Invalid email format");
         try {
-            const responce = await axios.post('http://localhost:8000/signup',values,{headers:{"Content-Type":"application/json"}})
+            const responce = await axios.post(`${host}/signup`,values,{headers:{"Content-Type":"application/json"}})
             if(responce?.data?.sucess){
                 setShowOtpField(true);
                 localStorage.setItem("user",JSON.stringify(values.name));
@@ -47,7 +48,7 @@ const Sign = () =>{
     }
     const handleOtpVerification = async () => {
         if(!otp) return setMessage("Enter OTP first.");
-        const otpResponse = await axios.post('http://localhost:8000/auth/verify-otp',{otp},{withCredentials: true})
+        const otpResponse = await axios.post(`${host}/auth/verify-otp`,{otp},{withCredentials: true})
         if(otpResponse.data.sucess){
             // setShowPswField(true)
             setShowOtpField(false)
@@ -145,7 +146,7 @@ const Sign = () =>{
                 </>
             )}
             {!showOtpField&&(<button type="submit" onClick={handelSignSubmmit}>Signup</button>)}
-            {/* <Gbutton/> */}
+            <Gbutton/>
             </div>
             <center>
                 <p>Already have an account?<Link to="/login">Log-in</Link></p><br />

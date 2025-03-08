@@ -5,6 +5,7 @@ import ForgetPass from "./forgetPass";
 // import Gbutton from "./signEasy";
 
 const Login = () => {
+  const host = import.meta.env.VITE_API_HOST;
     const navigate = useNavigate();
     const logPassInp = useRef(null);
     const [message, setMessage]=useState('');
@@ -22,7 +23,7 @@ const Login = () => {
         if(!data.email||!data.password) return setMessage('fill both fields to login.');
         try {
             const info = {email:data.email,password:data.password}
-            const res = await axios.post("http://localhost:8000/login", info,{
+            const res = await axios.post(`${host}/login`, info,{
                 headers:{"Content-Type":"application/json"},
                 withCredentials: true,
             });

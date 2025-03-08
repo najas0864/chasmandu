@@ -6,6 +6,7 @@ import Cart from "./cart";
 import './nav.css';
 
 const Nav = () => {
+  const host = import.meta.env.VITE_API_HOST;
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
   const toggleMenu = () => {setIsMobile(!isMobile);}; 
@@ -23,10 +24,10 @@ const Nav = () => {
     getUser();
   },[])
   const getUser = async () => {
-    const res = await axios.get("http://localhost:8000/validate-cookie", { withCredentials: true });
+    const res = await axios.get(`${host}/validate-cookie`, { withCredentials: true });
   } 
   const handelLogoutSubmmit = async () =>{
-    await axios.post('http://localhost:8000/logout',{},{
+    await axios.post(`${host}/logout`,{},{
       withCredentials: true,
     })
     // localStorage.removeItem('user');

@@ -3,7 +3,8 @@ import axios from "axios";
 import "./adminPage.css"
 
 const AdminPage = () => {
-    const fileInput = useRef(null);
+  const host = import.meta.env.VITE_API_HOST;
+  const fileInput = useRef(null);
     const addFileInput = useRef(null);
     const [files, setFiles] = useState([]);
     const [message, setMessage] = useState("");
@@ -25,7 +26,7 @@ const AdminPage = () => {
     }, [message]);
     const fetchItems = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/items');
+            const response = await axios.get(`${host}/items`);
             setFetchedData(response.data);
         } catch (error) {
             setMessage("Error fetching items. Please try again later.");
@@ -53,7 +54,7 @@ const AdminPage = () => {
         files?.forEach(file => formData.append("file", file));
         Object.entries(form).forEach(([key, value]) => formData.append(key, value));
         try {
-            const url = form.id ? `http://localhost:8000/items/${form.id}` : "http://localhost:8000/items";
+            const url = form.id ? `${host}/items/${form.id}` : `${host}/items`;
             const method = form.id ? axios.put : axios.post;
             await method(url, formData, {
                 headers: { "Content-Type": files.length?"multipart/form-data":"application/json"},
@@ -79,7 +80,7 @@ const AdminPage = () => {
         try {
             const formData = new FormData();
             addedFiles.forEach(file => formData.append("file", file));            
-            await axios.post(`http://localhost:8000/items/${id}`, formData, {
+            await axios.post(`${host}/items/${id}`, formData, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             fetchItems();
@@ -106,11 +107,11 @@ const AdminPage = () => {
         });
     };
     const deleteAllData = async (id) => {
-        await axios.delete(`http://localhost:8000/items/${id}`);
+        await axios.delete(`${host}/items/${id}`);
         fetchItems();
     };
     const deleteThisItem = async (id,fileName) => {
-        await axios.delete(`http://localhost:8000/delete/${id}/${fileName}`);
+        await axios.delete(`${host}/delete/${id}/${fileName}`);
         fetchItems();
     };
     const clearFormInputs = () => {
@@ -200,7 +201,7 @@ const AdminPage = () => {
                                     <img
                                         onDoubleClick={()=>deleteThisItem(item._id,fileName)}
                                         key={index}
-                                        src={`http://localhost:8000/uploads/${fileName}`} 
+                                        src={`${host}/uploads/${fileName}`} 
                                         alt={item.name} 
                                         style={{ borderRadius: "10px", objectFit: "cover" }}
                                         width="60px" 

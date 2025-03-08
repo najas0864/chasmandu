@@ -4,7 +4,9 @@ import "./review.css";
 
 
 
+const host = import.meta.env.VITE_API_HOST;
 const RateApp = ({id}) => {
+
     const [data, setFetchedData]= useState([]);
     const [hover, setHover] = useState(0);
     const [rating, setRating] = useState(0);
@@ -16,14 +18,14 @@ const RateApp = ({id}) => {
         console.log("User rated:", value);
         const formData = new FormData();
         formData.append("review", value)
-        axios.post(`http://localhost:8000/userReview/${id}`,formData,{
+        axios.post(`${host}/userReview/${id}`,formData,{
             headers:{ "Content-Type":"application/json"}
         })
     };
 
     const fetchItems = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/items');
+            const response = await axios.get(`${host}/items`);
             setFetchedData(response.data);
         } catch (error) {
             error?console.log(error):null;

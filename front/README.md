@@ -8,7 +8,7 @@
 <!-- 7 save cartdata in cookie from frontend.    -->
 <!-- 8 search items by keywords or tags    3 -->
 <!-- 9   signup fix with token -->
-10 steps order,delivered,fulfilled,pop or cancle order----------------------first then--->
+10 steps order,delivered,fulfilled,pop or cancle order----------------------first then---> upload image in db with url private and fix http://localhost:port/uploads
 11 show related results on enter push in search-------second
 
 12 filter items
