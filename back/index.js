@@ -71,6 +71,9 @@ const sendOtpEmail = async (email,otp)=> {
 
 
 /* GET */
+app.get('/', (req, res) => {
+  res.send("<h1>Dashboard</h1>");
+});
 app.get('/items', async (req, res) => {
   const items = await Data.find({});
   res.send(items);
