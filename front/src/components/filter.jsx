@@ -1,9 +1,45 @@
 import { useState } from "react";
 import "./filter.css";
 const Filter = ()=>{
+    const [isFilterVisible, setisFilterVisible] = useState(false);
+    const toggleFilter = () => setisFilterVisible(!isFilterVisible);
 
-        const [isFilterVisible, setisFilterVisible] = useState(false);
-        const toggleFilter = () => setisFilterVisible(!isFilterVisible);
+
+
+// function ProductList() {
+//     const [filteredProducts, setFilteredProducts] = useState([]);
+
+//     return (
+//         <div>
+//             <ProductFilters setFilteredProducts={setFilteredProducts} />
+//             <ul>
+//                 {filteredProducts.map((product) => (
+//                     <li key={product._id}>{product.name} - ${product.price}</li>
+//                 ))}
+//             </ul>
+//         </div>
+//     );
+// }
+
+//     const [filters, setFilters] = useState({
+//         category: "",
+//         brand: "",
+//         minPrice: "",
+//         maxPrice: "",
+//         minRating: "",
+//         sort: ""
+//     });
+//     useEffect(() => {
+//         async function fetchFilteredProducts() {
+//             const query = new URLSearchParams(filters).toString();
+//             const { data } = await axios.get(`/products?${query}`);
+//             setFilteredProducts(data);
+//         }
+//         fetchFilteredProducts();
+//     }, [filters]);
+
+
+
     
     return(
         <div className="Filter">

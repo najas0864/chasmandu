@@ -40,29 +40,29 @@ const PORT = process.env.PORT;
 const host = process.env.HOST;
 const mongoURL = process.env.MONGOURL;
 mongoose.connect(mongoURL)
-const sendOtpEmail = async (email, otp)=> {
+const sendOtpEmail = async (email,otp)=> {
   try {
-      const transporter = createTransport({
-          host:'smtp.gmail.com',
-          service: 'gmail',
-          port:465,
-          secure:true,
-          tls:{
-              servername:'smtp.gmail.com',
-              rejectUnauthorized: true,
-          },
-          auth: {
-              user: 'najas0864@gmail.com',
-              pass: 'legt bipn cawc rukk',
-          },
-      });
-      await transporter.sendMail({
-          from: 'najas0864@gmail.com',
-          to: email,
-          subject: 'OTP Verification',
-          html: `<h1>Your OTP is: ${otp}</h1>`,
-      });
-      console.log(`Email sent to :${email} `);
+    const transporter = createTransport({
+        host:'smtp.gmail.com',
+        service: 'gmail',
+        port:465,
+        secure:true,
+        tls:{
+          servername:'smtp.gmail.com',
+          rejectUnauthorized: true,
+        },
+        auth: {
+          user: 'najas0864@gmail.com',
+          pass: 'legt bipn cawc rukk',
+        },
+    });
+    await transporter.sendMail({
+      from: 'najas0864@gmail.com',
+      to: email,
+      subject: 'OTP Verification',
+      html: `<h1>Your OTP is: ${otp}</h1>`,
+    });
+    console.log(`Email sent to :${email} `);
   } catch (error) {
       console.log(`error semding email to ${email}`);
   }
@@ -75,18 +75,20 @@ app.get('/items', async (req, res) => {
   const items = await Data.find({});
   res.send(items);
 });
-app.post('/user', async (req, res) => {
+app.post('/placeOrder', async (req, res) => {
   const {item} = req.body;
   const cookieUser = req.cookies.User;
   const decoded = jwt.verify(cookieUser, MY_SECRET);
   const id = decoded?.id
   if (!mongoose.Types.ObjectId.isValid(id)) {return  res.status(400).json({ error: "Invalid item ID format" })}
-  const user = await User.findById(id);
-  user.orderItem.push(JSON.stringify(item));
-  await user.save();
-  console.log(user);
+
+  await User.findByIdAndUpdate(
+    id,
+    { $push: { orderItem: item } },
+    { new: true, runValidators: true }
+  );
+  console.log(item)
   res.json({message:'Order Placed.',sucess:true})
-  
 });
 app.get('/items/:id', async (req, res) => {
   const {id} = req.params;
@@ -95,7 +97,51 @@ app.get('/items/:id', async (req, res) => {
   if (!item) {return res.status(404).json({ error: "Data not found" })}
   res.json(item);
 });
+app.get("/validate-cookie", (req, res) => {
+  try {
+    const token = req.cookies.User;
+    const decoded = jwt.verify(token, MY_SECRET);
+    res.json({ valid: true, userId: decoded.id });
+  } catch (error) {
+    res.status(401).json({ valid: false });
+  }
+});
+
+
 // FIT IT FIRST
+// app.get("/products", async (req, res) => {
+//   let { category, brand, minPrice, maxPrice, minRating, sort } = req.query;
+
+//   let filter = {};
+
+//   if (category) filter.category = category;
+//   if (brand) filter.brand = brand;
+//   if (minPrice || maxPrice) {
+//       filter.price = {};
+//       if (minPrice) filter.price.$gte = Number(minPrice);
+//       if (maxPrice) filter.price.$lte = Number(maxPrice);
+//   }
+//   if (minRating) filter.rating = { $gte: Number(minRating) };
+
+//   let query = Product.find(filter);
+
+//   // Sorting: price (low to high or high to low), rating, or newest
+//   if (sort) {
+//       const sortOptions = {
+//           price_asc: { price: 1 },
+//           price_desc: { price: -1 },
+//           rating: { rating: -1 },
+//           newest: { createdAt: -1 }
+//       };
+//       query = query.sort(sortOptions[sort] || {});
+//   }
+
+//   const products = await query;
+//   res.json(products);
+// });
+
+
+
 // app.get('/search', async (req, res) => {
 //   Data.createIndexes({ title: "text", description: "text", content: "text" });
 //   const { query } = req.query;
@@ -155,16 +201,6 @@ app.post("/items/:id", upload.array("file", 20), async (req, res) => {
   }
 });
 /*sign-log*/
-app.get("/validate-cookie", (req, res) => {
-  try {
-    const token = req.cookies.User; // Access the cookie
-    console.log(req.cookies);
-    const decoded = jwt.verify(token, MY_SECRET);
-    res.json({ valid: true, userId: decoded.id });
-  } catch (error) {
-    res.status(401).json({ valid: false });
-  }
-});
 app.post('/auth/verify-otp', async (req, res) => {
   const { otp } = req.body;
   if (!otp) return res.json({ success: false, message: 'Enter OTP First!' });
@@ -222,7 +258,7 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-app.post('/forget-password',async(req,res)=>{
+app.post('/forget-password', async(req,res)=>{
   const {email} = req.body;  
   const user = await User.findOne({email});
   if(!user) return res.json({error:'invalid Email.'})

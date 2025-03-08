@@ -27,7 +27,16 @@ const UserSchema = new Schema({
     password:{type:String,require:true},
     verified:{type:String,default: null},
     email:{type:String,require:true,unique: true,},
-    orderItem:[{type:String}],
+    orderItem: [
+        {
+            id: Schema.Types.ObjectId,
+            file: String,
+            name: String,
+            price: Number,
+            quantity: Number,
+            sum: Number,
+        },
+    ],
 },{timestamps:true});
 
 const User = model('Users',UserSchema);

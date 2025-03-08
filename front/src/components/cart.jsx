@@ -17,14 +17,14 @@ const Cart = () => {
 
     const orderItem = async (item) => {
         item.sum=item.price*item.quantity;
-        const res = await axios.post('http://localhost:8000/user',
+        const res = await axios.post('http://localhost:8000/placeOrder',
             {item},
             { withCredentials: true },
             {headers:{"Content-Type":"application/json"}},
         );   
         console.log(res);
         if(res.data.sucess){
-            orderBtn.current.disabled=true
+            orderBtn.current.disabled=true;
             setMassage(res.data.message)
         }
     };
