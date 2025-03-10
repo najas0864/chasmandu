@@ -6,37 +6,37 @@ const Filter = ()=>{
 
 
 
-// function ProductList() {
-//     const [filteredProducts, setFilteredProducts] = useState([]);
+function ProductList() {
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
-//     return (
-//         <div>
-//             <ProductFilters setFilteredProducts={setFilteredProducts} />
-//             <ul>
-//                 {filteredProducts.map((product) => (
-//                     <li key={product._id}>{product.name} - ${product.price}</li>
-//                 ))}
-//             </ul>
-//         </div>
-//     );
-// }
+    return (
+        <div>
+            <ProductFilters setFilteredProducts={setFilteredProducts} />
+            <ul>
+                {filteredProducts.map((product) => (
+                    <li key={product._id}>{product.name} - ${product.price}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
 
-//     const [filters, setFilters] = useState({
-//         category: "",
-//         brand: "",
-//         minPrice: "",
-//         maxPrice: "",
-//         minRating: "",
-//         sort: ""
-//     });
-//     useEffect(() => {
-//         async function fetchFilteredProducts() {
-//             const query = new URLSearchParams(filters).toString();
-//             const { data } = await axios.get(`/products?${query}`);
-//             setFilteredProducts(data);
-//         }
-//         fetchFilteredProducts();
-//     }, [filters]);
+    const [filters, setFilters] = useState({
+        category: "",
+        brand: "",
+        minPrice: "",
+        maxPrice: "",
+        minRating: "",
+        sort: ""
+    });
+    useEffect(() => {
+        async function fetchFilteredProducts() {
+            const query = new URLSearchParams(filters).toString();
+            const { data } = await axios.get(`/products?${query}`);
+            setFilteredProducts(data);
+        }
+        fetchFilteredProducts();
+    }, [filters]);
 
 
 
