@@ -72,7 +72,7 @@ const sendOtpEmail = async (email,otp)=> {
 
 /* GET */
 app.get('/', (req, res) => {
-  res.send("<h1>Dashboard</h1>");
+  res.send("<h1>Dashboard</h1><a href='https://chasmandu-ade3.onrender.com'>Go to Clint side</a>");
 });
 app.get('/items', async (req, res) => {
   const items = await Data.find({});
