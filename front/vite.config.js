@@ -8,5 +8,6 @@ export default defineConfig({
       'localhost',
       '0.0.0.0',
     ],
+    port: process.env.PORT || 10000,
   },
 })
