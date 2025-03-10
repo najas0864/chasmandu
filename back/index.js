@@ -36,7 +36,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.set('trust proxy', 1) // trust first proxy
 
 const MY_SECRET = process.env.SECRET_TOKEN_KEY;
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 10000;
 const host = process.env.HOST;
 const mongoURL = process.env.MONGOURL;
 mongoose.connect(mongoURL)
