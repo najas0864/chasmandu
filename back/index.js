@@ -112,49 +112,37 @@ app.get("/validate-cookie", (req, res) => {
 
 
 // FIT IT FIRST
-// app.get("/products", async (req, res) => {
-//   let { category, brand, minPrice, maxPrice, minRating, sort } = req.query;
+app.get("/short", async (req, res) => {
+  let { category, brand, minPrice, maxPrice, minRating, sort } = req.query;
+  let filter = {};
+  if (category) filter.category = category;
+  if (brand) filter.brand = brand;
+  if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice) filter.price.$gte = Number(minPrice);
+      if (maxPrice) filter.price.$lte = Number(maxPrice);
+  }
+  if (minRating) filter.rating = { $gte: Number(minRating) };
 
-//   let filter = {};
+  let query = Product.find(filter);
 
-//   if (category) filter.category = category;
-//   if (brand) filter.brand = brand;
-//   if (minPrice || maxPrice) {
-//       filter.price = {};
-//       if (minPrice) filter.price.$gte = Number(minPrice);
-//       if (maxPrice) filter.price.$lte = Number(maxPrice);
-//   }
-//   if (minRating) filter.rating = { $gte: Number(minRating) };
+  // Sorting: price (low to high or high to low), rating, or newest
+  if (sort) {
+      const sortOptions = {
+          price_asc: { price: 1 },
+          price_desc: { price: -1 },
+          rating: { rating: -1 },
+          newest: { createdAt: -1 }
+      };
+      query = query.sort(sortOptions[sort] || {});
+  }
 
-//   let query = Product.find(filter);
-
-//   // Sorting: price (low to high or high to low), rating, or newest
-//   if (sort) {
-//       const sortOptions = {
-//           price_asc: { price: 1 },
-//           price_desc: { price: -1 },
-//           rating: { rating: -1 },
-//           newest: { createdAt: -1 }
-//       };
-//       query = query.sort(sortOptions[sort] || {});
-//   }
-
-//   const products = await query;
-//   res.json(products);
-// });
+  const products = await query;
+  res.json(products);
+});
 
 
 
-// app.get('/search', async (req, res) => {
-//   Data.createIndexes({ title: "text", description: "text", content: "text" });
-//   const { query } = req.query;
-//   const results = await Data.find({ 
-//     $text: { $search: query }
-//   }, { score: { $meta: "textScore" } })
-//   .sort({ score: { $meta: "textScore" } });
-
-//   res.json(results);
-// });
 app.get("/search", async (req, res) => {
   const {query} = req.query;
   const results = await Data.find({
