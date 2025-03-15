@@ -9,7 +9,7 @@ export default defineConfig({
     port: 10000,
     origin: 'https://chasmandu-ade3.onrender.com',
     cors: {
-      origin: ['https://chasmandu-ade3.onrender.com'],
+      origin: ['https://chasmandu.onrender.com'],
     },
   },
 })
