@@ -20,6 +20,10 @@ const ReviewSchema = new Schema({
     userId:{type: Schema.Types.ObjectId,ref: "User" },
     itemId:{type: Schema.Types.ObjectId,ref: "Item",require:true },
 });
+const ImageSchema = new Schema({
+    name: String,
+    image: String,
+});
 const UserSchema = new Schema({
     name:{type:String,require:true},
     otp:{type:Number,default: null},
@@ -41,7 +45,8 @@ const UserSchema = new Schema({
 
 const User = model('Users',UserSchema);
 const Data = model('Datas', ItemSchema);
+const Images = model('Images',ImageSchema);
 const Review = model('Reviews',ReviewSchema);
 const Comment = model('Comments',CommentSchema);
 
-export  {Data,User,Review,Comment};
+export  {Data,User,Images,Review,Comment};

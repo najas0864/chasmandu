@@ -123,6 +123,74 @@ const AdminPage = () => {
         setAddedFileLength(0);
         setAddedImagePreviews([]);
     };
+    const HeadImage = () => {
+        const [image, setImage] = useState('');
+        const [msg, setMsg] = useState('');
+        useEffect(() => {
+            setTimeout(() => {
+                setMsg("");
+            }, 4000);
+        }, [msg]);
+        const fetchItems = async () => {
+            if (!imageId) return alert("No image ID available.");
+            try {
+                const response = await axios.get(`https://chasmandu.onrender.com/uploads/${imageId}`);
+                setFetchedData(response.data);
+            } catch (error) {
+                setMessage("Error fetching items. Please try again later.");
+            }
+        };
+        const handleImageChange = (e) => {
+            if(e.target.files){
+                setImage(e.target.files[0]);
+                convertToBase64(e.target.files[0])
+            }
+        };
+        const convertToBase64 = (file) => {
+            const extension = file.name.slice(file.name.lastIndexOf(".") + 1)
+            const imageName = `Image-${Date.now()}.${extension}`
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                const results = {
+                    result:reader.result,
+                    name:imageName
+                }
+                setImage(results);
+            };
+            reader.onerror = (error) => {
+                setMsg("Error processing image:", error);
+            };
+        };
+        
+        const uploadFile = async () => {
+            if (!image.result) return setMsg("Select a file first.");
+            try {
+                const res = await axios.post('http://localhost:10001/uploadHeaderImg',{image},{
+                    headers:{"Content-Type":"application/json"},
+                })
+                setImage('')
+                setMsg(`${res?.data.message}`);
+            } catch (error) {
+                setMsg("Error uploading image:", error);
+                setImage('')
+            }
+        }
+
+        return(
+            <div className="headImg">
+                <img
+                    src={image?image.result:"./icon.svg"}
+                    alt={`Preview`}
+                    width="150rem"
+                    style={{ borderRadius: "10px", objectFit: "cover"}}
+                />
+                <input onChange={(e)=>handleImageChange(e)} name="image"  type="file" accept=".png, .jpeg, .jpg, .webp"/>
+                <input onClick={uploadFile} style={{height:"20px"}} type="button" value={"Upload"}/>
+                {msg&&(<p>{msg}</p>)}
+            </div>
+        )
+    }
 
     return (
         <main className='adminMain'>
@@ -178,6 +246,7 @@ const AdminPage = () => {
                 </div>
                 )}
             </div>
+            <HeadImage/>
             <div className='dataCover'>
             {fetchedData.map((item) => (
                 <details className='itemDatas'key={item._id}>
@@ -200,6 +269,7 @@ const AdminPage = () => {
                                     <img
                                         onDoubleClick={()=>deleteThisItem(item._id,fileName)}
                                         key={index}
+                                        // `data:image/jpeg;base64,${data.image}`
                                         src={`https://chasmandu.onrender.com/uploads/${fileName}`} 
                                         alt={item.name} 
                                         style={{ borderRadius: "10px", objectFit: "cover" }}

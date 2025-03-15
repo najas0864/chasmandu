@@ -49,7 +49,7 @@ const Slider = () => {
           {items.map((item, index) => (
           <Link key={index} to={`/single_product/${item._id}`}>
             <div 
-              style={{backgroundImage: `url(https://chasmandu.onrender.com/uploads/${item.files?.[0]})`|| 'url(/icon.svg)'}}  //set placeholder flip <
+              style={{backgroundImage: `url(https://chasmandu.onrender.com/uploads/${item.files?.[0]})`|| 'url(./icon.svg)'}}  //set placeholder flip <
               className="tabs" 
             >
               <div className="tabContent">

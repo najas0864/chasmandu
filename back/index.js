@@ -9,35 +9,26 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import randomize from 'randomatic';
 import { createServer } from "http";
-import { fileURLToPath } from "url";
 import cookieParser from 'cookie-parser';
-import { Data, Review, User } from "./models.js";
+import { Data, Images, Review, User } from "./models.js";
 import { createTransport } from "nodemailer";
 
 const app = express();
 const server = createServer(app);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const storage = multer.diskStorage({
-  destination: path.join(__dirname,'uploads'),
-  filename: (req, file, cb)=>{
-    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-  }
-});
+const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 
 dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: ["https://chasmandu-ade3.onrender.com","http://localhost:10000"],
+  origin: ["https://chasmandu-ade3.onrender.com","http://localhost:10001","http://localhost:10000"],  //remove useless urls
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type,Authorization",
   credentials: true
 }));
 app.use(express.urlencoded({limit:"150mb", extended: true }));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.set('trust proxy', 1) // trust first proxy
 
 const MY_SECRET = process.env.SECRET_TOKEN_KEY;
@@ -73,11 +64,32 @@ const sendOtpEmail = async (email,otp)=> {
   }
 }
 
+app.post("/uploadHeaderImg", async (req, res) => {
+  const {image} = req.body;
+  if (!image.result) return res.status(400).send("No file uploaded.");
+  const base64 = image.result.split(',')[1];
+  const buffer = Buffer.from(base64, "base64");  
+  const newImage = new Images({
+    name: image.name,
+    image: buffer,
+  });
+  await newImage.save();
+  res.json({ message: "Sucess uploading image" });
+});
 
-
+// Get Image Endpoint
+app.get("/uploads/:name", async (req, res) => {
+  const img = await Image.findOne({ name: req.params.name });
+  if (!img) return res.status(404).json({ error: "Image not found" });
+  const imgBuffer = Buffer.from(img.image, "base64");
+  console.log(img);
+  
+  res.set("Content-Type", "image/png"); // Change based on image type
+  res.send(imgBuffer);
+});
 /* GET */
 app.get('/', (req, res) => {
-  res.send("<h1>Dashboard</h1><a href='https://chasmandu-ade3.onrender.com'>Go to Clint side</a>");
+  res.redirect('https://chasmandu-ade3.onrender.com');
 });
 app.get('/items', async (req, res) => {
   const items = await Data.find({});
@@ -129,7 +141,7 @@ app.get("/short", async (req, res) => {
   }
   if (minRating) filter.rating = { $gte: Number(minRating) };
 
-  let query = Product.find(filter);
+  let query = products.find(filter);
 
   // Sorting: price (low to high or high to low), rating, or newest
   if (sort) {

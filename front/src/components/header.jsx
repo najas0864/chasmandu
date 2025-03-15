@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import "./header.css";
+import axios from "axios";
 
 const Header = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [items, setItems] = useState('');
   const [user, setUser] = useState('');
+  const fetchItems = async () => {
+    const response = await axios.get(`https://chasmandu.onrender.com/items`);
+    setItems(response.data);
+  };
+  useEffect(() => {
+    fetchItems();
+  }, []);
   
-  const images = [
-    "/banner-873111_1280.jpg",
-    "/banner-1763470_640.jpg",
-    "/banner-1763483_640.jpg",
-    "/banner-1050613_640.webp",
-    "/window-6243815_1280.png",
-    "/ai-generated-8371202_640.jpg",
-    "/bears-garlic-1370581_640.jpg",
-    "/decorative-header-1277841_1280.webp",
-  ];
-  const totSld = images.length;
+  const images = items[0]?.files;
+  const totSld = images?.length;  
 
   useEffect(()=>{
     const user = localStorage.getItem('user')|| JSON.stringify('User');
-    setUser(JSON.parse(user.toUpperCase()));
+    setUser(JSON.parse(user));
   },[])
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Header = () => {
   
   return (
     <header className="header">
-      <p style={{position:'absolute',zIndex: '1',right: "50%",  transform: 'translate(50%, 50%)',textShadow:"0 0 5px black"}}>Wellcome {user}</p>
+      <p style={{position:'absolute',zIndex: '1',left: "0",textShadow:"0 0 5px black"}}>🖐Wellcome {user}</p>
       {totSld > 0 ? (
         <div 
           className="headImgBox"
@@ -42,7 +42,7 @@ const Header = () => {
           {images.map((image, index) => (
             <img
               key={index} 
-              src={'http://localhost:5173/headerImages'+image}
+              src={`https://chasmandu.onrender.com/uploads/${image}`}
               style={{transform: `scale(${index === currentIndex ?"1":"1,0"})`,transitionDelay:index === currentIndex ?"0s":"1s",}}
               className="headerImg"
               alt={`Slide ${index}`}

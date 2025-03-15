@@ -1,6 +1,7 @@
 .header {
     height: 25vh;
     overflow: hidden;
+    isolation: isolate;
     background-image: repeating-radial-gradient(#222, #222 10px, #333 10px, #333 30px, #444 30px, #444 50px);
     background-size: 50px 50px;
 }

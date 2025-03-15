@@ -48,7 +48,7 @@ const SearchBar = () =>{
                 </div>
                 <ul className="Suggestion">
                     {results.map((r) => 
-                        <Link to={`http://localhost:5173/single_product/${r._id}`}>
+                        <Link to={`https://chasmandu-ade3.onrender.com/single_product/${r._id}`}>
                                 <li 
                                     onClick={()=>setisCartVisible(false)}
                                     key={r._id}
