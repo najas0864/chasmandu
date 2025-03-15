@@ -33,9 +33,9 @@ createRoot(document.getElementById('root')).render(
       <Route path='/login' element={<Login />}/>
       <Route path='/admin' element={<AdminPage/>}/>
       <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
-      <Route path='/catagoryes' element={<PrivateRoute><Catagory/></PrivateRoute>}/>
-      <Route path='/contact-lence' element={<PrivateRoute><Lences/></PrivateRoute>}/>
-      <Route path='/single_product/:id' element={<PrivateRoute><SinglePage/></PrivateRoute>}/>
+      <Route path='/catagoryes' element={<Catagory/>}/>
+      <Route path='/contact-lence' element={<Lences/>}/>
+      <Route path='/single_product/:id' element={<SinglePage/>}/>
       <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
