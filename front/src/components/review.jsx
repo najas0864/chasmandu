@@ -18,14 +18,14 @@ const RateApp = ({id}) => {
         console.log("User rated:", value);
         const formData = new FormData();
         formData.append("review", value)
-        axios.post(`${host}/userReview/${id}`,formData,{
+        axios.post(`https://chasmandu.onrender.com/userReview/${id}`,formData,{
             headers:{ "Content-Type":"application/json"}
         })
     };
 
     const fetchItems = async () => {
         try {
-            const response = await axios.get(`${host}/items`);
+            const response = await axios.get(`https://chasmandu.onrender.com/items`);
             setFetchedData(response.data);
         } catch (error) {
             error?console.log(error):null;

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Slider = () => {
-  const host = import.meta.env.VITE_API_HOST;
   const tabWidth = 470;
   const tabWraRef = useRef(null);
   const [items, setItems] = useState([]);
@@ -12,7 +11,7 @@ const Slider = () => {
   const [showRightButton, setShowRightButton] = useState(false);
 
   const fetchItems = async () => {
-    const response = await axios.get(`${host}/items`);
+    const response = await axios.get(`https://chasmandu.onrender.com/items`);
     setItems(response.data);
   };
   useEffect(() => {
@@ -50,7 +49,7 @@ const Slider = () => {
           {items.map((item, index) => (
           <Link key={index} to={`/single_product/${item._id}`}>
             <div 
-              style={{backgroundImage: `url(${host}/uploads/${item.files?.[0]})`|| 'url(/icon.svg)'}}  //set placeholder flip <
+              style={{backgroundImage: `url(https://chasmandu.onrender.com/uploads/${item.files?.[0]})`|| 'url(/icon.svg)'}}  //set placeholder flip <
               className="tabs" 
             >
               <div className="tabContent">

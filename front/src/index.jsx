@@ -7,6 +7,7 @@ import './index.css'
 import Home from './views/home';
 import Lences from './views/lencs';
 import NotFound from './views/404';
+import Profile from './views/profile';
 import Catagory from './views/catagoryes';
 import AdminPage from './views/adminPage';
 import SinglePage from './views/singlePage';
@@ -15,10 +16,9 @@ import Sign from './other/signHandel/signup';
 
 
 const PrivateRoute = ({ children }) => {
-  const host = import.meta.env.VITE_API_HOST;
   const [cooke, setCooke] = useState(undefined);
     useEffect(() => {
-      axios.get(`${host}/validate-cookie`, { withCredentials: true })
+      axios.get(`https://chasmandu.onrender.com/validate-cookie`, { withCredentials: true })
       .then((res) => (res.data.valid) ? setCooke(true) : setCooke(false))
       .catch(() =>setCooke(false))
     }, []);
@@ -32,6 +32,7 @@ createRoot(document.getElementById('root')).render(
       <Route path='/signup' element={<Sign/>}/>
       <Route path='/login' element={<Login />}/>
       <Route path='/admin' element={<AdminPage/>}/>
+      <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
       <Route path='/catagoryes' element={<PrivateRoute><Catagory/></PrivateRoute>}/>
       <Route path='/contact-lence' element={<PrivateRoute><Lences/></PrivateRoute>}/>
       <Route path='/single_product/:id' element={<PrivateRoute><SinglePage/></PrivateRoute>}/>

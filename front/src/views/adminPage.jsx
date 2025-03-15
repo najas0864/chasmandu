@@ -3,8 +3,7 @@ import axios from "axios";
 import "./adminPage.css"
 
 const AdminPage = () => {
-  const host = import.meta.env.VITE_API_HOST;
-  const fileInput = useRef(null);
+    const fileInput = useRef(null);
     const addFileInput = useRef(null);
     const [files, setFiles] = useState([]);
     const [message, setMessage] = useState("");
@@ -26,7 +25,7 @@ const AdminPage = () => {
     }, [message]);
     const fetchItems = async () => {
         try {
-            const response = await axios.get(`${host}/items`);
+            const response = await axios.get(`https://chasmandu.onrender.com/items`);
             setFetchedData(response.data);
         } catch (error) {
             setMessage("Error fetching items. Please try again later.");
@@ -54,7 +53,7 @@ const AdminPage = () => {
         files?.forEach(file => formData.append("file", file));
         Object.entries(form).forEach(([key, value]) => formData.append(key, value));
         try {
-            const url = form.id ? `${host}/items/${form.id}` : `${host}/items`;
+            const url = form.id ? `https://chasmandu.onrender.com/items/${form.id}` : `https://chasmandu.onrender.com/items`;
             const method = form.id ? axios.put : axios.post;
             await method(url, formData, {
                 headers: { "Content-Type": files.length?"multipart/form-data":"application/json"},
@@ -80,7 +79,7 @@ const AdminPage = () => {
         try {
             const formData = new FormData();
             addedFiles.forEach(file => formData.append("file", file));            
-            await axios.post(`${host}/items/${id}`, formData, {
+            await axios.post(`https://chasmandu.onrender.com/items/${id}`, formData, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             fetchItems();
@@ -107,11 +106,11 @@ const AdminPage = () => {
         });
     };
     const deleteAllData = async (id) => {
-        await axios.delete(`${host}/items/${id}`);
+        await axios.delete(`https://chasmandu.onrender.com/items/${id}`);
         fetchItems();
     };
     const deleteThisItem = async (id,fileName) => {
-        await axios.delete(`${host}/delete/${id}/${fileName}`);
+        await axios.delete(`https://chasmandu.onrender.com/delete/${id}/${fileName}`);
         fetchItems();
     };
     const clearFormInputs = () => {
@@ -201,7 +200,7 @@ const AdminPage = () => {
                                     <img
                                         onDoubleClick={()=>deleteThisItem(item._id,fileName)}
                                         key={index}
-                                        src={`${host}/uploads/${fileName}`} 
+                                        src={`https://chasmandu.onrender.com/uploads/${fileName}`} 
                                         alt={item.name} 
                                         style={{ borderRadius: "10px", objectFit: "cover" }}
                                         width="60px" 

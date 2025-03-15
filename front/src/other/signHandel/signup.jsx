@@ -7,8 +7,7 @@ import Gbutton from "./signEasy";
 
 
 const Sign = () =>{
-  const host = import.meta.env.VITE_API_HOST;
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     const signPassInp = useRef(null);
     const [otp, setOtp] = useState('');
     const [message, setMessage]=useState('');
@@ -33,7 +32,7 @@ const Sign = () =>{
         }
         if (!(emailRegex.test(values.email))) return setMessage("Invalid email format");
         try {
-            const responce = await axios.post(`${host}/signup`,values,{headers:{"Content-Type":"application/json"}})
+            const responce = await axios.post(`https://chasmandu.onrender.com/signup`,values,{headers:{"Content-Type":"application/json"}})
             if(responce?.data?.sucess){
                 setShowOtpField(true);
                 localStorage.setItem("user",JSON.stringify(values.name));
@@ -48,7 +47,7 @@ const Sign = () =>{
     }
     const handleOtpVerification = async () => {
         if(!otp) return setMessage("Enter OTP first.");
-        const otpResponse = await axios.post(`${host}/auth/verify-otp`,{otp},{withCredentials: true})
+        const otpResponse = await axios.post(`https://chasmandu.onrender.com/auth/verify-otp`,{otp},{withCredentials: true})
         if(otpResponse.data.sucess){
             // setShowPswField(true)
             setShowOtpField(false)

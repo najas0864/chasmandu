@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import './foot.css';
 
 const Foot = () => {
-  const muNumber = import.meta.env.VITE_API_CONTACTNUMBER ||9840395742;
+  const muNumber = 9817380234;
   return (
     <footer>
       <div className='footLogo'>

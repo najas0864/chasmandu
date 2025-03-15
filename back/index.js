@@ -31,7 +31,7 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin:"https://chasmandu-ade3.onrender.com",
+  origin: ["https://chasmandu-ade3.onrender.com","http://localhost:10000"],
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type,Authorization",
   credentials: true

@@ -3,7 +3,6 @@ import axios from "axios"
 import "./searchBar.css";
 import { Link } from "react-router-dom";
 const SearchBar = () =>{
-  const host = import.meta.env.VITE_API_HOST;
     const searchInp = useRef(null);
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -16,7 +15,7 @@ const SearchBar = () =>{
     const handleSearch = async (inpQuery) => {
         setQuery(inpQuery);
         if (inpQuery.length > 1) {
-            const { data } = await axios.get(`${host}/search?query=${inpQuery}`);
+            const { data } = await axios.get(`https://chasmandu.onrender.com/search?query=${inpQuery}`);
             setResults(data);
         }
     }
@@ -53,7 +52,7 @@ const SearchBar = () =>{
                                 <li 
                                     onClick={()=>setisCartVisible(false)}
                                     key={r._id}
-                                    style={{border:'2px solid #FFF',backgroundImage:`url(${host}/uploads/${r.files[0]})`}}
+                                    style={{border:'2px solid #FFF',backgroundImage:`url(https://chasmandu.onrender.com/uploads/${r.files[0]})`}}
                                 >
                                 {r.files[0]} {r.name} - ${r.price}
                             </li>
