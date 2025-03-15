@@ -18,7 +18,7 @@ const Header = () => {
   const totSld = images.length;
 
   useEffect(()=>{
-    const user = localStorage.getItem('user')||'User';
+    const user = localStorage.getItem('user')|| JSON.stringify('User');
     setUser(JSON.parse(user.toUpperCase()));
   },[])
 
