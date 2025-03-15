@@ -18,7 +18,7 @@ import Sign from './other/signHandel/signup';
 const PrivateRoute = ({ children }) => {
   const [cooke, setCooke] = useState(undefined);
     useEffect(() => {
-      axios.get(`https://chasmandu.onrender.com/validate-cookie`, { withCredentials: true })
+      axios.get(`https://35.160.120.126:10000/validate-cookie`, { withCredentials: true })
       .then((res) => (res.data.valid) ? setCooke(true) : setCooke(false))
       .catch(() =>setCooke(false))
     }, []);

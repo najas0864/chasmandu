@@ -1,0 +1,23 @@
+.pageNotFound{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100svh;
+    width: 100svw;
+
+}
+.Error:active{
+    transform: none;
+}
+text{
+    fill: #FFF;
+}
+.gotoHome{
+    padding: 5px 10px;
+    border: 2px solid #FFF;
+}
+.gotoHome:hover rect{
+    fill: aqua;
+    stroke: #000;
+}
