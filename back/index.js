@@ -30,7 +30,12 @@ const upload = multer({storage: storage});
 dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin:"https://chasmandu-ade3.onrender.com"||"http://localhost:5173",methods: "GET,POST,PUT,DELETE",allowedHeaders: "Content-Type,Authorization",credentials: true}));
+app.use(cors({
+  origin:"https://chasmandu-ade3.onrender.com",
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+  credentials: true
+}));
 app.use(express.urlencoded({limit:"150mb", extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.set('trust proxy', 1) // trust first proxy
