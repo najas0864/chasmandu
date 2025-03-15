@@ -15,7 +15,7 @@ import Login from './other/signHandel/login';
 import Sign from './other/signHandel/signup';
 
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children }) => {  //use this only for purchase products
   const [cooke, setCooke] = useState(undefined);
     useEffect(() => {
       axios.get(`https://35.160.120.126:10000/validate-cookie`, { withCredentials: true })
@@ -28,7 +28,7 @@ const PrivateRoute = ({ children }) => {
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
-      <Route path='/' index element={<PrivateRoute><Home/></PrivateRoute>}/>
+      <Route path='/' index element={<Home/>}/>
       <Route path='/signup' element={<Sign/>}/>
       <Route path='/login' element={<Login />}/>
       <Route path='/admin' element={<AdminPage/>}/>
