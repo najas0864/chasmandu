@@ -14,11 +14,12 @@ const port = process.env.PORT||5000;
 const __dirname = path.resolve();
 
 app.use(cors({
-  origin: ["http://localhost:2000"],
+  origin: "http://localhost:2000",
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type,Authorization",
   credentials: true
 }));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({limit:"150mb", extended: true }));
