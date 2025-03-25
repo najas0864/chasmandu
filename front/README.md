@@ -1,6 +1,6 @@
 # start
 8 first organize [backend] then [frontend] using zusis Functions.   header image database or ststic images in assest folder in site
-9 signup fix with token using express-session.    ())(((  fix search and short second)))
+9 signup fix with token using express-session.    (((  fix search and short second)))
 10 steps order,delivered,fulfilled,pop or cancle order.
 11 show related results on enter push in search.
 12 filter items
