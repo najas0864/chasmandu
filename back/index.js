@@ -19,9 +19,6 @@ app.use(cors({
   allowedHeaders: "Content-Type,Authorization",
   credentials: true
 }));
-app.get('/',(req,res)=>{
-    res.redirect("https://chasmandu-ade3.onrender.com/");
-});
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({limit:"150mb", extended: true }));
