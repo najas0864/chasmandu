@@ -5,10 +5,10 @@ const Profile = () => {
         getUser();
     },[])
     const getUser = async () => {
-        await axios.get(`https://chasmandu.onrender.com/validate-cookie`, { withCredentials: true });
+        await axios.get(`/api/validate-cookie`, { withCredentials: true });
     } 
     const handelLogoutSubmmit = async () =>{
-        await axios.post(`https://chasmandu.onrender.com/logout`,{},{
+        await axios.post(`/api/logout`,{},{
         withCredentials: true,
         })
         // localStorage.removeItem('user');

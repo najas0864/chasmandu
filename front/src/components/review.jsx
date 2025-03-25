@@ -13,27 +13,24 @@ const RateApp = ({id}) => {
     useEffect(() => {
         fetchItems();
     }, []);
-    const handleClick = (value) => {
+    const handleClick = async (value) => {
         setRating(value);
         console.log("User rated:", value);
         const formData = new FormData();
         formData.append("review", value)
-        axios.post(`https://chasmandu.onrender.com/userReview/${id}`,formData,{
+        await axios.post(`/api/userReview/${id}`,formData,{
             headers:{ "Content-Type":"application/json"}
         })
     };
 
     const fetchItems = async () => {
         try {
-            const response = await axios.get(`https://chasmandu.onrender.com/items`);
+            const response = await axios.get(`/api/reviews`);
             setFetchedData(response.data);
         } catch (error) {
             error?console.log(error):null;
         }
     };
-
-
-
 
 
     return (

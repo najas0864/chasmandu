@@ -5,21 +5,23 @@ import Nav from "../components/nav"
 import Foot from "../components/foot"
 import Slider from "../components/slider"
 import Reviews from "../components/review"
-import { addToCart } from "../components/cartCRUD"
 import "./singlePage.css";
+import { useCartStore, useProduct } from "../other/product"
 
 
 
 const AddToCart = ({item}) => {
+  const { addToCarts } = useCartStore();
   const [isVisible, setIsVisible] = useState(false);
   const [productName, setProductName] = useState('');
   
   const notify = () => {
-    addToCart(item)
+    addToCarts(item)
     setProductName(item.name);
     setIsVisible(true);
 
     setTimeout(() => {
+      setProductName('');
       setIsVisible(false);
     }, 3000);
   };
@@ -44,32 +46,15 @@ const AddToCart = ({item}) => {
 
 
 const SinglePage = () =>{
-    const {id} = useParams();
-    const [products, setProduct] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState("description");
-    const [activeImage, setActiveImage] = useState(0);
+  const { singleProduct, fetchSingleProduct } = useProduct();
+  const {id} = useParams();
+  const [activeTab, setActiveTab] = useState("description");
+  const [activeImage, setActiveImage] = useState(0);
+  let alert= `!!! OFFER OFFER OFFER !!! Biggest Offer Buy One and get one free on every eyewear. And please don't forget to Sign up.`
 
-
-    useEffect(() => {
-        fetchItems();
-    }, [id]);
-
-    const fetchItems = async () => {
-        try {
-          const response = await axios.get(`https://chasmandu.onrender.com/items/${id}`);
-          setProduct(response.data);
-        } catch (error) {
-          console.error("Error fetching items:", error);
-        } finally {
-          setLoading(false);
-        }
-    };
-
-
-
-    let alert= `!!! OFFER OFFER OFFER !!! Biggest Offer Buy One and get one free on every eyewear. And please don't forget to Sign up.`
-    if (loading) {return <p>Loading...</p>}
+  useEffect(() => {
+    fetchSingleProduct(id);
+  }, [fetchSingleProduct,id]);
     return(
         <>
             <Nav/>
@@ -80,30 +65,30 @@ const SinglePage = () =>{
                         <div className="spImageBox">
                             <img
                                 className="slider-image"
-                                src={`https://chasmandu.onrender.com/uploads/${products.files?.[activeImage]}`|| 'icon.svg'}
-                                alt={products?.name||"Image not found"} 
+                                src={`${singleProduct.imagesURl?.[activeImage]}`|| 'icon.svg'}
+                                alt={singleProduct?.name||"Image not found"} 
                             />
                         </div>
                         <div className="tabBox">
                             <div className="tabCover">
-                                {products.files?.map((path,index) =>(
-                                    <img onClick={()=>setActiveImage(index)} src={`https://chasmandu.onrender.com/uploads/${path}`} className="tab" key={index}/>
+                                {singleProduct.imagesURl?.map((path,index) =>(
+                                    <img onClick={()=>setActiveImage(index)} src={`${path}`} className="tab" key={index}/>
                                 ))}
                             </div>
                         </div>
                     </div>
                     <div className="spInfo">
-                        <h3>{products.name}</h3>
-                        <Reviews id={products._id}/>
-                        <p className="price"><b>Price :</b> ${products.price}</p>
+                        <h3>{singleProduct.name}</h3>
+                        <Reviews id={singleProduct._id}/>
+                        <p className="price"><b>Price :</b> ${singleProduct.price}</p>
                         <div className="prductRelateds">
-                            <b>Model : {products.model}</b>
-                            <b>Color : {products.color}</b>
-                            <b>Brand : {products.brand}</b>
-                            <b>Catagory : {products.name}</b>
-                            <b>Sizes : {products.size}</b>
+                            <b>Model : {singleProduct.model}</b>
+                            <b>Color : {singleProduct.color}</b>
+                            <b>Brand : {singleProduct.brand}</b>
+                            <b>Catagory : {singleProduct.name}</b>
+                            <b>Sizes : {singleProduct.size}</b>
                         </div>
-                        <AddToCart item={products}/>
+                        <AddToCart item={singleProduct}/>
                     </div>
                 </div>
                 <br />
@@ -124,7 +109,7 @@ const SinglePage = () =>{
                     {activeTab === "description" && (
                         <div className="descriptions">
                             <center><h2>Descriptions</h2></center>
-                            <p className="descBox">{products.description}</p>
+                            <p className="descBox">{singleProduct.description}</p>
                         </div>
                     )}
                     {activeTab === "reviews" && (

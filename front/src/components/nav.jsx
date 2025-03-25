@@ -31,7 +31,12 @@ const Nav = () => {
       <ul className={`nav-links ${isMobile ? "active" : ""}`}>
         <Link to="/"><li>Home</li></Link>
         <Link to="/catagoryes"><li>catagoryes</li></Link>
-        <Link to="/contact-lence"><li>Lences</li></Link>
+        <Link to="/contact-lence"><li>Sunglasses</li></Link>
+        <Link to="/contact-lence"><li>Frame</li></Link>
+        <Link to="/contact-lence"><li>Men</li></Link>
+        <Link to="/contact-lence"><li>Women</li></Link>
+        <Link to="/contact-lence"><li>Kids</li></Link>
+        <Link to="/contact-lence"><li>reading</li></Link>
         <Link to="/signup"><li>sign</li></Link>
         <Link to="/profile"><li>Profile</li></Link>
         {(permission !== "granted" && permission !== 'denied')&&(

@@ -1,22 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './slider.css';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useProduct } from '../other/product';
+import './slider.css';
 
 const Slider = () => {
+  const {products, fetchProducts} = useProduct();
+  useEffect(() => {
+    fetchProducts();
+}, [fetchProducts]);
   const tabWidth = 470;
   const tabWraRef = useRef(null);
-  const [items, setItems] = useState([]);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
 
-  const fetchItems = async () => {
-    const response = await axios.get(`https://chasmandu.onrender.com/items`);
-    setItems(response.data);
-  };
-  useEffect(() => {
-    fetchItems();
-  }, []);
 
   const updateButtonVisibility = () => {
     if (tabWraRef.current) {
@@ -46,10 +42,10 @@ const Slider = () => {
   return (
     <div className="sliderContainer">
         <div ref={tabWraRef} className="tabsBox">
-          {items.map((item, index) => (
+          {products.length === 0 ? (<p>😥 No Product avilable.</p>) :products.map((item, index) => (
           <Link key={index} to={`/single_product/${item._id}`}>
             <div 
-              style={{backgroundImage: `url(https://chasmandu.onrender.com/uploads/${item.files?.[0]})`|| 'url(./icon.svg)'}}  //set placeholder flip <
+              style={{backgroundImage: `url(${item.imagesURl?.[0]})`|| 'url(./icon.svg)'}}  //set placeholder flip <
               className="tabs" 
             >
               <div className="tabContent">

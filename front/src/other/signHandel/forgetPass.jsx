@@ -33,7 +33,7 @@ const ForgetPass = () => {
         setOtp('');
         if(!email){return setMessage('insert email first.');}
         try {
-            const otpResponse = await axios.post(`https://chasmandu.onrender.com/forget-password`,{email});
+            const otpResponse = await axios.post(`/api/forget-password`,{email});
             if (otpResponse.data.sucess) {
                 setOtpFeilds(true)
                 setMessage(`${otpResponse.data.message}`);
@@ -44,7 +44,7 @@ const ForgetPass = () => {
     }
     const handleOtpVerification = async () => {
         try {
-            const otpResponse = await axios.post(`https://chasmandu.onrender.com/auth/verify-otp`,{otp});
+            const otpResponse = await axios.post(`/api/auth/verify-otp`,{otp});
             if (otpResponse.data.success) {
                 setShowPswField(true)
                 setOtpFeilds(false)
@@ -60,7 +60,7 @@ const ForgetPass = () => {
         if(!password||!rePassword) return setMessage(`Fill Both Field`);
         if(password!==rePassword) return setMessage(`password doesn't match`);
         try {
-            const res = await axios.post(`https://chasmandu.onrender.com/update-password`,{password,rePassword,email},{
+            const res = await axios.post(`/api/update-password`,{password,rePassword,email},{
                 headers:{"Content-Type":"application/json"},
             })
             if(res.data.sucess){

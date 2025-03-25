@@ -5,23 +5,15 @@ import axios from "axios";
 const Header = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [items, setItems] = useState('');
-  const [user, setUser] = useState('');
-  const fetchItems = async () => {
-    const response = await axios.get(`https://chasmandu.onrender.com/items`);
-    setItems(response.data);
-  };
   useEffect(() => {
     fetchItems();
   }, []);
-  
-  const images = items[0]?.files;
-  const totSld = images?.length;  
-
-  useEffect(()=>{
-    const user = localStorage.getItem('user')|| JSON.stringify('User');
-    setUser(JSON.parse(user));
-  },[])
-
+  const fetchItems = async () => {
+    const res = await axios.get(`/api/products/67deff1a29d1da5cfc2a06d0`);
+    const data = await res.data.data.imagesURl;
+    setItems(data);
+  };
+  const totSld = items?.length;  
   useEffect(() => {
     if (totSld>1) {
       const interval = setInterval(() => {
@@ -33,16 +25,15 @@ const Header = () => {
   
   return (
     <header className="header">
-      <p style={{position:'absolute',zIndex: '1',left: "0",textShadow:"0 0 5px black"}}>🖐Wellcome {user}</p>
       {totSld > 0 ? (
         <div 
           className="headImgBox"
           style={{transform: `translateY(-${currentIndex * 25}vh)`,}}
         >
-          {images.map((image, index) => (
+          {items.map((image, index) => (
             <img
               key={index} 
-              src={`https://chasmandu.onrender.com/uploads/${image}`}
+              src={image}
               style={{transform: `scale(${index === currentIndex ?"1":"1,0"})`,transitionDelay:index === currentIndex ?"0s":"1s",}}
               className="headerImg"
               alt={`Slide ${index}`}

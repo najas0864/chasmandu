@@ -22,7 +22,7 @@ const Login = () => {
         if(!data.email||!data.password) return setMessage('fill both fields to login.');
         try {
             const info = {email:data.email,password:data.password}
-            const res = await axios.post(`https://chasmandu.onrender.com/login`, info,{
+            const res = await axios.post(`/api/login`, info,{
                 headers:{"Content-Type":"application/json"},
                 withCredentials: true,
             });

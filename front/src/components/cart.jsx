@@ -1,11 +1,11 @@
 import {  useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useCart, incrementQuantity, decrementQuantity } from "./cartCRUD";
 import axios from "axios";
+import { useCartStore } from "../other/product";
 import "./cart.css";
 
 const Cart = () => {
-    const cart = useCart();
+    const { cart, incrementQuantity, decrementQuantity } = useCartStore();
     const orderBtn = useRef(null);
     const [message, setMassage] = useState(null);
     const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -17,7 +17,7 @@ const Cart = () => {
 
     const orderItem = async (item) => {
         item.sum=item.price*item.quantity;
-        const res = await axios.post(`https://chasmandu.onrender.com/placeOrder`,
+        const res = await axios.post(`/api/place_order`,
             {item},
             { withCredentials: true },
             {headers:{"Content-Type":"application/json"}},
@@ -48,7 +48,7 @@ const Cart = () => {
                             <li key={index} className="cartItems">
                                 <Link to={`/single_product/${item.id}`}>
                                     <div
-                                        style={{backgroundImage:`url(https://chasmandu.onrender.com/uploads/${item.file}`|| 'icon.svg'}}
+                                        style={{backgroundImage:`url(${item.file}`|| 'icon.svg'}}
                                         className="cartItemImage"
                                     ></div>
                                 </Link>
