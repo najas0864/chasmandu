@@ -8,7 +8,6 @@ import userRoutes from "./routes/user.route.js";
 import reviewRoutes from "./routes/review.route.js";
 import productRoutes from "./routes/product.route.js";
 
-
 dotenv.config();
 const app = express();
 const port = process.env.PORT||5000;
@@ -34,8 +33,6 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path.resolve(__dirname, "front", "dist", "index.html"))
     })
 }
-
-
 app.listen(port,() =>{
     conectDB();
     console.log(`http://localhost:${port}`);
