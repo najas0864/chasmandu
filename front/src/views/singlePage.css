@@ -18,10 +18,11 @@
 }
 .spImageBox {
     border: 4px double #fff;
+    margin: auto;
     height: 30vh;
 }
 .slider-image {
-    width: 100%;
+    width: auto;
     height: 100%;
 
 }
