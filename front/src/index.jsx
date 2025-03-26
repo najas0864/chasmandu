@@ -1,39 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createRoot } from 'react-dom/client'
-import axios from 'axios';
-
-import './index.css'
+import './index.css';
 import Home from './views/home';
 import Lences from './views/lencs';
 import NotFound from './views/404';
-import Profile from './views/profile';
 import Catagory from './views/catagoryes';
 import AdminPage from './views/adminPage';
 import SinglePage from './views/singlePage';
-import Login from './other/signHandel/login';
-import Sign from './other/signHandel/signup';
+import { DisplayGrid } from './components/slider1';
 
-
-const PrivateRoute = ({ children }) => {  //use this only for purchase products
-  const [cooke, setCooke] = useState(undefined);
-    useEffect(() => {
-      axios.get(`/api/validate-cookie`, { withCredentials: true })
-      .then((res) => (res.data.valid) ? setCooke(true) : setCooke(false))
-      .catch(() =>setCooke(false))
-    }, []);
-    if (cooke === undefined) {return <div>Loading...</div>}
-  return cooke? children : <Navigate to="/login" />;
-};
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
       <Route path='/' index element={<Home/>}/>
-      <Route path='/signup' element={<Sign/>}/>
-      <Route path='/login' element={<Login />}/>
       <Route path='/admin' element={<AdminPage/>}/>
-      <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
-      <Route path='/catagoryes' element={<Catagory/>}/>
+      <Route path='/grid' element={<DisplayGrid/>}/>
+      <Route path='/categories' element={<Catagory/>}/>
       <Route path='/contact-lence' element={<Lences/>}/>
       <Route path='/single_product/:id' element={<SinglePage/>}/>
       <Route path="*" element={<NotFound />} />

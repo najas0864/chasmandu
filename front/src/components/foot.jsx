@@ -1,64 +1,31 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './foot.css';
 
 const Foot = () => {
-  const muNumber = 9817380234;
+  const navigate = useNavigate();
   return (
     <footer>
-      <div className='footLogo'>
-      <div className="logo">
-        <Link to="/">MySite</Link>
-      </div>
-      </div>
-      <div className="footspannks">
-        <h4>FOLLOW US:</h4>
-          <a target='_blank' href="https://www.facebook.com"><span>Facebook</span></a>
-          <a target='_blank' href="https://www.instagram.com"><span>Instragram</span></a>
+      <div className='footLogo' onClick={()=>navigate('/')}>CHASMANDU</div>
+      <div>
+        <h4>Contact</h4>
+          <a href={`tel:+9779817380234`}>Call</a>
+          <a href="mailto:najas0864@gmail.com">Gmail</a>
+          <a href="https://maps.app.goo.gl/eUdAPS53rUgMwMQL9" target='_blanck' title='Open Location on App'>Location</a>
+          <a href={`https://api.whatsapp.com/send/?phone=9817380234&text=Source:https://chasmandu.onrender.com/ `}target="_blank">WhatsApp</a>
+        </div>
+      <div>
+        <h4>Socials</h4>
           <a target='_blank' href="https://www.tiktok.com"><span>Tik tok</span></a>
           <a target='_blank' href="https://www.youtube.com"><span>Youtube</span></a>
+          <a target='_blank' href="https://www.facebook.com"><span>Facebook</span></a>
+          <a target='_blank' href="https://www.instagram.com"><span>Instragram</span></a>
       </div>
-      <div className="footIcons">
-        <h4>USEFULL LINKS:</h4>
-          <a target='_blank' href="/about"><span>About</span></a>
+      <div>
+        <h4>Quick Links</h4>
           <a target='_blank' href="/blog"><span>Blog</span></a>
-          <a target='_blank' href="/support"><span>Support</span></a>
-      </div>
-      <div className="contactUs">
-        <h4>CONTACT US:</h4>
-          <a href={`tel:+977${muNumber}`}>
-            <svg className='contactIcon' fill="#fff" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-              <path d="M458.88,240.87h-3.49c-4.23-106.59-92.24-192-199.84-192s-195.61,85.41-199.84,192H53.12a18,18,0,0,0-18,18v108a18,18,0,0,0,18,18H77.33a72.12,72.12,0,0,0,71.57,64h56v6.25a8,8,0,0,0,8,8h42.67a8,8,0,0,0,8-8V426.6a8,8,0,0,0-8-8H212.88a8,8,0,0,0-8,8v6.28h-56a56.1,56.1,0,0,1-55.45-48h25a18,18,0,0,0,18-18v-108a18,18,0,0,0-18-18h-4c4.18-74.22,65.87-133.33,141.12-133.33s137,59.11,141.12,133.34h-3.12a18,18,0,0,0-18,18v108a18,18,0,0,0,18,18h65.33a18,18,0,0,0,18-18v-108A18,18,0,0,0,458.88,240.87Zm-238,193.73h26.67v12.53H220.88ZM120.45,258.86v108a2,2,0,0,1-2,2H53.12a2,2,0,0,1-2-2v-108a2,2,0,0,1,2-2h65.33A2,2,0,0,1,120.45,258.86ZM255.55,91.53c-84.07,0-153,66.28-157.15,149.33H71.73c4.21-97.76,85.05-176,183.82-176s179.61,78.24,183.82,176H412.7C408.51,157.81,339.62,91.53,255.55,91.53ZM460.88,366.87a2,2,0,0,1-2,2H393.55a2,2,0,0,1-2-2v-108a2,2,0,0,1,2-2h65.33a2,2,0,0,1,2,2Z"></path>
-            </svg>
-            <span>Call us</span>
-          </a>
-          <a href={`sms:+977${muNumber}`}>
-            <svg className='contactIcon' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 18.4299H11L15.45 21.39C16.11 21.83 17 21.3599 17 20.5599V18.4299C20 18.4299 22 16.4299 22 13.4299V7.42993C22 4.42993 20 2.42993 17 2.42993H7C4 2.42993 2 4.42993 2 7.42993V13.4299C2 16.4299 4 18.4299 7 18.4299Z" strokeWidth="0.6" stroke="#fff"></path>
-              <path d="M11.9955 11H12.0045" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> 
-              <path d="M7.99451 11H8.00349" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-              <path d="M15.9965 11H16.0054" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> 
-            </svg>
-            <span>leave SMS</span>
-          </a>
-          <a href="mailto:najas0864@gmail.com">
-            <svg className='contactIcon' fill="#fff" viewBox="0 0 100.354 100.354" xmlns="http://www.w3.org/2000/svg" stroke="#fff" strokeWidth="0.01">
-              <path d="M93.09,76.224c0.047-0.145,0.079-0.298,0.079-0.459V22.638c0-0.162-0.032-0.316-0.08-0.462 c-0.007-0.02-0.011-0.04-0.019-0.06c-0.064-0.171-0.158-0.325-0.276-0.46c-0.008-0.009-0.009-0.02-0.017-0.029 c-0.005-0.005-0.011-0.007-0.016-0.012c-0.126-0.134-0.275-0.242-0.442-0.323c-0.013-0.006-0.023-0.014-0.036-0.02 c-0.158-0.071-0.33-0.111-0.511-0.123c-0.018-0.001-0.035-0.005-0.053-0.005c-0.017-0.001-0.032-0.005-0.049-0.005H8.465 c-0.017,0-0.033,0.004-0.05,0.005c-0.016,0.001-0.032,0.004-0.048,0.005c-0.183,0.012-0.358,0.053-0.518,0.125 c-0.01,0.004-0.018,0.011-0.028,0.015c-0.17,0.081-0.321,0.191-0.448,0.327c-0.005,0.005-0.011,0.006-0.016,0.011 c-0.008,0.008-0.009,0.019-0.017,0.028c-0.118,0.135-0.213,0.29-0.277,0.461c-0.008,0.02-0.012,0.04-0.019,0.061 c-0.048,0.146-0.08,0.3-0.08,0.462v53.128c0,0.164,0.033,0.32,0.082,0.468c0.007,0.02,0.011,0.039,0.018,0.059 c0.065,0.172,0.161,0.327,0.28,0.462c0.007,0.008,0.009,0.018,0.016,0.026c0.006,0.007,0.014,0.011,0.021,0.018 c0.049,0.051,0.103,0.096,0.159,0.14c0.025,0.019,0.047,0.042,0.073,0.06c0.066,0.046,0.137,0.083,0.21,0.117 c0.018,0.008,0.034,0.021,0.052,0.028c0.181,0.077,0.38,0.121,0.589,0.121h83.204c0.209,0,0.408-0.043,0.589-0.121 c0.028-0.012,0.054-0.03,0.081-0.044c0.062-0.031,0.124-0.063,0.181-0.102c0.03-0.021,0.057-0.048,0.086-0.071 c0.051-0.041,0.101-0.082,0.145-0.129c0.008-0.008,0.017-0.014,0.025-0.022c0.008-0.009,0.01-0.021,0.018-0.03 c0.117-0.134,0.211-0.288,0.275-0.458C93.078,76.267,93.083,76.246,93.09,76.224z M9.965,26.04l25.247,23.061L9.965,72.346V26.04z M61.711,47.971c-0.104,0.068-0.214,0.125-0.301,0.221c-0.033,0.036-0.044,0.083-0.073,0.121l-11.27,10.294L12.331,24.138h75.472 L61.711,47.971z M37.436,51.132l11.619,10.613c0.287,0.262,0.649,0.393,1.012,0.393s0.725-0.131,1.011-0.393l11.475-10.481 l25.243,23.002H12.309L37.436,51.132z M64.778,49.232L90.169,26.04v46.33L64.778,49.232z"></path>
-            </svg>
-            <span>Drop an Email</span>
-          </a>
-          <a href={`https://wa.me/+977${muNumber}`} target="_blank">
-            <svg className='contactIcon' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <path stroke="#fff" strokeWidth="0.5" d="M19.1,4.9C17,2.8,14.2,1.8,11.2,2c-4,0.3-7.5,3.1-8.7,7c-0.8,2.7-0.5,5.6,0.9,8l-1.3,4.3c-0.1,0.4,0.3,0.8,0.7,0.7l4.5-1.2	C8.7,21.6,10.3,22,12,22h0c4.2,0,8.1-2.6,9.4-6.5C22.7,11.6,21.8,7.6,19.1,4.9z M16.9,15.6c-0.2,0.6-1.2,1.1-1.7,1.2	c-0.5,0-0.9,0.2-3-0.6c-2.5-1-4.1-3.6-4.3-3.8c-0.1-0.2-1-1.4-1-2.6c0-1.2,0.6-1.8,0.9-2.1C8,7.4,8.3,7.4,8.5,7.4c0.2,0,0.3,0,0.5,0	c0.2,0,0.4,0,0.6,0.4c0.2,0.5,0.7,1.7,0.8,1.9c0.1,0.1,0.1,0.3,0,0.4c-0.1,0.2-0.1,0.3-0.2,0.4c-0.1,0.1-0.3,0.3-0.4,0.4	c-0.1,0.1-0.3,0.3-0.1,0.5c0.1,0.3,0.6,1.1,1.4,1.7c1,0.8,1.8,1.1,2,1.2c0.3,0.1,0.4,0.1,0.5-0.1c0.1-0.2,0.6-0.7,0.8-1	s0.3-0.2,0.6-0.1s1.5,0.7,1.7,0.8c0.3,0.1,0.4,0.2,0.5,0.3C17.1,14.5,17.1,15,16.9,15.6z"></path>
-            </svg>
-            <span>WhatsApp</span>
-          </a>
-          <a href="https://maps.app.goo.gl/59SaowuhVguWukpH9" target='_blanck' title='Open Location on App'>
-              <svg className='contactIcon' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 21C15.5 17 19 14 19 10.2C19 6 16 3 12 3C8 3 5 6 5 10.2C5 14 8.5 17 12 21Z" stroke="#fff" strokeWidth="0.5" strokespannecap="round" strokespannejoin="round"></path>
-                <path d="M12 12C13 12 14 11 14 10C14 9 13 8 12 8C11 8 10 9 10 10C10 11 11 12 12 12Z" stroke="#fff" strokeWidth="0.5" strokespannecap="round" strokespannejoin="round"></path>
-            </svg>
-            <span>Owr Location</span>
-          </a>
+          <a target='_blank' href="/about"><span>About us</span></a>
+          <a target='_blank' href="/Refund-Policy"><span>Refund Policy</span></a>
+          <a target='_blank' href="/Privacy-Policy"><span>Privacy Policy</span></a>
       </div>
     </footer>
   );

@@ -4,7 +4,6 @@ import axios from "axios"
 import Nav from "../components/nav"
 import Foot from "../components/foot"
 import Slider from "../components/slider"
-import Reviews from "../components/review"
 import "./singlePage.css";
 import { useCartStore, useProduct } from "../other/product"
 
@@ -79,13 +78,11 @@ const SinglePage = () =>{
                     </div>
                     <div className="spInfo">
                         <h3>{singleProduct.name}</h3>
-                        <Reviews id={singleProduct._id}/>
                         <p className="price"><b>Price :</b> ${singleProduct.price}</p>
                         <div className="prductRelateds">
                             <b>Model : {singleProduct.model}</b>
                             <b>Color : {singleProduct.color}</b>
                             <b>Brand : {singleProduct.brand}</b>
-                            <b>Catagory : {singleProduct.name}</b>
                             <b>Sizes : {singleProduct.size}</b>
                         </div>
                         <AddToCart item={singleProduct}/>
@@ -96,37 +93,9 @@ const SinglePage = () =>{
                 <br />
                 <center><h2>RELATED PRODUCTS</h2></center>
                 <Slider/>
-                <div className="discReviews">
-                    <div className="flipButtons">
-                        <a className={`tabButton ${activeTab === "description" ? "active" : ""}`}
-                            onClick={() => setActiveTab("description")}
-                        >Description</a>
-
-                        <a className={`tabButton ${activeTab === "reviews" ? "active" : ""}`}
-                            onClick={() => setActiveTab("reviews")}
-                        >Reviews(0)</a>
-                    </div>
-                    {activeTab === "description" && (
-                        <div className="descriptions">
-                            <center><h2>Descriptions</h2></center>
-                            <p className="descBox">{singleProduct.description}</p>
-                        </div>
-                    )}
-                    {activeTab === "reviews" && (
-                        <div className="reviews">
-                            <center><h2>Reviews</h2></center>
-                            <div className="reviewbox">
-                                <span>user.email</span>
-                                <p>this product is fire , i just love it and this sit is actually good on this items.</p>
-                                <span>user.email</span>
-                                <p>this product is fire , i just love it and this sit is actually good on this items.</p>
-                                <span>user.email</span>
-                                <p>this product is fire , i just love it and this sit is actually good on this items.</p>
-                                <span>user.email</span>
-                                <p>this product is fire , i just love it and this sit is actually good on this items.</p>
-                            </div>
-                        </div>
-                    )}
+                <div className="descriptions">
+                    <center><h2>Descriptions</h2></center>
+                    <p className="descBox">{singleProduct.description}</p>
                 </div>
             </main>
             <Foot/>

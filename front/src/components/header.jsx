@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
 import "./header.css";
-import axios from "axios";
 
 const Header = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
-  const [items, setItems] = useState('');
-  useEffect(() => {
-    fetchItems();
-  }, []);
-  const fetchItems = async () => {
-    const res = await axios.get(`/api/products/67deff1a29d1da5cfc2a06d0`);
-    const data = await res.data.data.imagesURl;
-    setItems(data);
-  };
+  const [items, setItems] = useState(5);
+
   const totSld = items?.length;  
   useEffect(() => {
     if (totSld>1) {

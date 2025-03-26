@@ -4,8 +4,7 @@ import cors from 'cors';
 import dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
 import { conectDB } from "./config/db.js";
-import userRoutes from "./routes/user.route.js";
-import reviewRoutes from "./routes/review.route.js";
+import orderRoute from "./routes/order.route.js";
 import productRoutes from "./routes/product.route.js";
 
 dotenv.config();
@@ -24,8 +23,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({limit:"150mb", extended: true }));
 
-app.use("/api/users",userRoutes);
-app.use("/api/reviews",reviewRoutes);
+
+app.use("/api/order",orderRoute);
 app.use("/api/products",productRoutes);
 
 if (process.env.NODE_ENV === "production") {

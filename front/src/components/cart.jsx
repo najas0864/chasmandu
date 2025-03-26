@@ -1,23 +1,24 @@
 import {  useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCartStore } from "../other/product";
 import "./cart.css";
 
 const Cart = () => {
-    const { cart, incrementQuantity, decrementQuantity } = useCartStore();
     const orderBtn = useRef(null);
+    const navigate = useNavigate()
     const [message, setMassage] = useState(null);
-    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-    const totalPrice = cart.reduce((total, item) => total + (item.price*item.quantity), 0);
     const [isCartVisible, setisCartVisible] = useState(true);
     const toggleCrat = () => setisCartVisible(!isCartVisible);
+    const { cart, incrementQuantity, decrementQuantity } = useCartStore();
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+    const totalPrice = cart.reduce((total, item) => total + (item.price*item.quantity), 0);
 
 
 
     const orderItem = async (item) => {
         item.sum=item.price*item.quantity;
-        const res = await axios.post(`/api/place_order`,
+        const res = await axios.post(`/api/order`,
             {item},
             { withCredentials: true },
             {headers:{"Content-Type":"application/json"}},
@@ -42,53 +43,46 @@ const Cart = () => {
                     <p className="close" onClick={!isCartVisible? toggleCrat:null}>Close</p>
                 </div>
                 <div className="cartItemRapper">
-                    {cart.length === 0 ? (<p>Your cart is empty</p>) : (
-                        <>
-                        {cart.map((item,index) => (
-                            <li key={index} className="cartItems">
-                                <Link to={`/single_product/${item.id}`}>
-                                    <div
-                                        style={{backgroundImage:`url(${item.file}`|| 'icon.svg'}}
-                                        className="cartItemImage"
-                                    ></div>
-                                </Link>
-                                <div className="groupping">
-                                    <div className="productInfo">
-                                        <p>{item.name}</p>
-                                        <input 
-                                            type="button"
-                                            ref={orderBtn}
-                                            value={message?`${message}`:"Place Order"}
-                                            className="order_item"
-                                            onClick={()=>orderItem(item)}
-                                        />
-                                    </div>
-                                    <div className="itemCostumize">
-                                        <p className="price">Rs: {item.price*item.quantity}</p>
-                                        <div className="qtyAlter">
-                                            <input
-                                                type="button"
-                                                value="+"
-                                                onClick={()=>incrementQuantity(item.id)}
-                                            />
-                                            <input 
-                                                disabled
-                                                type="button"
-                                                value={item.quantity}
-                                            />
-                                            <input 
-                                                type="button"
-                                                title={item.quantity===1?'Removing Item❔':null}
-                                                onClick={()=>decrementQuantity(item.id)}
-                                                value={item.quantity===1?'x':'-'}
-                                            />
-                                        </div>
-                                    </div>
+                    {cart.length === 0 ? (<p>Your cart is empty</p>) : (cart.map((item,index) => (
+                        <li key={index} className="cartItems">
+                            <img 
+                                src={item.file|| 'icon.svg'}
+                                className="cartItemImage"
+                                onClick={()=>navigate(`/single_product/${item.id}`)}
+                            />
+                            <div>
+                                <p title={item.name} className="productName">{item.name}</p>
+                                <p className="price">Rs: {item.price*item.quantity}</p>
+                            </div>
+                            <div>
+                                <input 
+                                    type="button"
+                                    ref={orderBtn}
+                                    value={message?`${message}`:"Place Order"}
+                                    className="order_item"
+                                    onClick={()=>orderItem(item)}
+                                />
+                                <div className="qtyAlter">
+                                    <input
+                                        type="button"
+                                        value="+"
+                                        onClick={()=>incrementQuantity(item.id)}
+                                    />
+                                    <input 
+                                        disabled
+                                        type="button"
+                                        value={item.quantity}
+                                    />
+                                    <input 
+                                        type="button"
+                                        title={item.quantity===1?'Removing Item❔':null}
+                                        onClick={()=>decrementQuantity(item.id)}
+                                        value={item.quantity===1?'x':'-'}
+                                    />
                                 </div>
-                            </li>
-                        ))}
-                    </>
-                )}
+                            </div>
+                        </li>
+                    )))}
                 </div>
                 <p style={{textAlign:"right"}}>Total Rs : {totalPrice}</p>
             </ul>

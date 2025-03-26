@@ -48,45 +48,45 @@ const Filter = ()=>{
             </svg>
             <div className={`filterPopup ${isFilterVisible?"active":""}`}>
                 <p className="close" onClick={isFilterVisible? toggleFilter:null}>Cancel</p>
-                <form action="">
-                    <h5>Brands</h5>
-                    <select name="brand" id="brand">
-                        <option value={null} >Select one brand</option>
-                        <option value="rayban">Rayban</option>
-                        <option value="prada">Prada</option>
-                        <option value="gucci">Gucci</option>
-                        <option value="oakley">Oakley</option>
-                    </select>
-                    <h5>Price</h5>
-                    <label className="priceBox" htmlFor="price">
-                        <p>0</p>
-                        <input type="range" name="price" id="price" defaultValue={0} />
-                        <p>100</p>
-                    </label>
-                    <h5>Mode</h5>
-                    <label htmlFor="sunglasses">Sunglasses
-                        <input type="checkbox" name="sunglasses"  id="sunglasses" defaultValue="sunglasses" />
-                    </label>
-                    <label htmlFor="eyewears">Eyewears
-                        <input type="checkbox" name="eyewears" id="eyewears" defaultValue="eyewears" />
-                    </label>
-                    <h5>Color</h5>
-                    <select name="color" id="color">
-                        <option value={null} >Select color</option>
-                        <option value="red">red</option>
-                        <option value="black">black</option>
-                        <option value="crayon">crayon</option>
-                        <option value="Brown">Brown</option>
-                    </select>
-                    <input className="findBtn" type="submit" value="Find" />
-                    <span>
-                        Height:<b>{window.innerHeight}</b> 
-                        <br></br>
-                        Width:<b>{window.innerWidth} </b>
-                        <br></br>
-                        notification Permission:<b>{Notification.permission}</b>
-                    </span>
-                </form>
+                <h5>Brands</h5>
+                <select name="brand" id="brand">
+                    <option value={null} >Select one brand</option>
+                    <option value="rayban">Rayban</option>
+                    <option value="prada">Prada</option>
+                    <option value="gucci">Gucci</option>
+                    <option value="oakley">Oakley</option>
+                </select>
+                <h5>Price</h5>
+                <label className="priceBox" htmlFor="price">
+                    <p>0</p>
+                    <input type="range" name="price" id="price" defaultValue={0} />
+                    <input type="hidden" name="undefined_from" value="950"/>
+                    <input type="hidden" name="undefined_to" value="2290"/>
+                    <p>100</p>
+                </label>
+                <h5>Mode</h5>
+                <label htmlFor="sunglasses">Sunglasses
+                    <input type="checkbox" name="sunglasses"  id="sunglasses" defaultValue="sunglasses" />
+                </label>
+                <label htmlFor="eyewears">Eyewears
+                    <input type="checkbox" name="eyewears" id="eyewears" defaultValue="eyewears" />
+                </label>
+                <h5>Color</h5>
+                <select name="color" id="color">
+                    <option value={null} >Select color</option>
+                    <option value="red">red</option>
+                    <option value="black">black</option>
+                    <option value="crayon">crayon</option>
+                    <option value="Brown">Brown</option>
+                </select>
+                <input className="findBtn" type="submit" value="Find" />
+                <span>
+                    Height:<b>{window.innerHeight}</b> 
+                    <br></br>
+                    Width:<b>{window.innerWidth} </b>
+                    <br></br>
+                    notification Permission:<b>{Notification.permission}</b>
+                </span>
             </div>
         </div>
     )

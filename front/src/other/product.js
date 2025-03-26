@@ -1,97 +1,5 @@
 import axios from "axios";
 import { create } from "zustand";
-
-export const useUser = create((set) => ({
-	users: [],
-	setUsers: (users) => set({ users }),
-	fetchUsers: async () => {
-		const res = await axios.get("/api/users");
-		const data = await res.data.data;
-		set({ users: data });
-	},
-	createUser: async (newUser) => {
-		if (!newUser.name || !newUser.email || !newUser.password || !newUser.gender) {
-			return { success: false, message: "Please fill in all fields." };
-		}
-		try {
-			const res = await axios.post("/api/users",newUser,{headers: {"Content-Type": "application/json",}});
-			const data = await res.data.data;
-			set((state) => ({ users: [...state.users, data] }));
-			return { success: true, message: "user created successfully" };
-		} catch (error) {
-			if (error.response && error.response.status === 400) {
-				return { success: false, message: error.response.data.message };
-			}
-		}
-		return { success: false, message: "An unexpected error occurred." };
-	},
-	updateUserPassword: async (uid, updatedProduct) => {
-		const res = await axios.put(`/api/users/${uid}`,updatedProduct, {headers: {"Content-Type": "application/json",}});
-		console.log(res);
-		
-		const data = await res.data.data;
-		if (!data.success) return { success: false, message: data.message };
-
-		set((state) => ({
-			users: state.users.map((user) => (user._id === uid ? data.data : user)),
-		}));
-
-		return { success: true, message: data.message };
-	},
-	deleteUser: async (uid) => {
-		const res = await axios.delete(`/api/users/${uid}`);
-		console.log(res);
-		
-		const data = await res.data;
-		if (!data.success) return { success: false, message: data.message };
-
-		set((state) => ({ users: state.users.filter((user) => user._id !== uid) }));
-		return { success: true, message: data.message };
-	},
-}));
-export const useReview = create((set) => ({
-	reviews: [],
-	setReviews: (reviews) => set({ reviews }),
-	fetchReviews: async () => {
-		const res = await axios.get("/api/reviews");		
-		const data = await res.data.data;
-		set({ reviews: data });
-	},
-	createReview: async (newReview) => {
-		if (!newReview) {
-			return { success: false, message: "Please fill in all fields." };
-		}
-		const res = await axios.post("/api/reviews",newReview, {	//pass item id and user id too
-			headers: {"Content-Type": "application/json",},
-		});
-		console.log(res);
-		
-		const data = await res.data.data;
-		set((state) => ({ reviews: [...state.reviews, data] }));
-		return { success: true, message: "review created successfully" };
-	},
-	updateReview: async (rid, updatedReview) => {
-		const res = await axios.put(`/api/reviews/${rid}`,updatedReview, {
-			headers: {"Content-Type": "application/json",},
-		});
-		const data = await res.data.data;
-		if (!data.success) return { success: false, message: data.message };
-
-		set((state) => ({
-			reviews: state.reviews.map((review) => (review._id === rid ? data.data : review)),
-		}));
-
-		return { success: true, message: data.message };
-	},
-	deleteReview: async (rid) => {
-		const res = await axios.delete(`/api/reviews/${rid}`);
-		const data = await res.data;
-		if (!data.success) return { success: false, message: data.message };
-
-		set((state) => ({ reviews: state.reviews.filter((review) => review._id !== rid) }));
-		return { success: true, message: data.message };
-	},
-}));
 export const useProduct = create((set) => ({
 	products: [],
 	singleProduct:{},
@@ -116,28 +24,65 @@ export const useProduct = create((set) => ({
 		const res = await axios.put(`/api/products/${pid}`,updatedProduct, {
 			headers: {"Content-Type": "application/json",},
 		});
-		const data = await res.data.data;
+		const data = res.data;
 		if (!data.success) return { success: false, message: data.message };
-
 		set((state) => ({
-			products: state.products.map((product) => (product._id === pid ? data : product)),
+			products: state.products.map((product) => product._id === pid ? { ...product, ...data.data } : product),
 		}));
-
 		return { success: true, message: data.message };
 	},
 	updateImage: async (pid, updatedImages) => {		
-		const res = await axios.put(`/api/products/images/${pid}`,updatedImages);
-		const data = await res.data;
+		const res = await axios.put(`/api/products/images/${pid}`,updatedImages, {
+            headers: { "Content-Type": "multipart/form-data" }
+		});
+		const data = res.data;
 		if (!data.success) return { success: false, message: data.message };
-
+		console.log(res);
 		set((state) => ({
-			products: state.products.map((product) => (product._id === pid ? data : product)),
+			products: state.products.map((product) => (product._id === pid ? { ...product, imagesURl: data.product.imagesURl } : product)),
 		}));
-
 		return { success: true, message: data.message };
 	},
-	orderProduct:async (pid) => {
-		const res = await axios.post(`/api/products/order/${pid}`,{
+	deleteProduct: async (pid) => {
+		const res = await axios.delete(`/api/products/${pid}`);
+		const data = await res.data;
+		if (!data.success) return { success: false, message: data.message };
+		set((state) => ({ products: state.products.filter((product) => product._id !== pid) }));
+		return { success: true, message: data.message };
+	},
+	deleteImage: async (id,url) => {
+		const res = await axios.delete(`/api/products/deleteImage`, {data: { id, url }});
+		const data = await res.data;
+		if (!data.success) return { success: false, message: data.message };
+		set((state) => ({ 
+			products: state.products.map((product) => product._id === id?{ ...product, imagesURl : data.data.imagesURl } : product)
+		}));
+		return { success: true, message: data.message };
+	},
+}));
+export const useOrderStore = create((set) => ({
+	orders: [],
+	createOrder: async (pid, updatedImages) => {		
+		const res = await axios.post(`/api/products/images/${pid}`,updatedImages, {
+            headers: { "Content-Type": "multipart/form-data" }
+		});
+		const data = res.data;
+		if (!data.success) return { success: false, message: data.message };
+		console.log(res);
+		set((state) => ({
+			products: state.products.map((product) => (product._id === pid ? { ...product, imagesURl: data.product.imagesURl } : product)),
+		}));
+		return { success: true, message: data.message };
+	},
+	cancelOrder: async (pid) => {
+		const res = await axios.delete(`/api/order/${pid}`);
+		const data = await res.data;
+		if (!data.success) return { success: false, message: data.message };
+		set((state) => ({ products: state.products.filter((product) => product._id !== pid) }));
+		return { success: true, message: data.message };
+	},
+	orderComplete:async (pid) => {
+		const res = await axios.post(`/api/order/${pid}`,{
 			headers: {"Content-Type": "application/json",},
 		});
 		const data = await res.data.data;
@@ -145,24 +90,6 @@ export const useProduct = create((set) => ({
 		set((state) => ({
 			products: state.products.map((product) => (product._id === pid ? data : product)),
 		}));
-		return { success: true, message: data.message };
-	},
-	deleteProduct: async (pid) => {
-		const res = await axios.delete(`/api/products/${pid}`);
-		const data = await res.data;
-		
-		if (!data.status===200) return { success: false, message: data.message };
-
-		set((state) => ({ products: state.products.filter((product) => product._id !== pid) }));
-		return { success: true, message: data.message };
-	},
-	deleteImage: async (pid) => {
-		const res = await axios.delete(`/api/deleteImage/${pid}`);
-		const data = await res.data;
-		
-		if (!data.status===200) return { success: false, message: data.message };
-
-		set((state) => ({ products: state.products.filter((product) => product._id !== pid) }));
 		return { success: true, message: data.message };
 	},
 }));

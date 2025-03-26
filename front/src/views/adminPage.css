@@ -34,35 +34,47 @@
 .formBtns button:active{
     transform: translate(0, 1px) scale(0.9);
 }
+.prvImgBox{
+    display: flex;
+    gap: 5px;
+    width: 10rem;
+    overflow: auto;
+}
+.prvImgBox>img{
+    border-radius: 10px;
+    object-fit: cover; 
+    height: 3rem;
+    width: 4rem;
+    z-index: 0;
+}
+img.active{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
 
 .addImgBtn {
-    height: 2rem;
-    width: 5rem;
-    display: block;
-    background-color: #000;
-    color: #FFF;
-    cursor: pointer;
-    border: none;
-    border-radius: 14px;
     position: relative;
-    transition: all .3s ease-in-out;
-    z-index: 0;
 }
 .addImgBtn::after {
     content: attr(data_length);
-    height: 20px;
-    font-size: 18px;
-    width: 20px;
-    border-radius: 50%;
-    background-color: red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 1;
-    right: 0;
     top: 0;
-    transform: translate(50%, -50%);
+    right: 0;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    font-size: 14px;
+    border-radius: 50%;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
 }
 #addImage{
     display: none;
@@ -79,65 +91,50 @@
     color: #FFF;
 }
 .itemDatas{
+    padding: 10px;
+    border-radius: 7px;
     background-color: #363636;
 }
+.itemDatas:not(:last-child){
+    margin-bottom: 5px;
+}
 .itemDatas summary{
-    font-size: large;
+    width: 10rem;
+    height: .9rem;
     cursor: pointer;
+    line-clamp: auto;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 .desc {
+    resize: none;
     color: #FFF;
     padding: 10px;
-    background-color: inherit;
-    outline: 2px solid gray;
+    overflow: auto;
     font-weight: 600;
     border-radius: 14px;
+    background-color: inherit;
+    outline: 2px solid gray;
 }
-.alterFiles {
-    display: flex;
-    flex-direction: column;
-}
-.imageCollectionSlider {
-    overflow-x: auto;
-    position: relative;
-    height: 80px;
-}
-.imageHolderBox{
-    display: flex;
-    position: absolute;
-    gap: 1rem;
-    padding: 0 1rem;
-    z-index: 1;
-}
-.btnBox{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    gap: 5px;
-}
-.btnBox>button{
-    font-size: large;
-    color: #fff;
+.btnBox>div{
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 5px 10px;
-    background-color: #000;
-    cursor: pointer;
-    border-radius: 14px;
 }
-.alterBtn{
-    display: flex;
-    justify-content: space-around;
-}
-.alterBtn > button{
-    padding: 5px 10px;
-    border: none;
-    border-radius: 14px;
-    font-size: larger;
+.btnBox button{
+    margin: 3px;
     width: 5rem;
+    border: none;
+    display: flex;
+    color: #FFF;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 5px 10px;
+    align-items: center;
+    border-radius: 14px;
+    justify-content: center;
     background-color: #2323ff;
-    color: #FFFFFF;
 }
 
 @media only screen and (min-width: 600px) {

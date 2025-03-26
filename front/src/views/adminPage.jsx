@@ -1,20 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import "./adminPage.css"
 import { useProduct } from "../other/product";
-import PopMessage from "../components/propMessage";
+import "./adminPage.css"
 
 const AdminPage = () => {
-    const {products, fetchProducts, createProduct, updateImage} = useProduct();
+    const {products, fetchProducts, createProduct,updateProduct,deleteProduct ,updateImage, deleteImage} = useProduct();
     const fileInput = useRef(null);
     const addFileInput = useRef(null);
     const [files, setFiles] = useState([]);
     const [message, setMessage] = useState("");
-    const [addedFiles, setAddedFiles] = useState([]);
-    const [addedImagePreviews, setAddedImagePreviews] = useState([]);
-    const [imagePreviews, setImagePreviews] = useState([]);
-    const [addedFileLength, setAddedFileLength] = useState(0);
-    const [product, setProduct] = useState({id: null, name: '', brand: '', model: '', color: '', size: '', stock: '', price: '', description: ''});
+    const [addedFiles, setPushFiles] = useState([]);
+    const [imagePreviews, setImagePrev] = useState([]);
+    const [addedFileLength, setPushFileLen] = useState(0);
+    const [addedImagePreviews, setPushFilePrev] = useState([]);
+    const [product, setProduct] = useState({id: null, name: "", brand: "", model: "", color: "", size: "", stock: "", price: "", description: ""});
 
     useEffect(() => {
         setTimeout(() => {
@@ -25,31 +23,31 @@ const AdminPage = () => {
         fetchProducts()
     }, [fetchProducts]);
 
-    const handleFileChange = (e) => {
+    const handleFilesChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
         setFiles(selectedFiles);
-        setImagePreviews(selectedFiles.map(file => URL.createObjectURL(file)));
+        setImagePrev(selectedFiles.map(file => URL.createObjectURL(file)));
     };
-    const handelChange = (e)=>{ //for after image uploads
+    const handePushFilelChange = (e)=>{ //for after image uploads
         const selectedFiles = Array.from(e.target.files);
-        setAddedFiles(selectedFiles)
-        setAddedFileLength(e.target.files.length)
-        setAddedImagePreviews(selectedFiles.map(file => URL.createObjectURL(file)));
+        setPushFiles(selectedFiles)
+        setPushFileLen(e.target.files.length)
+        setPushFilePrev(selectedFiles.map(file => URL.createObjectURL(file)));
     }
 
     const handleUpload = async () => {
-        if (!product.name || !product.brand || !product.model || !product.color || !product.size || !product.price || !product.stock || !product.description) {
+        if (!product.name||!product.brand||!product.model||!product.color||!product.size||!product.price||!product.stock||!product.description){
             return setMessage("Please fill all input fields.");
         }
         const formData = new FormData();
-        files.forEach(file => formData.append("imageURL", file));
+        files?.forEach(file => formData.append("imageURL", file));
         Object.entries(product).forEach(([key, value]) => formData.append(key, value));
-        const { success, message } = await createProduct(formData);
-        (!success)?<PopMessage message={message}/>:<PopMessage message={message}/>;
+        const { success, message } = product.id ? await updateProduct(product.id,formData) : await createProduct(formData);
+        (!success)?setMessage(message):setMessage(message);
         if (success) {
-            setProduct({name:"",brand:"",model:"",color:"",size:"",stock:null,price:null,description:""});
+            setProduct({name:"",brand:"",model:"",color:"",size:"",stock:"",price:"",description:""});
             setFiles([]);
-            setImagePreviews([]);
+            setImagePrev([]);
         }
     };
     const handelFileSubmmit = async (id)=>{
@@ -57,10 +55,11 @@ const AdminPage = () => {
         const formData = new FormData();
         addedFiles.forEach(file => formData.append("imageURL", file));            
         const { success, message } = await updateImage(id,formData);
+        (!success)?setMessage(message):setMessage(message);
         if (success) {
-            setAddedFiles([]);
-            setAddedFileLength(0)
-            setAddedImagePreviews([]);
+            setPushFiles([]);
+            setPushFileLen(0)
+            setPushFilePrev([]);
         }
     }
     const editFormDatas = (item) => {
@@ -76,25 +75,28 @@ const AdminPage = () => {
           id: item._id,
         });
     };
-    const deleteAllData = async (id) => {
-		const { success, message } = await deleteProduct(pid);
-		(!success)?setMessage(message):setMessage(message);
+    const delProduct = async (pid) => {
+        if(confirm("Are you sure ?")){
+            const { success, message } = await deleteProduct(pid);
+            (!success)?setMessage(message):setMessage(message);
+        }
     };
-    const deleteThisItem = async (id) => {
-		const { success, message } = await deleteImage(pid);
-		(!success)?setMessage(message):setMessage(message);
+    const delProductImage = async (pid, fileName) => {
+        if(confirm("Are you sure ?")){
+            const { success, message } = await deleteImage(pid,fileName);
+            (!success)?setMessage(message):setMessage(message);
+        }
     };
     const clearFormInputs = () => {
         setFiles([]);
-        setImagePreviews([]);
-        setProduct({ id: null, name: '', brand: '', model: '', color: '', size: '', stock: '', price: '', description: '' });
+        setImagePrev([]);
+        setProduct({ id: null, name: "", brand: "", model: "", color: "", size: "", stock: "", price: "", description: "" });
     };
     const clearFileInput = () => {
-        setAddedFiles([]);
-        setAddedFileLength(0);
-        setAddedImagePreviews([]);
+        setPushFiles([]);
+        setPushFileLen(0);
+        setPushFilePrev([]);
     };
-    
     return (
         <main className='adminMain'>
             <div className="formCover">
@@ -115,7 +117,7 @@ const AdminPage = () => {
                     ref={fileInput}
                     type="file" 
                     multiple 
-                    onChange={handleFileChange} 
+                    onChange={handleFilesChange} 
                 />
                 <input 
                     style={{display:product.id?"none":'block'}}
@@ -123,90 +125,63 @@ const AdminPage = () => {
                     type='button'
                     value={`Add Images:(${imagePreviews?.length})`} 
                 />
+                {message && <p style={{color:"silver"}}>{message}</p>}
+                <div className="prvImgBox">
+                    {(imagePreviews.length > 0) && (imagePreviews.map((preview, index) => (
+                        <img
+                            key={index}
+                            src={preview}
+                            alt={`Preview ${index}`}
+                        />
+                    )))}
+                </div>
                 <div className="formBtns">
-                    <button onClick={handleUpload}>{product.id?'UPDATE':'Add'}</button>
+                    <button onClick={()=>handleUpload(product?.id)}>{product.id?'UPDATE':'Create'}</button>
                     <button onClick={clearFormInputs}>Clear</button>
                 </div>
-                {message && <p style={{color:"silver"}}>{message}</p>}
-                {(imagePreviews.length > 0) && (
-                    <div>
-                    <h3>Selected Files:</h3>
+            </div>
+            <div className='dataCover'>
+            {products.length === 0 ? (<p>No Product avilable. 😥</p>) :products.map((item, index) => (
+                <details className='itemDatas'key={index}>
+                    <summary>{item.name}</summary>
+                    <p>Brand : {item.brand}</p>
+                    <p>Model : {item.model}</p>
+                    <p>Color : {item.color}</p>
+                    <p>Size  : {item.size}</p>
+                    <p>Stock : {item.stock}</p>
+                    <p>Price : {item.price}</p>
                     <div className="prvImgBox">
-                        {imagePreviews.map((preview, index) => (
+                        {item.imagesURl.length === 0 ? (<p>No image avilable.😥</p>) :item.imagesURl?.map((fileName,index)=>(
                             <img
+                                key={index}
+                                width="60px" 
+                                alt={item.name} 
+                                src={`${fileName}`} 
+                                onDoubleClick={()=>delProductImage(item._id, fileName)}
+                            />
+                        ))}
+                        {addedImagePreviews?.map((preview, index) => (
+                            <img
+                                width="60px"
                                 key={index}
                                 src={preview}
                                 alt={`Preview ${index}`}
-                                width="100"
-                                height="100"
-                                style={{ borderRadius: "10px", objectFit: "cover" }}
+                                style={{ boxShadow: "0 0 0 3px #fff, 0 0 0 9px red" }}
                             />
                         ))}
                     </div>
-                </div>
-                )}
-            </div>
-            <div className='dataCover'>
-            {products.map((item, index) => (
-                <details className='itemDatas'key={index}>
-                    <summary>{item.name}</summary>
-                        <div className="dataInfo">
-                            <p><b>Brand :</b>{item.brand}</p>
-                            <p><b>Model :</b>{item.model}</p>
-                            <p><b>Color :</b>{item.color}</p>
-                            <p><b>Size :</b>{item.size}</p>
-                            <p><b>Stock :</b>{item.stock}</p>
-                            <p><b>Price :</b>{item.price}</p>
-                            <p><b>Description :</b></p>
-                            <textarea rows={"5"} cols={"15"} className="desc" defaultValue={item.description} readOnly></textarea>
-                        </div>
-                    <div className="alterFiles">
-                        <h3>Uploaded Files:</h3>
-                        <div className="imageCollectionSlider">
-                            <div className="imageHolderBox">
-                                {item.imagesURl?.map((fileName,index)=>(
-                                    <img
-                                        key={index}
-                                        width="60px" 
-                                        alt={item.name} 
-                                        src={`${fileName}`} 
-                                        onDoubleClick={()=>deleteThisItem(item._id)}
-                                        style={{ borderRadius: "10px", objectFit: "cover" }}
-                                    />
-                                ))}
-                                {addedImagePreviews?.map((preview, index) => (
-                                    <img
-                                        key={index}
-                                        src={preview}
-                                        alt={`Preview ${index}`}
-                                        width="60px"
-                                        style={{ borderRadius: "10px", objectFit: "cover" }}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                        <div className="btnBox">
-                            <input 
-                                id="addImage"
-                                ref={addFileInput}
-                                name="files"
-                                type="file"
-                                multiple
-                                onChange={(e)=>handelChange(e)} 
-                            />
-                            <button 
-                                className="addImgBtn"
-                                data_length={addedFileLength}  
-                                onClick={()=>handelFileSubmmit(item._id)}
-                            >
-                                <span>{addedFileLength?"Upload":"ADD"}</span>
+                    <div className="btnBox">
+                        <div>
+                            <input id="addImage" ref={addFileInput} name="files" type="file" multiple onChange={(e)=>handePushFilelChange(e)} />
+                            <button className="addImgBtn" data_length={addedFileLength} onClick={()=>handelFileSubmmit(item._id)}>
+                                {addedFileLength?"Upload":"Select"}
                             </button>
-                            {addedFileLength !==0 && <button onClick={clearFileInput}>clear</button>}
+                            {addedFileLength !==0 && <button onClick={clearFileInput}>Cancel</button>}
                         </div>
-                    </div>
-                    <div className="alterBtn">
-                        <button onClick={() => editFormDatas(item)}>Edit</button>
-                        <button onClick={() => deleteAllData(item._id)}>Delete</button>
+                        <div>
+                            <button onClick={() => editFormDatas(item)}>Edit</button>
+                            <button onClick={() => delProduct(item._id)}>Delete</button>
+                        </div>
                     </div>
                 </details>
             ))}

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useProduct } from '../other/product';
 import './slider.css';
 
 const Slider = () => {
+  const navigate = useNavigate()
   const {products, fetchProducts} = useProduct();
   useEffect(() => {
     fetchProducts();
@@ -43,17 +44,17 @@ const Slider = () => {
     <div className="sliderContainer">
         <div ref={tabWraRef} className="tabsBox">
           {products.length === 0 ? (<p>😥 No Product avilable.</p>) :products.map((item, index) => (
-          <Link key={index} to={`/single_product/${item._id}`}>
-            <div 
+            <div
+              key={index}
+              onClick={()=>navigate(`/single_product/${item._id}`)}
               style={{backgroundImage: `url(${item.imagesURl?.[0]})`|| 'url(./icon.svg)'}}  //set placeholder flip <
-              className="tabs" 
+              className="tabs"
             >
               <div className="tabContent">
-                <p>{item.name}</p>
-                <p className='price'>$ {item.price}<i style={{float:"right"}}>⭐⭐⭐⭐⭐</i></p>
+                <p className='itemName'>{item.name}</p>
+                <p className='price'>$ {item.price}</p>
               </div>
             </div>
-          </Link>
           ))}
         </div>
         {showLeftButton && (
