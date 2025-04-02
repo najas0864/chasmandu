@@ -4,8 +4,8 @@ import { createProducts, deleteProducts, shortProducts, searchProducts, deleteIm
 const router = express.Router();
 
 router.delete("/deleteImage",deleteImage);
-router.post("/search",searchProducts);
 router.put("/images/:id",updateImage);
+router.get("/search",searchProducts);
 router.delete("/:id",deleteProducts);
 router.get('/:id',getSingleProduct);
 router.post("/short",shortProducts);

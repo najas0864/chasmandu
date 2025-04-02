@@ -8,7 +8,7 @@ footer {
 footer>div{
   display: flex;
   text-align: center;
-  flex: 1;
+  gap: .5rem;
   flex-direction: column;
   justify-content: space-between;
 }

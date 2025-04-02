@@ -1,14 +1,11 @@
 import "./main.css"
-import Slider from "./slider";
+import { DisplayGrid } from "./gridView";
 
 const Main = (props) => {
     return(
         <main>
             <h3>{props.names}</h3>
-            <Slider/>
-            <Slider/>
-            <Slider/>
-            <Slider/>
+            <DisplayGrid/>
         </main>
     )
 }

@@ -60,3 +60,12 @@
   gap: 1rem;
   list-style-type: none;
 }
+.Suggestion>li{
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 3rem;
+  width: 20rem;
+  text-align: right;
+  padding: 10px;
+}

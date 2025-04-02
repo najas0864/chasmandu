@@ -111,17 +111,18 @@
 
 .tabCover {
     display: flex;
-    overflow-x: auto;
+    overflow-x: hidden;
     scroll-behavior: smooth;
     scroll-snap-stop: always;
     scroll-snap-type: x mandatory;
-    width: 90%;
-    border-radius: 0 5px 5px 0;
+    width: 80%;
+    border-radius: 5px;
     gap: 10px;
     scrollbar-width: thin;
 }
 .tabCover>img{
     z-index: 0;
+    object-fit: cover;
 }
 
 .tabCover::-webkit-scrollbar {

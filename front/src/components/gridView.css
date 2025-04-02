@@ -1,0 +1,63 @@
+.rangeBox{
+    height: calc(100vh - 2rem);
+}
+.productGrid {
+    display: grid;
+    gap: 10px;
+    margin: auto;
+    height: calc(100vh - 2rem);
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    grid-template-rows: repeat(3, minmax(100px, auto))
+}
+.box , .skeleton{
+    object-fit: cover;
+    position: relative;
+    word-break: break-word;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px #FFF;
+    border-radius: 14px;
+    background-position: center;
+    background-size: cover;
+    transition: all .1s linear;    
+    display: flex;
+    align-items: flex-end;
+}
+.box::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, black, transparent,transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+.box:hover {
+    transform: translate(0, -5px);
+    filter: brightness(1.2);
+}
+.box:hover::after , .skeleton {
+    opacity: 1;
+}
+
+.box:hover .tabContent {
+    color: #ffffff;
+    z-index: 1;
+}
+.box:nth-child(3n) , .skeleton:nth-child(3n){
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+.skeleton {
+    background: #e0e0e0;
+    background-image: linear-gradient(45deg, #e0e0e0 25%, #999999 50%, #e0e0e0 75%);
+}
+
+.skeleton-text {
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background: #adadad;
+    width: 8rem;
+    height: 12px;
+    background-image: linear-gradient(45deg, #e0e0e0 25%, #999999 50%, #e0e0e0 75%);
+}

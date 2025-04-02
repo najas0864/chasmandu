@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
-import axios from "axios"
 import Nav from "../components/nav"
 import Foot from "../components/foot"
 import Slider from "../components/slider"
-import "./singlePage.css";
 import { useCartStore, useProduct } from "../other/product"
+import "./singlePage.css";
 
 
 
@@ -18,7 +17,7 @@ const AddToCart = ({item}) => {
     addToCarts(item)
     setProductName(item.name);
     setIsVisible(true);
-
+    
     setTimeout(() => {
       setProductName('');
       setIsVisible(false);
@@ -45,15 +44,44 @@ const AddToCart = ({item}) => {
 
 
 const SinglePage = () =>{
-  const { singleProduct, fetchSingleProduct } = useProduct();
+  const tabWidth = 270;
   const {id} = useParams();
-  const [activeTab, setActiveTab] = useState("description");
+  const tabWraRef = useRef(null);
   const [activeImage, setActiveImage] = useState(0);
+  const [activeTab, setActiveTab] = useState("description");
+  const { singleProduct, fetchSingleProduct } = useProduct();
+  const [showLeftButton, setShowLeftButton] = useState(false);
+  const [showRightButton, setShowRightButton] = useState(false);
   let alert= `!!! OFFER OFFER OFFER !!! Biggest Offer Buy One and get one free on every eyewear. And please don't forget to Sign up.`
-
   useEffect(() => {
     fetchSingleProduct(id);
   }, [fetchSingleProduct,id]);
+
+  const updateButtonVisibility = () => {
+    if (tabWraRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = tabWraRef.current;
+      setShowLeftButton(scrollLeft > 10);
+      setShowRightButton(scrollLeft + clientWidth+10 < scrollWidth);
+    }
+  };
+  const scrollLeft = () => {
+    if (tabWraRef.current) {
+      tabWraRef.current.scrollBy({ left: -tabWidth, behavior: 'smooth' });
+    }
+  };
+  const scrollRight = () => {
+    if (tabWraRef.current) {
+      tabWraRef.current.scrollBy({ left: tabWidth, behavior: 'smooth' });
+    }
+  };
+  useEffect(() => {
+    const container = tabWraRef.current;
+    if (container) {
+      updateButtonVisibility();
+      container.addEventListener("scroll", updateButtonVisibility);
+      return () => container.removeEventListener("scroll", updateButtonVisibility);
+    }
+  });
     return(
         <>
             <Nav/>
@@ -69,11 +97,25 @@ const SinglePage = () =>{
                             />
                         </div>
                         <div className="tabBox">
-                            <div className="tabCover">
+                            <div ref={tabWraRef} className="tabCover">
                                 {singleProduct.imagesURl?.map((path,index) =>(
                                     <img onClick={()=>setActiveImage(index)} src={`${path}`} className="tab" key={index}/>
                                 ))}
                             </div>
+                            {showLeftButton && (
+                              <button onClick={scrollLeft} className="flickityBtn flickity-next-button" type="button" aria-label="Next">
+                                <svg viewBox="0 0 100 100">
+                                  <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z"></path>
+                                </svg>
+                              </button>
+                            )}
+                            {showRightButton && (
+                              <button onClick={scrollRight} className="flickityBtn flickity-prev-button" type="button" aria-label="Next">
+                              <svg viewBox="5 0 6 10">
+                                <path d="M 11 5 L 6 10 L 5 9 L 9 5 L 5 1 L 6 0 L 11 5" fill="#FFF"/>
+                              </svg>
+                              </button>
+                            )}
                         </div>
                     </div>
                     <div className="spInfo">

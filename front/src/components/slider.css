@@ -20,7 +20,7 @@
     flex-direction: column;
     justify-content: flex-end;
     background-position: center;
-    background-size: 80%;
+    background-size: 100%;
     position: relative;
     overflow: hidden;
     transition: background-image .2s ease-in-out;

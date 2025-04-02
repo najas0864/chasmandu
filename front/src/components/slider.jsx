@@ -43,7 +43,7 @@ const Slider = () => {
   return (
     <div className="sliderContainer">
         <div ref={tabWraRef} className="tabsBox">
-          {products.length === 0 ? (<p>😥 No Product avilable.</p>) :products.map((item, index) => (
+          {products.length === 0 ? (<p>loading Product...</p>) :products.map((item, index) => (
             <div
               key={index}
               onClick={()=>navigate(`/single_product/${item._id}`)}

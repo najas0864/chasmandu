@@ -1,24 +1,35 @@
 import { useEffect, useRef, useState } from "react";
+import { useProduct } from "../other/product";
+import { useNavigate } from "react-router-dom";
+import debounce from "lodash.debounce";
 import axios from "axios"
 import "./searchBar.css";
-import { Link } from "react-router-dom";
 const SearchBar = () =>{
-    const searchInp = useRef(null);
+    const searchInp = useRef(null);    
+    const navigate = useNavigate()
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState([]);
     const [isSearchVisible, setisCartVisible] = useState(false);
     const toggleSearch = () =>{
         setisCartVisible(!isSearchVisible);
         isSearchVisible?null:searchInp.current.focus();
     }
 
+    
+    const { searchProducts, searchResults } = useProduct();
+
     const handleSearch = async (inpQuery) => {
         setQuery(inpQuery);
         if (inpQuery.length > 1) {
-            const { data } = await axios.get(`/api/search?query=${inpQuery}`);
-            setResults(data);
+            searchProducts(inpQuery)
         }
     }
+    const debouncedSearch = debounce(handleSearch, 500);
+    useEffect(() => {
+        debouncedSearch(query);
+        return () => debouncedSearch.cancel();
+    }, [query]);
+
+
     // const handleKeyDown = async(e) => {  //if key down show all results in one page and navigate to their
     //     if (e.key === "Enter") {
             
@@ -43,20 +54,19 @@ const SearchBar = () =>{
                         placeholder="Search"
                         onChange={e=>handleSearch(e.target.value)}
                         // onKeyDown={handleKeyDown}
+                        autoComplete="off"
                     />
                     <p className="close" onClick={isSearchVisible? toggleSearch:null}>Cancel</p>
                 </div>
                 <ul className="Suggestion">
-                    {results.map((r) => 
-                        <Link to={`https://chasmandu-ade3.onrender.com/single_product/${r._id}`}>
-                                <li 
-                                    onClick={()=>setisCartVisible(false)}
-                                    key={r._id}
-                                    style={{border:'2px solid #FFF',backgroundImage:`url(/api/uploads/${r.files[0]})`}}
-                                >
-                                {r.files[0]} {r.name} - ${r.price}
-                            </li>
-                        </Link>
+                    {searchResults.map((result) => 
+                        <li 
+                            key={result._id}
+                            onClick={()=>navigate(`/single_product/${result._id}`)}
+                            style={{backgroundImage:`url(${result?.imagesURl[0]})`}}
+                        >
+                            {result.name} - ${result.price}
+                        </li>
                     )}
                 </ul>
             </ul>

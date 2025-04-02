@@ -28,15 +28,18 @@ export const shortProducts = async (req, res) => {
 	res.json(products);
 };
 export const searchProducts = async (req, res) => {
-  const {query} = req.query;
-  const results = await Product.find({
-	  $or: [
-		{ name: { $regex: query, $options: "i" } },
-		{ description: { $regex: query, $options: "i" } }
-	  ]
-  });
-  res.json(results);
-};
+    try {
+        const { query } = req.query;
+        const results = await Product.find({
+            $or: [
+                { name: { $regex: query, $options: "i" } },
+                { description: { $regex: query, $options: "i" } }
+            ]
+        });
+		
+        res.json(results);
+    } catch (error) {res.status(500).json({ error: "Server error" })}
+}
 export const getProducts = async (req,res) => {
 	try {
 		const products = await Product.find({});
