@@ -30,7 +30,7 @@ export const DisplayGrid = () => {
                 >
                     <span className="tabContent">
                         <p className='itemName'>{item.name}</p>
-                        <p className='price'>$ {item.price}</p>
+                        <p className='price'>Rs: {item.price}</p>
                     </span>
                 </div>
             ))}

@@ -65,7 +65,7 @@ const SearchBar = () =>{
                             onClick={()=>navigate(`/single_product/${result._id}`)}
                             style={{backgroundImage:`url(${result?.imagesURl[0]})`}}
                         >
-                            {result.name} - ${result.price}
+                            {result.name} - Rs:{result.price}
                         </li>
                     )}
                 </ul>

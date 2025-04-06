@@ -87,6 +87,7 @@
   width: 4rem;
   height: 4rem;
   cursor: pointer;
+  object-fit: cover;
   background-size: cover;
   border: 2px solid #fff;
   background-repeat: no-repeat;

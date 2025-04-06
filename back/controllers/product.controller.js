@@ -4,22 +4,22 @@ import { v2 as cloudinary } from 'cloudinary';
 import Product from "../models/product.model.js";
 
 export const shortProducts = async (req, res) => {
-	let { category, brand, minPrice, maxPrice, minRating, sort } = req.query;
+	let { color, brand, minPrice, maxPrice, selectTypes } = req.query;
 	let filter = {};
-	if (category) filter.category = category;
+	if (color) filter.color = color;
+	if (selectTypes) filter.selectTypes = selectTypes;
 	if (brand) filter.brand = brand;
 	if (minPrice || maxPrice) {
 		filter.price = {};
 		if (minPrice) filter.price.$gte = Number(minPrice);
 		if (maxPrice) filter.price.$lte = Number(maxPrice);
 	}
-	if (minRating) filter.rating = { $gte: Number(minRating) };
+	// if (minRating) filter.rating = { $gte: Number(minRating) };
 	let query = Product.find(filter);
 	if (sort) {
 		const sortOptions = {
 			price_asc: { price: 1 },
 			price_desc: { price: -1 },
-			rating: { rating: -1 },
 			newest: { createdAt: -1 }
 		};
 		query = query.sort(sortOptions[sort] || {});

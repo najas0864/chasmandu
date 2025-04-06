@@ -37,6 +37,8 @@ const AdminPage = () => {
 
     const handleUpload = async () => {
         if (!product.name||!product.brand||!product.model||!product.color||!product.size||!product.price||!product.stock||!product.description){
+            console.log(product);
+            
             return setMessage("Please fill all input fields.");
         }
         const formData = new FormData();

@@ -48,7 +48,7 @@ const SinglePage = () =>{
   const {id} = useParams();
   const tabWraRef = useRef(null);
   const [activeImage, setActiveImage] = useState(0);
-  const [activeTab, setActiveTab] = useState("description");
+  // const [activeTab, setActiveTab] = useState("description");
   const { singleProduct, fetchSingleProduct } = useProduct();
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
@@ -83,65 +83,62 @@ const SinglePage = () =>{
     }
   });
     return(
-        <>
-            <Nav/>
-            <marquee behavior="scroll" direction="left">{alert}</marquee>
-            <main className="mainBox">
-                <div className="spContainer">
-                    <div className="spImage">
-                        <div className="spImageBox">
-                            <img
-                                className="slider-image"
-                                src={`${singleProduct.imagesURl?.[activeImage]}`|| 'icon.svg'}
-                                alt={singleProduct?.name||"Image not found"} 
-                            />
-                        </div>
-                        <div className="tabBox">
-                            <div ref={tabWraRef} className="tabCover">
-                                {singleProduct.imagesURl?.map((path,index) =>(
-                                    <img onClick={()=>setActiveImage(index)} src={`${path}`} className="tab" key={index}/>
-                                ))}
-                            </div>
-                            {showLeftButton && (
-                              <button onClick={scrollLeft} className="flickityBtn flickity-next-button" type="button" aria-label="Next">
-                                <svg viewBox="0 0 100 100">
-                                  <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z"></path>
-                                </svg>
-                              </button>
-                            )}
-                            {showRightButton && (
-                              <button onClick={scrollRight} className="flickityBtn flickity-prev-button" type="button" aria-label="Next">
-                              <svg viewBox="5 0 6 10">
-                                <path d="M 11 5 L 6 10 L 5 9 L 9 5 L 5 1 L 6 0 L 11 5" fill="#FFF"/>
-                              </svg>
-                              </button>
-                            )}
-                        </div>
+      <>
+        <Nav/>
+        <marquee behavior="scroll" direction="left">{alert}</marquee>
+        <main className="mainBox">
+            <div className="spContainer">
+                <div className="spImage">
+                    <div className="spImageBox">
+                        <img
+                            className="slider-image"
+                            src={`${singleProduct.imagesURl?.[activeImage]}`|| 'icon.svg'}
+                            alt={singleProduct?.name||"Image not found"} 
+                        />
                     </div>
-                    <div className="spInfo">
-                        <h3>{singleProduct.name}</h3>
-                        <p className="price"><b>Price :</b> ${singleProduct.price}</p>
-                        <div className="prductRelateds">
-                            <b>Model : {singleProduct.model}</b>
-                            <b>Color : {singleProduct.color}</b>
-                            <b>Brand : {singleProduct.brand}</b>
-                            <b>Sizes : {singleProduct.size}</b>
+                    <div className="tabBox">
+                        <div ref={tabWraRef} className="tabCover">
+                            {singleProduct.imagesURl?.map((path,index) =>(
+                                <img onClick={()=>setActiveImage(index)} src={`${path}`} className="tab" key={index}/>
+                            ))}
                         </div>
-                        <AddToCart item={singleProduct}/>
+                        {showLeftButton && (
+                          <button onClick={scrollLeft} className="flickityBtn flickity-next-button" type="button" aria-label="Next">
+                            <svg viewBox="0 0 100 100">
+                              <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z"></path>
+                            </svg>
+                          </button>
+                        )}
+                        {showRightButton && (
+                          <button onClick={scrollRight} className="flickityBtn flickity-prev-button" type="button" aria-label="Next">
+                          <svg viewBox="5 0 6 10">
+                            <path d="M 11 5 L 6 10 L 5 9 L 9 5 L 5 1 L 6 0 L 11 5" fill="#FFF"/>
+                          </svg>
+                          </button>
+                        )}
                     </div>
                 </div>
-                <br />
-                <hr/>
-                <br />
-                <center><h2>RELATED PRODUCTS</h2></center>
-                <Slider/>
-                <div className="descriptions">
-                    <center><h2>Descriptions</h2></center>
-                    <p className="descBox">{singleProduct.description}</p>
+                <div className="spInfo">
+                    <h3>{singleProduct.name}</h3>
+                    <p className="price"><b>Price : </b>Rs: {singleProduct.price}</p>
+                    <div className="prductRelateds">
+                        <b>Model : {singleProduct.model}</b>
+                        <b>Color : {singleProduct.color}</b>
+                        <b>Brand : {singleProduct.brand}</b>
+                        <b>Sizes : {singleProduct.size}</b>
+                    </div>
+                    <AddToCart item={singleProduct}/>
                 </div>
-            </main>
-            <Foot/>
-        </>
+            </div>
+            <center><h2>RELATED PRODUCTS</h2></center>
+            <Slider/>
+            <div className="descriptions">
+                <center><h2>Descriptions</h2></center>
+                <p className="descBox">{singleProduct.description}</p>
+            </div>
+        </main>
+        <Foot/>
+      </>
     )
 }
 export default SinglePage;

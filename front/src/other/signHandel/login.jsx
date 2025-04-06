@@ -16,9 +16,6 @@ const Login = () => {
         }, 4000);
     }, [message]);
     const handelLogSubmmit = async ()=>{
-        
-        
-        
         if(!data.email||!data.password) return setMessage('fill both fields to login.');
         try {
             const info = {email:data.email,password:data.password}

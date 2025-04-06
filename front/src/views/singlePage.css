@@ -1,5 +1,6 @@
 .mainBox{
     display: flex;
+    gap: 20px;
     flex-direction: column;
 }
 .spContainer {
@@ -17,9 +18,12 @@
     justify-content: space-between;
 }
 .spImageBox {
-    border: 4px double #fff;
-    margin: auto;
     height: 30vh;
+    display: flex;
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    border: 4px double #fff;
 }
 .slider-image {
     width: auto;
@@ -110,15 +114,18 @@
 }
 
 .tabCover {
+    gap: 10px;
+    width: 80%;
     display: flex;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    border-bottom: 2px dotted #fff;
     overflow-x: hidden;
+    scrollbar-width: thin;
+    justify-content: center;
     scroll-behavior: smooth;
     scroll-snap-stop: always;
     scroll-snap-type: x mandatory;
-    width: 80%;
-    border-radius: 5px;
-    gap: 10px;
-    scrollbar-width: thin;
 }
 .tabCover>img{
     z-index: 0;
@@ -175,4 +182,69 @@
 
 .scrollBtn.right {
     right: 0;
+}
+
+
+
+
+
+.popMessage{
+    position: fixed;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #0056b3;
+    border-radius: 10px;
+    z-index: 10;
+    bottom: -4rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .2s linear;
+}
+.popMessage.active{
+    bottom: 1rem;
+    opacity: 1;
+    pointer-events: all;
+}
+.msgCloseBtn{
+    margin-left: 1rem;
+    height: 1.2rem;
+    width: 1.2rem;
+    cursor: pointer;
+}
+.msgCloseBtn:hover{
+    transform: scale(1.3);
+}
+.msgCloseBtn:active{
+    transform: scale(.9);
+}
+.cartSvg {
+    min-height: 2rem;
+    max-width: 2rem;
+}
+.cartBtn{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 7px 10px;
+    width: 60%;
+    align-self: center;
+    justify-content: center;
+    background: #0056b3;
+    border-radius: 7px;
+    cursor: pointer;
+}
+.cartBtn:active {
+    background-color: #000;
+}
+@media (max-width: 600px) {
+    .popMessage{
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}
+.headImg{
+    display: flex;
+    flex-direction: column;
 }
