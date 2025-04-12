@@ -2,18 +2,31 @@
     height: 25vh;
     overflow: hidden;
     isolation: isolate;
-    background-image: repeating-radial-gradient(#222, #222 10px, #333 10px, #333 30px, #444 30px, #444 50px);
+    position: relative;
     background-size: 50px 50px;
+    background-image: repeating-radial-gradient(#222, #222 10px, #333 10px, #333 30px, #444 30px, #444 50px);
 }
 .headImgBox{
     display: flex;
     flex-direction: column;
     transition: transform 1s ease-in-out;
 }
-.headerImg{
+.headImgBox>img{
     width: 100%;
     height: 25vh;
-    transform-origin: top;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
     object-fit: cover;
+    transform-origin: top;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.bell {
+    width: 2rem;
+    height: 2rem;
+    display: inline-block;
+    position: absolute;
+    right: 1rem;
+    cursor: pointer;
+    transition: transform .2s linear;
+}
+.bell:hover{
+    transform: scale(1.2);
 }

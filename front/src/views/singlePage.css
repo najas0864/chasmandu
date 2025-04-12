@@ -18,22 +18,23 @@
     justify-content: space-between;
 }
 .spImageBox {
-    height: 30vh;
+    height: 25rem;
     display: flex;
+    overflow: hidden;
     border-radius: 1rem;
     align-items: center;
     justify-content: center;
     border: 4px double #fff;
 }
 .slider-image {
-    width: auto;
+    width: 100%;
     height: 100%;
-
+    object-fit: cover;
 }
 .spInfo{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     gap: 10px;
 }
 
@@ -118,9 +119,8 @@
     width: 80%;
     display: flex;
     border-radius: 5px;
+    overflow-x: auto;
     padding-bottom: 5px;
-    border-bottom: 2px dotted #fff;
-    overflow-x: hidden;
     scrollbar-width: thin;
     justify-content: center;
     scroll-behavior: smooth;
@@ -130,10 +130,6 @@
 .tabCover>img{
     z-index: 0;
     object-fit: cover;
-}
-
-.tabCover::-webkit-scrollbar {
-    display: none;
 }
 
 .tab {

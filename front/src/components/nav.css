@@ -120,27 +120,3 @@
     height: 3px;
   }
 }
-
-
-
-
-
-
-@keyframes bellRing {
-  0% { transform: rotate(0deg); }
-  15% { transform: rotate(20deg); }
-  30% { transform: rotate(-20deg); }
-  45% { transform: rotate(15deg); }
-  60% { transform: rotate(-15deg); }
-  75% { transform: rotate(5deg); }
-  90% { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
-}
-
-.bell {
-  width: 2rem;
-  height: 2rem;
-  display: inline-block;
-  transform-origin: top center;
-  animation: bellRing 1s steps(9, end) infinite;
-}

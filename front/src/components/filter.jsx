@@ -102,7 +102,7 @@ const Filter = () => {
             [name]: type === "checkbox" ? (checked ? value : "") : value,
         }));
     };
-
+    // now send data and fetch....................................
     const applyFilters = async () => {
         try {
             const query = new URLSearchParams(filters).toString();

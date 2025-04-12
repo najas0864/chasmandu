@@ -21,7 +21,7 @@ export const DisplayGrid = () => {
     }
     return (
         <div className="productGrid">
-            {products.length === 0 ? (Array.from({ length: 9 }).map((_, index) => <Skelaton key={index} />)) :products.map((item, index) => (
+            {products.length === 0 ? (Array.from({ length: 8 }).map((_, index) => <Skelaton key={index} />)) :products.map((item, index) => (
                 <div
                     key={index}
                     className="box"

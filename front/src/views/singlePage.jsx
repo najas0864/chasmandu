@@ -119,13 +119,13 @@ const SinglePage = () =>{
                     </div>
                 </div>
                 <div className="spInfo">
-                    <h3>{singleProduct.name}</h3>
-                    <p className="price"><b>Price : </b>Rs: {singleProduct.price}</p>
+                    <p>{singleProduct.name}</p>
                     <div className="prductRelateds">
                         <b>Model : {singleProduct.model}</b>
                         <b>Color : {singleProduct.color}</b>
                         <b>Brand : {singleProduct.brand}</b>
                         <b>Sizes : {singleProduct.size}</b>
+                        <p className="price">Price :Rs: {singleProduct.price}</p>
                     </div>
                     <AddToCart item={singleProduct}/>
                 </div>
