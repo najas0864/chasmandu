@@ -122,7 +122,6 @@
     overflow-x: auto;
     padding-bottom: 5px;
     scrollbar-width: thin;
-    justify-content: center;
     scroll-behavior: smooth;
     scroll-snap-stop: always;
     scroll-snap-type: x mandatory;

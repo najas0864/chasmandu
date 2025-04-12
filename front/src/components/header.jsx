@@ -7,6 +7,8 @@ const Header = () => {
   const [items, setItems] = useState([
     "/head0.jpg",
     "/head1.jpg",
+    "/head2.jpg",
+    "/head3.jpg",
   ]);
   
   useEffect(() => {
