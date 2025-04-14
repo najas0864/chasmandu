@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import { conectDB } from "./config/db.js";
 import userRoutes from "./routes/user.route.js";
 import orderRoute from "./routes/order.route.js";
-import ReviewRoutes from "./routes/review.route.js";
+// import ReviewRoutes from "./routes/review.route.js";
 import productRoutes from "./routes/product.route.js";
 import connectMongoDBSession from "connect-mongodb-session";
 
@@ -28,7 +28,7 @@ const sessionStorage = new MongoDBSession({
     collection: "sessions"
 })
 app.use(session({
-    secret: 'my-secret-key-8755657676464-oooooo+0000000',
+    secret: process.env.SECRET_TOKEN_KEY,
     resave: false,
     saveUninitialized: true,
     store: sessionStorage,
@@ -45,7 +45,6 @@ app.use(express.urlencoded({limit:"150mb", extended: true }));
 app.use("/api/order",orderRoute);
 app.use("/api/users",userRoutes);
 app.use("/api/products",productRoutes);
-app.use("/api/products",ReviewRoutes);
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname,"/front/dist")));

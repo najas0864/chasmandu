@@ -16,13 +16,17 @@
     height: 25vh;
     object-fit: cover;
     transform-origin: top;
-    transition: transform 0.5s ease, opacity 0.5s ease;
+    transition: transform .8s ease-in-out, opacity .8s ease-in-out;
 }
 .bell {
     width: 2rem;
+    z-index: 2;
+    box-shadow: 0 0 10px 5px #000;
+    border-radius: 50%;
     height: 2rem;
     display: inline-block;
     position: absolute;
+    top: .5rem;
     right: 1rem;
     cursor: pointer;
     transition: transform .2s linear;

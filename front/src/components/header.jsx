@@ -3,8 +3,8 @@ import "./header.css";
 
 const Header = () => {
   const [permission, setPermission] = useState(Notification.permission);
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [items, setItems] = useState([
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [items] = useState([
     "/head0.jpg",
     "/head1.jpg",
     "/head2.jpg",
@@ -15,7 +15,7 @@ const Header = () => {
     if (items.length>1) {
       const interval = setInterval(() => {
         setCurrentIndex((prevIndex) => ((prevIndex + 1) % items.length));
-      }, 3000);
+      }, 10000);
       return () => clearInterval(interval);
     }
   }, [items.length]);

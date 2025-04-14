@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useProduct } from "../other/product";
 import { useNavigate } from "react-router-dom";
 import debounce from "lodash.debounce";
-import axios from "axios"
 import "./searchBar.css";
 const SearchBar = () =>{
     const searchInp = useRef(null);    
@@ -14,7 +13,6 @@ const SearchBar = () =>{
         isSearchVisible?null:searchInp.current.focus();
     }
 
-    
     const { searchProducts, searchResults } = useProduct();
 
     const handleSearch = async (inpQuery) => {
@@ -28,13 +26,6 @@ const SearchBar = () =>{
         debouncedSearch(query);
         return () => debouncedSearch.cancel();
     }, [query]);
-
-
-    // const handleKeyDown = async(e) => {  //if key down show all results in one page and navigate to their
-    //     if (e.key === "Enter") {
-            
-    //     }
-    // };
 
     return(
         <>
@@ -53,7 +44,6 @@ const SearchBar = () =>{
                         value={query}
                         placeholder="Search"
                         onChange={e=>handleSearch(e.target.value)}
-                        // onKeyDown={handleKeyDown}
                         autoComplete="off"
                     />
                     <p className="close" onClick={isSearchVisible? toggleSearch:null}>Cancel</p>

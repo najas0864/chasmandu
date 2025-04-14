@@ -3,7 +3,7 @@
     width: 3rem;
     cursor: pointer;
     border-radius: 6px;
-    box-shadow: 0 0 3px 3px #fff;
+    box-shadow: 0 0 3px #fff;
     transition: all .1s ease-in-out;
     margin: 1rem 0 0 1rem;
 }

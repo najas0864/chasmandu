@@ -5,6 +5,7 @@ import Foot from "../components/foot"
 import Slider from "../components/slider"
 import { useCartStore, useProduct } from "../other/product"
 import "./singlePage.css";
+import axios from "axios"
 
 
 
@@ -48,11 +49,20 @@ const SinglePage = () =>{
   const {id} = useParams();
   const tabWraRef = useRef(null);
   const [activeImage, setActiveImage] = useState(0);
-  // const [activeTab, setActiveTab] = useState("description");
   const { singleProduct, fetchSingleProduct } = useProduct();
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
+  const [related, setRelated] = useState([]);
   let alert= `!!! OFFER OFFER OFFER !!! Biggest Offer Buy One and get one free on every eyewear. And please don't forget to Sign up.`
+  useEffect(() => {
+    const fetchRelated = async () => {
+      try {
+        const res = await axios.get(`/api/products/${id}/related`);
+        setRelated(res.data);
+      } catch (error) {console.error("Failed to fetch related products", error)}
+    };
+    fetchRelated();
+  }, [id]);
   useEffect(() => {
     fetchSingleProduct(id);
   }, [fetchSingleProduct,id]);
@@ -92,7 +102,7 @@ const SinglePage = () =>{
                     <div className="spImageBox">
                         <img
                             className="slider-image"
-                            src={`${singleProduct.imagesURl?.[activeImage]}`|| 'icon.svg'}
+                            src={`${singleProduct.imagesURl?.[activeImage]}`|| '/placeholder.svg'}
                             alt={singleProduct?.name||"Image not found"} 
                         />
                     </div>
@@ -119,23 +129,24 @@ const SinglePage = () =>{
                     </div>
                 </div>
                 <div className="spInfo">
-                    <p>{singleProduct.name}</p>
+                    <h2>{singleProduct.name}</h2>
                     <div className="prductRelateds">
+                        <b>Brand : {singleProduct.brand}</b>
                         <b>Model : {singleProduct.model}</b>
                         <b>Color : {singleProduct.color}</b>
-                        <b>Brand : {singleProduct.brand}</b>
+                        <b>Type : {singleProduct.type}</b>
                         <b>Sizes : {singleProduct.size}</b>
-                        <p className="price">Price :Rs: {singleProduct.price}</p>
+                        <p className="price">Price Rs: {singleProduct.price}</p>
+                        <div className="descriptions">
+                            <center><h2>Description</h2></center>
+                            <p className="descBox">{singleProduct.description}</p>
+                        </div>
                     </div>
                     <AddToCart item={singleProduct}/>
                 </div>
             </div>
             <center><h2>RELATED PRODUCTS</h2></center>
-            <Slider/>
-            <div className="descriptions">
-                <center><h2>Descriptions</h2></center>
-                <p className="descBox">{singleProduct.description}</p>
-            </div>
+            <Slider products={related}/>
         </main>
         <Foot/>
       </>

@@ -5,7 +5,7 @@ const Main = (props) => {
     return(
         <main>
             <h3>{props.names}</h3>
-            <DisplayGrid/>
+            <DisplayGrid data={props.products} />
         </main>
     )
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useProduct } from "../other/product";
-import "./adminPage.css"
+import "./admin.css"
 
 const AdminPage = () => {
     const {products, fetchProducts, createProduct,updateProduct,deleteProduct ,updateImage, deleteImage} = useProduct();
@@ -12,7 +12,7 @@ const AdminPage = () => {
     const [imagePreviews, setImagePrev] = useState([]);
     const [addedFileLength, setPushFileLen] = useState(0);
     const [addedImagePreviews, setPushFilePrev] = useState([]);
-    const [product, setProduct] = useState({id: null, name: "", brand: "", model: "", color: "", size: "", stock: "", price: "", description: ""});
+    const [product, setProduct] = useState({id: null, name: "", brand: "", model: "", color: "", size: "",forThem:"",type:"", stock: "", price: "", description: ""});
 
     useEffect(() => {
         setTimeout(() => {
@@ -36,9 +36,7 @@ const AdminPage = () => {
     }
 
     const handleUpload = async () => {
-        if (!product.name||!product.brand||!product.model||!product.color||!product.size||!product.price||!product.stock||!product.description){
-            console.log(product);
-            
+        if (!product.name||!product.brand||!product.model||!product.color||!product.size||!product.type||!product.forThem||!product.price||!product.stock||!product.description){
             return setMessage("Please fill all input fields.");
         }
         const formData = new FormData();
@@ -47,7 +45,7 @@ const AdminPage = () => {
         const { success, message } = product.id ? await updateProduct(product.id,formData) : await createProduct(formData);
         (!success)?setMessage(message):setMessage(message);
         if (success) {
-            setProduct({name:"",brand:"",model:"",color:"",size:"",stock:"",price:"",description:""});
+            setProduct({name:"",brand:"",model:"",color:"",size:"",type:"",forThem:"",stock:"",price:"",description:""});
             setFiles([]);
             setImagePrev([]);
         }
@@ -66,15 +64,17 @@ const AdminPage = () => {
     }
     const editFormDatas = (item) => {
         setProduct({ 
-          name:item.name,
-          brand:item.brand,
-          model:item.model,
-          color:item.color,
-          size:item.size,
-          stock:item.stock,
-          price:item.price,
-          description:item.description,
-          id: item._id,
+            id: item._id,
+            size:item.size,
+            name:item.name,
+            brand:item.brand,
+            model:item.model,
+            type:item.type,
+            color:item.color,
+            stock:item.stock,
+            price:item.price,
+            forThem:item.forThem,
+            description:item.description,
         });
     };
     const delProduct = async (pid) => {
@@ -92,7 +92,7 @@ const AdminPage = () => {
     const clearFormInputs = () => {
         setFiles([]);
         setImagePrev([]);
-        setProduct({ id: null, name: "", brand: "", model: "", color: "", size: "", stock: "", price: "", description: "" });
+        setProduct({ id: null, name: "", brand: "", model: "", color: "",type:"", size: "",forThem:"", stock: "", price: "", description: "" });
     };
     const clearFileInput = () => {
         setPushFiles([]);
@@ -121,6 +121,61 @@ const AdminPage = () => {
                     multiple 
                     onChange={handleFilesChange} 
                 />
+                <div>Types:
+                    <label>
+                        <input
+                            type="radio"
+                            name="type"
+                            checked={product.type === "shades"}
+                            value={'shades'}
+                            onChange={(e) => setProduct({ ...product, "type": e.target.value })}
+                        />Shades
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="type"
+                            checked={product.type === "specs"}
+                            value={'specs'}
+                            onChange={(e) => setProduct({ ...product, "type": e.target.value })}
+                        />Specs
+                    </label>
+                </div>
+                <div>FOR:
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={product.forThem === "men"}
+                            value={'men'}
+                            onChange={(e) => setProduct({ ...product, "forThem": e.target.value })}
+                        />Men's
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={product.forThem === "women"}
+                            value={'women'}
+                            onChange={(e) => setProduct({ ...product, "forThem": e.target.value })}
+                        />Women's
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={product.forThem === "child"}
+                            value={'child'}
+                            onChange={(e) => setProduct({ ...product, "forThem": e.target.value })}
+                        />Child's
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={product.forThem === "unisex"}
+                            value={'unisex'}
+                            onChange={(e) => setProduct({ ...product, "forThem": e.target.value })}
+                        />Unisex
+                    </label>
+                </div>
+
                 <input 
                     style={{display:product.id?"none":'block'}}
                     onClick={()=>fileInput.current.click()}  
@@ -149,6 +204,7 @@ const AdminPage = () => {
                     <p>Brand : {item.brand}</p>
                     <p>Model : {item.model}</p>
                     <p>Color : {item.color}</p>
+                    <p>Type : {item.type}</p>
                     <p>Size  : {item.size}</p>
                     <p>Stock : {item.stock}</p>
                     <p>Price : {item.price}</p>

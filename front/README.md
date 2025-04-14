@@ -1,13 +1,10 @@
 # start
-8 header image database or ststic images in assest folder in site [place order and store in db]
-9 signup fix with token using express-session.    (((  fix search and short second)))
-10 steps order,delivered,fulfilled,pop or cancle order.
-11 show related results on enter push in search.
-12 filter items
-13 reviews products
-14 costumize frame,sunglasses and other items with good dashboard,
+. steps order,delivered,fulfilled,pop or cancle order.[place order and store in db] create page after place order butten in cart.
+. create function to mail users about new offers and products.
+. signup fix with token using express-session
+. use passport to sign easy
+14 good dashboard,
 
-const user = await User.findById(userId).select("name email"); // Get only name & email
 **DUE**
 *FOOTER*
 [Legal_Links_in_footer]

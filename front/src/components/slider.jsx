@@ -1,14 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProduct } from '../other/product';
 import './slider.css';
 
-const Slider = () => {
+const Slider = ({products}) => {
   const navigate = useNavigate()
-  const {products, fetchProducts} = useProduct();
-  useEffect(() => {
-    fetchProducts();
-}, [fetchProducts]);
   const tabWidth = 470;
   const tabWraRef = useRef(null);
   const [showLeftButton, setShowLeftButton] = useState(false);
@@ -40,14 +35,24 @@ const Slider = () => {
       return () => container.removeEventListener("scroll", updateButtonVisibility);
     }
   });
+  const Skelaton = () => {
+    return(
+      <div className="tabs skeleton">
+        <div className="tabContent">
+          <p className='skeleton-text'></p>
+          <p className='skeleton-text'></p>
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="sliderContainer">
         <div ref={tabWraRef} className="tabsBox">
-          {products.length === 0 ? (<p>loading Product...</p>) :products.map((item, index) => (
+          {products.length === 0 ? (Array.from({ length: 8 }).map((_, index) => <Skelaton key={index} />)) :products.map((item, index) => (
             <div
               key={index}
               onClick={()=>navigate(`/single_product/${item._id}`)}
-              style={{backgroundImage: `url(${item.imagesURl?.[0]})`|| 'url(./icon.svg)'}}  //set placeholder flip <
+              style={{backgroundImage: `url(${item.imagesURl?.[0]})`}}
               className="tabs"
             >
               <div className="tabContent">

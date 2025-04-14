@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ForgetPass from "./forgetPass";
 import axios from "axios";
 import "./signup.css";
-import Gbutton from "./signEasy";
+import Gbutton from "../due/signEasy";
 
 
 const Sign = () =>{
@@ -12,7 +12,7 @@ const Sign = () =>{
     const [otp, setOtp] = useState('');
     const [message, setMessage]=useState('');
     const [isMasked, setIsMasked] = useState(true);
-    const [values, setValues] = useState({name: "",email: "",password: "",gender: "",});
+    const [values, setValues] = useState({email: "",password: ""});
     const [userEmail, setUserEmail] = useState('');
     const [showOtpField, setShowOtpField] = useState(false);
 

@@ -10,6 +10,8 @@ const ProductSchema = new Schema({
     price: {type:Number,require:true,},
     color: {type:[String],require:true,},
     description: {type:String,require:true,},
+    type: {type: String,enum: ['shades', 'specs'],required: true,},
+    forThem: {type: String,enum: ['men', 'women','child','unisex'],required: true,},
 },{timestamps:true});
 
 const Product = model('Product', ProductSchema);

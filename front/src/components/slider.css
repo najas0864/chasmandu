@@ -53,11 +53,11 @@
 .itemName{
     display: -webkit-box;
     -webkit-line-clamp: 1;
-    line-clamp: auto;
+    line-clamp: inherit;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-transform: capitalize;
-    height: .8rem;
+    height: 1rem;
 }
 
 @media (max-width: 600px) {

@@ -48,58 +48,77 @@ export const useUser = create((set) => ({
 		return { success: true, message: data.message };
 	},
 }));
-export const useReview = create((set) => ({
-	reviews: [],
-	setReviews: (reviews) => set({ reviews }),
-	fetchReviews: async () => {
-		const res = await axios.get("/api/reviews");		
-		const data = await res.data.data;
-		set({ reviews: data });
-	},
-	createReview: async (newReview) => {
-		if (!newReview) {
-			return { success: false, message: "Please fill in all fields." };
-		}
-		const res = await axios.post("/api/reviews",newReview, {	//pass item id and user id too
-			headers: {"Content-Type": "application/json",},
-		});
-		console.log(res);
+// export const useReview = create((set) => ({
+// 	reviews: [],
+// 	setReviews: (reviews) => set({ reviews }),
+// 	fetchReviews: async () => {
+// 		const res = await axios.get("/api/reviews");		
+// 		const data = await res.data.data;
+// 		set({ reviews: data });
+// 	},
+// 	createReview: async (newReview) => {
+// 		if (!newReview) {
+// 			return { success: false, message: "Please fill in all fields." };
+// 		}
+// 		const res = await axios.post("/api/reviews",newReview, {	//pass item id and user id too
+// 			headers: {"Content-Type": "application/json",},
+// 		});
+// 		console.log(res);
 		
-		const data = await res.data.data;
-		set((state) => ({ reviews: [...state.reviews, data] }));
-		return { success: true, message: "review created successfully" };
-	},
-	updateReview: async (rid, updatedReview) => {
-		const res = await axios.put(`/api/reviews/${rid}`,updatedReview, {
-			headers: {"Content-Type": "application/json",},
-		});
-		const data = await res.data.data;
-		if (!data.success) return { success: false, message: data.message };
+// 		const data = await res.data.data;
+// 		set((state) => ({ reviews: [...state.reviews, data] }));
+// 		return { success: true, message: "review created successfully" };
+// 	},
+// 	updateReview: async (rid, updatedReview) => {
+// 		const res = await axios.put(`/api/reviews/${rid}`,updatedReview, {
+// 			headers: {"Content-Type": "application/json",},
+// 		});
+// 		const data = await res.data.data;
+// 		if (!data.success) return { success: false, message: data.message };
 
-		set((state) => ({
-			reviews: state.reviews.map((review) => (review._id === rid ? data.data : review)),
-		}));
+// 		set((state) => ({
+// 			reviews: state.reviews.map((review) => (review._id === rid ? data.data : review)),
+// 		}));
 
-		return { success: true, message: data.message };
-	},
-	deleteReview: async (rid) => {
-		const res = await axios.delete(`/api/reviews/${rid}`);
-		const data = await res.data;
-		if (!data.success) return { success: false, message: data.message };
+// 		return { success: true, message: data.message };
+// 	},
+// 	deleteReview: async (rid) => {
+// 		const res = await axios.delete(`/api/reviews/${rid}`);
+// 		const data = await res.data;
+// 		if (!data.success) return { success: false, message: data.message };
 
-		set((state) => ({ reviews: state.reviews.filter((review) => review._id !== rid) }));
-		return { success: true, message: data.message };
-	},
-}));
+// 		set((state) => ({ reviews: state.reviews.filter((review) => review._id !== rid) }));
+// 		return { success: true, message: data.message };
+// 	},
+// }));
 export const useProduct = create((set) => ({
 	products: [],
 	singleProduct:{},
     searchResults: [],
+    filterResults: [],
+	shades: [],
+	specs: [],
+	loading: false,
+	error: null,
 	setProducts: (products) => set({ products }),
 	fetchProducts: async () => {
 		const res = await axios.get("/api/products");
 		const data = await res.data.data;
 		set({ products: data });
+	},
+	fetchProductMeta: async () => {
+		set({ loading: true, error: null });
+		try {
+			const [shadesRes, specsRes] = await Promise.all([
+				axios.get("/api/products/shades"),
+				axios.get("/api/products/specs"),
+			]);
+			set({
+				shades: shadesRes.data,
+				specs: specsRes.data,
+				loading: false,
+			});
+		} catch (error) {set({ error: error.message, loading: false });}
 	},
 	fetchSingleProduct: async (id) => {
 		const res = await axios.get(`/api/products/${id}`);
@@ -108,24 +127,31 @@ export const useProduct = create((set) => ({
 	},
 	searchProducts: async (query) => {
         try {
-            if (query.length < 2) return; // Avoid unnecessary API calls
+            if (query.length < 2) return;
             const res = await axios.get(`/api/products/search?query=${query}`);
             const data = res.data;
             set({ searchResults: data });
-        } catch (error) {
-            console.error("Error searching products:", error);
-        }
+        } catch (error) {console.error("Error searching products:", error)}
+    },
+	filterProducts: async (filters) => {
+		try {
+			const query = new URLSearchParams(filters).toString();
+			if (query.length < 2) return;
+            const res = await axios.get(`/api/products/short?${query}`);
+            const data = res.data;
+			set({ filterResults: data });
+        } catch (error) {console.error("Error fetching filtered products", error)}
     },
 	createProduct: async (newProduct) => {
-		const res = await axios.post("/api/products",newProduct);
-		const data = await res.data.data;
-		set((state) => ({ products: [...state.products, data] }));
-		return { success: true, message: "Product created successfully" };
+		try{
+			const res = await axios.post("/api/products",newProduct);
+			const data = await res.data.data;
+			set((state) => ({ products: [...state.products, data] }));
+			return { success: true, message: "Product created successfully" };
+		} catch (err) {if(err)return { success: false, message:`Failed to create product: ${err.response.data.message}`}}
 	},
 	updateProduct: async (pid, updatedProduct) => {
-		const res = await axios.put(`/api/products/${pid}`,updatedProduct, {
-			headers: {"Content-Type": "application/json",},
-		});
+		const res = await axios.put(`/api/products/${pid}`,updatedProduct, {headers: {"Content-Type": "application/json"}});
 		const data = res.data;
 		if (!data.success) return { success: false, message: data.message };
 		set((state) => ({
@@ -134,9 +160,7 @@ export const useProduct = create((set) => ({
 		return { success: true, message: data.message };
 	},
 	updateImage: async (pid, updatedImages) => {		
-		const res = await axios.put(`/api/products/images/${pid}`,updatedImages, {
-            headers: { "Content-Type": "multipart/form-data" }
-		});
+		const res = await axios.put(`/api/products/images/${pid}`,updatedImages, {headers: { "Content-Type": "multipart/form-data" }});
 		const data = res.data;
 		if (!data.success) return { success: false, message: data.message };
 		console.log(res);
@@ -164,10 +188,8 @@ export const useProduct = create((set) => ({
 }));
 export const useOrderStore = create((set) => ({
 	orders: [],
-	createOrder: async (pid, updatedImages) => {		
-		const res = await axios.post(`/api/products/images/${pid}`,updatedImages, {
-            headers: { "Content-Type": "multipart/form-data" }
-		});
+	createOrder: async (cart) => {		
+		const res = await axios.post(`/api/order`,{cart},{ withCredentials: true },{headers:{"Content-Type":"application/json"}}); 
 		const data = res.data;
 		if (!data.success) return { success: false, message: data.message };
 		console.log(res);

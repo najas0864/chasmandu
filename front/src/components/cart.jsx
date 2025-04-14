@@ -1,12 +1,12 @@
 import {  useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useCartStore } from "../other/product";
+import { useNavigate } from "react-router-dom";
+import { useCartStore, useOrderStore } from "../other/product";
 import "./cart.css";
 
 const Cart = () => {
     const orderBtn = useRef(null);
     const navigate = useNavigate()
+    const {createOrder} = useOrderStore();
     const [message, setMassage] = useState(null);
     const [isCartVisible, setisCartVisible] = useState(true);
     const toggleCrat = () => setisCartVisible(!isCartVisible);
@@ -16,18 +16,13 @@ const Cart = () => {
 
 
 
-    const orderItem = async (item) => {
-        item.sum=item.price*item.quantity;
-        const res = await axios.post(`/api/order`,
-            {item},
-            { withCredentials: true },
-            {headers:{"Content-Type":"application/json"}},
-        );   
-        console.log(res);
-        if(res.data.sucess){
+    const orderItem = async (cart) => {
+        cart.sum=totalPrice;
+        const { success, message } = await createOrder(cart);
+        if(!success){
             orderBtn.current.disabled=true;
-            setMassage(res.data.message)
-        }
+            setMassage(message)
+        }else{setMassage(message)}
     };
     
     return(
@@ -52,39 +47,41 @@ const Cart = () => {
                             />
                             <div>
                                 <p title={item.name} className="productName">{item.name}</p>
-                                <p className="price">Rs: {item.price*item.quantity}</p>
-                            </div>
-                            <div>
-                                <input 
-                                    type="button"
-                                    ref={orderBtn}
-                                    value={message?`${message}`:"Place Order"}
-                                    className="order_item"
-                                    onClick={()=>orderItem(item)}
-                                />
-                                <div className="qtyAlter">
-                                    <input
-                                        type="button"
-                                        value="+"
-                                        onClick={()=>incrementQuantity(item.id)}
-                                    />
-                                    <input 
-                                        disabled
-                                        type="button"
-                                        value={item.quantity}
-                                    />
-                                    <input 
-                                        type="button"
-                                        title={item.quantity===1?'Removing Item❔':null}
-                                        onClick={()=>decrementQuantity(item.id)}
-                                        value={item.quantity===1?'x':'-'}
-                                    />
+                                <div>
+                                    <span className="price">Rs: {item.price*item.quantity}</span>
+                                    <div className="qtyAlter">
+                                        <input
+                                            type="button"
+                                            value="+"
+                                            onClick={()=>incrementQuantity(item.id)}
+                                        />
+                                        <input 
+                                            disabled
+                                            type="button"
+                                            value={item.quantity}
+                                        />
+                                        <input 
+                                            type="button"
+                                            title={item.quantity===1?'Removing Item❔':null}
+                                            onClick={()=>decrementQuantity(item.id)}
+                                            value={item.quantity===1?'x':'-'}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </li>
                     )))}
                 </div>
                 <p style={{textAlign:"right"}}>Total Rs : {totalPrice}</p>
+                {(cart.length>0)&&(
+                    <input 
+                        type="button"
+                        ref={orderBtn}
+                        value={message?`${message}`:"Place Order"}
+                        className="order_item"
+                        onClick={()=>orderItem(cart)}
+                    />
+                )}
             </ul>
         </>
     )

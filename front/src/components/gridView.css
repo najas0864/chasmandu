@@ -10,6 +10,7 @@
 }
 .box , .skeleton{
     display: flex;
+    cursor: pointer;
     overflow: hidden;
     object-fit: cover;
     position: relative;
@@ -49,6 +50,7 @@
 
 .skeleton {
     background: #e0e0e0;
+    pointer-events: none;
     background-image: linear-gradient(45deg, #e0e0e0 25%, #999999 50%, #e0e0e0 75%);
 }
 

@@ -20,9 +20,9 @@ const Nav = () => {
       </div>
       <ul className={`nav-links ${isMobile ? "active" : ""}`}>
         {location.pathname !== "/" && <Link to="/"><li>Home</li></Link>}
-        {location.pathname !== "/eyeglasses" && <Link to="/eye_glass"><li>Eyeglasses</li></Link>}
-        {location.pathname !== "/sunglasses" && <Link to="/sun_glass"><li>Sunglasses</li></Link>}
-        {location.pathname !== "/categories" && <Link to="/categories"><li>Categories</li></Link>}
+        {location.pathname !== "/all_products" && <Link to="/all_products"><li>All products</li></Link>}
+        {location.pathname !== "/sunglass" && <Link to="/sunglass"><li>Sunglasses</li></Link>}
+        {location.pathname !== "/eyeglass" && <Link to="/eyeglass"><li>Eyeglasses</li></Link>}
       </ul>
       <div className="itemFinder">
         <SearchBar/>

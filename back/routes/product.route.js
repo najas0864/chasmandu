@@ -1,16 +1,32 @@
 import express from "express";
-import { createProducts, deleteProducts, shortProducts, searchProducts, deleteImage, getProducts, updateProducts, getSingleProduct, updateImage } from "../controllers/product.controller.js";
+import { 
+    createProducts,
+    deleteProducts,
+    shortProducts,
+    searchProducts,
+    deleteImage,
+    getProducts,
+    updateProducts,
+    getSingleProduct,
+    updateImage,
+    getSpecsProduct,
+    getShadesProduct,
+    getRelatedProducts,
+} from "../controllers/product.controller.js";
 
 const router = express.Router();
 
-router.delete("/deleteImage",deleteImage);
-router.put("/images/:id",updateImage);
-router.get("/search",searchProducts);
-router.delete("/:id",deleteProducts);
-router.get('/:id',getSingleProduct);
-router.post("/short",shortProducts);
-router.put("/:id",updateProducts);
-router.post("/",createProducts);
 router.get('/',getProducts);
+router.get("/short",shortProducts);
+router.get("/search",searchProducts);
+router.get("/specs",getSpecsProduct);
+router.get("/shades",getShadesProduct);
+router.get('/:id',getSingleProduct);
+router.get('/:id/related',getRelatedProducts);
+router.post("/",createProducts);
+router.put("/images/:id",updateImage);
+router.put("/:id",updateProducts);
+router.delete("/deleteImage",deleteImage);
+router.delete("/:id",deleteProducts);
 
 export default router;

@@ -1,14 +1,8 @@
-import { useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProduct } from '../other/product';
 import './gridView.css';
 
-export const DisplayGrid = () => {
-    const navigate = useNavigate()
-    const {products, fetchProducts} = useProduct();
-    useEffect(() => {
-        fetchProducts();
-    }, [fetchProducts]);
+export const DisplayGrid = ({data}) => {
+    const navigate = useNavigate();
     const Skelaton = () => {
         return(
             <div className='skeleton'>
@@ -21,7 +15,7 @@ export const DisplayGrid = () => {
     }
     return (
         <div className="productGrid">
-            {products.length === 0 ? (Array.from({ length: 8 }).map((_, index) => <Skelaton key={index} />)) :products.map((item, index) => (
+            {data.length === 0 ? (Array.from({ length: 8 }).map((_, index) => <Skelaton key={index} />)) : data.map((item, index) => (
                 <div
                     key={index}
                     className="box"

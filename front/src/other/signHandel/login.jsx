@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ForgetPass from "./forgetPass";
-// import Gbutton from "./signEasy";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -85,7 +84,6 @@ const Login = () => {
                     </svg>
                 </div>
                 <button type="submit" onClick={handelLogSubmmit}>Login</button>
-                {/* <Gbutton/> */}
             </div>
             <center>
                 <p>Don't have an account?<Link to="/signup">Sign-up</Link></p>
