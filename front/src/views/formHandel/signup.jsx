@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ForgetPass from "./forgetPass";
 import axios from "axios";
 import "./signup.css";
-import Gbutton from "../due/signEasy";
+import Gbutton from "./signEasy";
 
 
 const Sign = () =>{

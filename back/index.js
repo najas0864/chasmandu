@@ -7,7 +7,6 @@ import cookieParser from 'cookie-parser';
 import { conectDB } from "./config/db.js";
 import userRoutes from "./routes/user.route.js";
 import orderRoute from "./routes/order.route.js";
-// import ReviewRoutes from "./routes/review.route.js";
 import productRoutes from "./routes/product.route.js";
 import connectMongoDBSession from "connect-mongodb-session";
 

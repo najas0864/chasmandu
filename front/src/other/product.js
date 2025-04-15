@@ -188,8 +188,9 @@ export const useProduct = create((set) => ({
 }));
 export const useOrderStore = create((set) => ({
 	orders: [],
-	createOrder: async (cart) => {		
-		const res = await axios.post(`/api/order`,{cart},{ withCredentials: true },{headers:{"Content-Type":"application/json"}}); 
+	createOrder: async (cart) => {
+		const string = JSON.stringify(cart)
+		const res = await axios.post(`/api/order`,{string},{headers:{"Content-Type":"application/json"}}); 
 		const data = res.data;
 		if (!data.success) return { success: false, message: data.message };
 		console.log(res);

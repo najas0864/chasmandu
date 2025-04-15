@@ -10,8 +10,8 @@ import AllProducts from './views/allProducts';
 import Eyeglass from './views/eyeglass';
 import Sunglass from './views/sunglass';
 import SinglePage from './views/singlePage';
-import Sign from './other/signHandel/signup';
-import Login from './other/signHandel/login';
+import Sign from './views/formHandel/signup';
+import Login from './views/formHandel/login';
 
 const PrivateRoute = ({ children }) => {
   const [cooke, setCooke] = useState(undefined);

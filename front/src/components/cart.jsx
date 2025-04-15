@@ -14,10 +14,7 @@ const Cart = () => {
     const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
     const totalPrice = cart.reduce((total, item) => total + (item.price*item.quantity), 0);
 
-
-
     const orderItem = async (cart) => {
-        cart.sum=totalPrice;
         const { success, message } = await createOrder(cart);
         if(!success){
             orderBtn.current.disabled=true;
@@ -32,56 +29,58 @@ const Cart = () => {
                 <path d="M18.5,20.5A1.5,1.5,0,1,1,17,19,1.5,1.5,0,0,1,18.5,20.5ZM11,19a1.5,1.5,0,1,0,1.5,1.5A1.5,1.5,0,0,0,11,19Z" fill="#FFF;"></path>
                 <path d="M18.2,14a1,1,0,0,0,.93-.63l2.8-7a1,1,0,0,0-.1-.93A1,1,0,0,0,21,5H7.88l-.7-1.74A2,2,0,0,0,5.32,2H3A1,1,0,0,0,3,4H5.32L8.9,13,7.83,15.11A2,2,0,0,0,9.62,18H19a1,1,0,0,0,0-2H9.62l1-2Z" fill="#FFF;"></path>
             </svg>
-            <ul className={`cart-lists ${!isCartVisible ? "active" : ""}`}>
-                <div className="cartTitle">
-                    <h3>Add item</h3>
-                    <p className="close" onClick={!isCartVisible? toggleCrat:null}>Close</p>
-                </div>
-                <div className="cartItemRapper">
-                    {cart.length === 0 ? (<p>Your cart is empty</p>) : (cart.map((item,index) => (
-                        <li key={index} className="cartItems">
-                            <img 
-                                src={item.file|| 'icon.svg'}
-                                className="cartItemImage"
-                                onClick={()=>navigate(`/single_product/${item.id}`)}
-                            />
-                            <div>
-                                <p title={item.name} className="productName">{item.name}</p>
+            <ul onClick={!isCartVisible? toggleCrat:null} className={`cart-lists ${!isCartVisible ? "active" : ""}`}>
+                <div onClick={e=>e.stopPropagation()}>
+                    <div className="cartTitle">
+                        <h3>Add item</h3>
+                        <p className="close" onClick={!isCartVisible? toggleCrat:null}>Close</p>
+                    </div>
+                    <div className="cartItemRapper">
+                        {cart.length === 0 ? (<p>Your cart is empty</p>) : (cart.map((item,index) => (
+                            <li key={index} className="cartItems">
+                                <img 
+                                    src={item.file|| 'icon.svg'}
+                                    className="cartItemImage"
+                                    onClick={()=>navigate(`/single_product/${item.id}`)}
+                                />
                                 <div>
-                                    <span className="price">Rs: {item.price*item.quantity}</span>
-                                    <div className="qtyAlter">
-                                        <input
-                                            type="button"
-                                            value="+"
-                                            onClick={()=>incrementQuantity(item.id)}
-                                        />
-                                        <input 
-                                            disabled
-                                            type="button"
-                                            value={item.quantity}
-                                        />
-                                        <input 
-                                            type="button"
-                                            title={item.quantity===1?'Removing Item❔':null}
-                                            onClick={()=>decrementQuantity(item.id)}
-                                            value={item.quantity===1?'x':'-'}
-                                        />
+                                    <p title={item.name} className="productName">{item.name}</p>
+                                    <div>
+                                        <span className="price">Rs: {item.price*item.quantity}</span>
+                                        <div className="qtyAlter">
+                                            <input
+                                                type="button"
+                                                value="+"
+                                                onClick={()=>incrementQuantity(item.id)}
+                                            />
+                                            <input 
+                                                disabled
+                                                type="button"
+                                                value={item.quantity}
+                                            />
+                                            <input 
+                                                type="button"
+                                                title={item.quantity===1?'Removing Item❔':null}
+                                                onClick={()=>decrementQuantity(item.id)}
+                                                value={item.quantity===1?'x':'-'}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    )))}
+                            </li>
+                        )))}
+                    </div>
+                    <p style={{textAlign:"left"}}>Total Rs : {totalPrice}</p>
+                    {(cart.length>0)&&(
+                        <input 
+                            type="button"
+                            ref={orderBtn}
+                            value={message?`${message}`:"Place Order"}
+                            className="order_item"
+                            onClick={()=>orderItem(cart)}
+                        />
+                    )}
                 </div>
-                <p style={{textAlign:"right"}}>Total Rs : {totalPrice}</p>
-                {(cart.length>0)&&(
-                    <input 
-                        type="button"
-                        ref={orderBtn}
-                        value={message?`${message}`:"Place Order"}
-                        className="order_item"
-                        onClick={()=>orderItem(cart)}
-                    />
-                )}
             </ul>
         </>
     )
