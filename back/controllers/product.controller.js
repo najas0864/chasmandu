@@ -34,7 +34,6 @@ export const searchProducts = async (req, res) => {
                 { description: { $regex: query, $options: "i" } }
             ]
         });
-		
         res.json(results);
     } catch (error) {res.status(500).json({ error: "Server error" })}
 }
@@ -47,11 +46,26 @@ export const getProducts = async (req,res) => {
 export const getShadesProduct = async (req, res) => {
 	const shades = await Product.find({ type: 'shades' });
 	res.json(shades);
-	
 };
 export const getSpecsProduct = async (req, res) => {
 	const specs = await Product.find({ type: 'specs' });
 	res.json(specs);
+};
+export const getPopularProduct = async (req, res) => {
+	const popular = await Product.find({ forThem: 'unisex' });
+	res.json(popular);
+};
+export const getChildProduct = async (req, res) => {
+	const child = await Product.find({ forThem: 'child' });
+	res.json(child);
+};
+export const getWomenProduct = async (req, res) => {
+	const women = await Product.find({ forThem: 'women' });
+	res.json(women);
+};
+export const getMenProduct = async (req, res) => {
+	const men = await Product.find({ forThem: 'men' });
+	res.json(men);
 };
 export const getRelatedProducts = async (req, res) => {
 	const { id } = req.params;
@@ -89,8 +103,8 @@ export const updateImage = [upload.array('imageURL', 20), async (req,res) => {
 	} catch (error) {res.status(500).json({ success: false, message:error.message })}
 }];
 export const createProducts = [upload.array('imageURL', 20), async (req,res) => {
-	const {name,price,brand,model,color,size,forThem,stock,type,description} = req.body;
-	if (!name||!price||!brand||!model||!color||!forThem||!size||!stock||!description||!type||req.files.length===0) {
+	const {name,price,brand,model,color,size,forThem,stock,type,description,material,shape} = req.body;
+	if (!name||!price||!brand||!model||!color||!forThem||!material||!shape||!size||!stock||!description||!type||req.files.length===0) {
 		return res.status(400).json({ success: false, message: "Please provide all fields" });
 	}
 	const existingProduct = await Product.findOne({ name: name.trim() });
@@ -99,7 +113,7 @@ export const createProducts = [upload.array('imageURL', 20), async (req,res) => 
 	}
 	try {
 		const imageUrls = req.files.map(file => file.path);
-		const newProduct = new Product({name,price,brand,model,color,size,stock,forThem,type,description,imagesURl:imageUrls});
+		const newProduct = new Product({name,price,brand,model,color,material,shape,size,stock,forThem,type,description,imagesURl:imageUrls});
 		await newProduct.save();
 		res.status(201).json({ success: true, data: newProduct });
 	} catch (error) {res.status(500).json({ success: false, message: `Server Error ${error}` })}
@@ -133,7 +147,6 @@ export const deleteProducts = async (req,res) => {
 		res.status(200).json({ success: false, message: "Error deleting Product!" })
 	} catch (error) {res.status(500).json({ success: false, message: "Server Error" })}
 }
-
 export const deleteImage = async (req, res) => {
 	const { id, url } = req.body;
 	if(!isValidObjectId(id)) return res.status(400).json({ error: "Invalid item ID format" }); 

@@ -131,11 +131,13 @@ const SinglePage = () =>{
                 <div className="spInfo">
                     <h2>{singleProduct.name}</h2>
                     <div className="prductRelateds">
+                        <b>Type : {singleProduct.type}</b>
+                        <b>Sizes : {singleProduct.size}</b>
                         <b>Brand : {singleProduct.brand}</b>
                         <b>Model : {singleProduct.model}</b>
                         <b>Color : {singleProduct.color}</b>
-                        <b>Type : {singleProduct.type}</b>
-                        <b>Sizes : {singleProduct.size}</b>
+                        <b>Shape : {singleProduct.shape}</b>
+                        <b>Material : {singleProduct.material}</b>
                         <p className="price">Price Rs: {singleProduct.price}</p>
                         <div className="descriptions">
                             <center><h2>Description</h2></center>

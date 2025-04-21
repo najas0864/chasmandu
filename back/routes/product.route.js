@@ -12,6 +12,10 @@ import {
     getSpecsProduct,
     getShadesProduct,
     getRelatedProducts,
+    getPopularProduct,
+    getChildProduct,
+    getWomenProduct,
+    getMenProduct,
 } from "../controllers/product.controller.js";
 
 const router = express.Router();
@@ -20,6 +24,10 @@ router.get('/',getProducts);
 router.get("/short",shortProducts);
 router.get("/search",searchProducts);
 router.get("/specs",getSpecsProduct);
+router.get("/popular",getPopularProduct);
+router.get("/child",getChildProduct);
+router.get("/women",getWomenProduct);
+router.get("/men",getMenProduct);
 router.get("/shades",getShadesProduct);
 router.get('/:id',getSingleProduct);
 router.get('/:id/related',getRelatedProducts);

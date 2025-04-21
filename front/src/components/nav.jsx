@@ -6,12 +6,13 @@ import './nav.css';
 
 const Nav = () => {
   const menuRef = useRef(null);
+  const btnRef = useRef(null);
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(false);
   const toggleMenu = () => {setIsMobile(!isMobile)};
   useEffect(() => {
     function handleClickOutside(e) {
-      if (isMobile && menuRef.current && !menuRef.current.contains(e.target)) {setIsMobile(false)}
+      if (isMobile && !btnRef.current.contains(e.target) && menuRef.current && !menuRef.current.contains(e.target)) {setIsMobile(false)}
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -20,7 +21,7 @@ const Nav = () => {
   }, [isMobile]);
   return (
     <nav className="navbar">
-      <div className={`menu-icon ${isMobile ? "active" : ""}`} onClick={toggleMenu}>
+      <div className={`menu-icon ${isMobile ? "active" : ""}`} onClick={toggleMenu} ref={btnRef}>
         <span></span>
         <span></span>
         <span></span>

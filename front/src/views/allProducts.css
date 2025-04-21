@@ -1,11 +1,20 @@
+.Filter{
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    height: 5rem;
+}
+.Filter>p{
+    box-shadow: 0 0 3px #fff;
+    padding: .5rem;
+    border-radius: 14px;
+}
 .filterBtn {
-    height: 2rem;
-    width: 3rem;
     cursor: pointer;
     border-radius: 6px;
-    box-shadow: 0 0 3px #fff;
     transition: all .1s ease-in-out;
-    margin: 1rem 0 0 1rem;
 }
 .filterPopup {
     position: fixed;

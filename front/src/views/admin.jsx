@@ -12,7 +12,7 @@ const AdminPage = () => {
     const [imagePreviews, setImagePrev] = useState([]);
     const [addedFileLength, setPushFileLen] = useState(0);
     const [addedImagePreviews, setPushFilePrev] = useState([]);
-    const [product, setProduct] = useState({id: null, name: "", brand: "", model: "", color: "", size: "",forThem:"",type:"", stock: "", price: "", description: ""});
+    const [product, setProduct] = useState({id: null, name: "", brand: "",shape:'',material:"", model: "", color: "", size: "",forThem:"",type:"", stock: "", price: "", description: ""});
 
     useEffect(() => {
         setTimeout(() => {
@@ -22,7 +22,6 @@ const AdminPage = () => {
     useEffect(() => {
         fetchProducts()
     }, [fetchProducts]);
-
     const handleFilesChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
         setFiles(selectedFiles);
@@ -36,7 +35,20 @@ const AdminPage = () => {
     }
 
     const handleUpload = async () => {
-        if (!product.name||!product.brand||!product.model||!product.color||!product.size||!product.type||!product.forThem||!product.price||!product.stock||!product.description){
+        if (
+            !product.name||
+            !product.size||
+            !product.type||
+            !product.brand||
+            !product.shape||
+            !product.model||
+            !product.color||
+            !product.price||
+            !product.stock||
+            !product.forThem||
+            !product.material||
+            !product.description
+        ){
             return setMessage("Please fill all input fields.");
         }
         const formData = new FormData();
@@ -45,7 +57,7 @@ const AdminPage = () => {
         const { success, message } = product.id ? await updateProduct(product.id,formData) : await createProduct(formData);
         (!success)?setMessage(message):setMessage(message);
         if (success) {
-            setProduct({name:"",brand:"",model:"",color:"",size:"",type:"",forThem:"",stock:"",price:"",description:""});
+            setProduct({name:"",brand:"",material:"",shape:"",model:"",color:"",size:"",type:"",forThem:"",stock:"",price:"",description:""});
             setFiles([]);
             setImagePrev([]);
         }
@@ -66,14 +78,16 @@ const AdminPage = () => {
         setProduct({ 
             id: item._id,
             size:item.size,
-            name:item.name,
-            brand:item.brand,
-            model:item.model,
             type:item.type,
+            name:item.name,
+            shape:item.shape,
             color:item.color,
             stock:item.stock,
             price:item.price,
+            brand:item.brand,
+            model:item.model,
             forThem:item.forThem,
+            material:item.material,
             description:item.description,
         });
     };
@@ -92,7 +106,7 @@ const AdminPage = () => {
     const clearFormInputs = () => {
         setFiles([]);
         setImagePrev([]);
-        setProduct({ id: null, name: "", brand: "", model: "", color: "",type:"", size: "",forThem:"", stock: "", price: "", description: "" });
+        setProduct({ id: null, name: "", brand: "", model: "", color: "",shape:"",material:"",type:"", size: "",forThem:"", stock: "", price: "", description: "" });
     };
     const clearFileInput = () => {
         setPushFiles([]);
@@ -101,7 +115,7 @@ const AdminPage = () => {
     };
     return (
         <main className='adminMain'>
-            <div className="formCover">
+            <div className="formCover" id="gototop">
                 <h2>Upload Item Info</h2>
                 {['brand', 'name', 'model', 'color', 'size', 'stock', 'price', 'description'].map(field => (
                     <input
@@ -175,7 +189,40 @@ const AdminPage = () => {
                         />Unisex
                     </label>
                 </div>
-
+                <label htmlFor="material">Material: 
+                    <select 
+                        name="material" 
+                        value={product.material} 
+                        onChange={(e) => setProduct({ ...product, "material": e.target.value })} 
+                    >
+                        <option value="" selected>Select</option>
+                        <option value="Metals">Metals</option>
+                        <option value="Titanium">Titanium</option>
+                        <option value="Acetate">Acetate</option>
+                        <option value="Plastic">Plastic</option>
+                        <option value="Semi-acetate">Semi-acetate</option>
+                        <option value="Aluminium">Aluminium</option>
+                        <option value="TR">TR</option>
+                    </select>
+                </label>
+                <label htmlFor="shape">Shapes: 
+                    <select 
+                        name="shape" 
+                        value={product.shape} 
+                        onChange={(e) => setProduct({ ...product, "shape": e.target.value })} 
+                    >
+                        <option value="" selected>Select</option>
+                        <option value="Cateye">Cateye</option>
+                        <option value="Circle">Circle</option>
+                        <option value="Oval">Oval</option>
+                        <option value="Aviator">Aviator</option>
+                        <option value="Rectangle">Rectangle</option>
+                        <option value="Sporty">Sporty</option>
+                        <option value="Clubmaster">Clubmaster</option>
+                        <option value="Butterfly">Butterfly</option>
+                        <option value="Rimless">Rimless</option>
+                    </select>
+                </label>
                 <input 
                     style={{display:product.id?"none":'block'}}
                     onClick={()=>fileInput.current.click()}  
@@ -201,13 +248,15 @@ const AdminPage = () => {
             {products.length === 0 ? (<p>No Product avilable. 😥</p>) :products.map((item, index) => (
                 <details className='itemDatas'key={index}>
                     <summary>{item.name}</summary>
-                    <p>Brand : {item.brand}</p>
-                    <p>Model : {item.model}</p>
-                    <p>Color : {item.color}</p>
                     <p>Type : {item.type}</p>
                     <p>Size  : {item.size}</p>
+                    <p>Model : {item.model}</p>
+                    <p>Brand : {item.brand}</p>
+                    <p>Color : {item.color}</p>
+                    <p>Shape : {item.shape}</p>
                     <p>Stock : {item.stock}</p>
                     <p>Price : {item.price}</p>
+                    <p>Material : {item.material}</p>
                     <div className="prvImgBox">
                         {item.imagesURl.length === 0 ? (<p>No image avilable.😥</p>) :item.imagesURl?.map((fileName,index)=>(
                             <img
@@ -237,7 +286,7 @@ const AdminPage = () => {
                             {addedFileLength !==0 && <button onClick={clearFileInput}>Cancel</button>}
                         </div>
                         <div>
-                            <button onClick={() => editFormDatas(item)}>Edit</button>
+                            <a href="#gototop"><button onClick={() => editFormDatas(item)}>Edit</button></a>
                             <button onClick={() => delProduct(item._id)}>Delete</button>
                         </div>
                     </div>

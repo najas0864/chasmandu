@@ -109,13 +109,21 @@ export const useProduct = create((set) => ({
 	fetchProductMeta: async () => {
 		set({ loading: true, error: null });
 		try {
-			const [shadesRes, specsRes] = await Promise.all([
+			const [shadesRes, specsRes, menRes, womenRes, childRes, popularRes, ] = await Promise.all([
 				axios.get("/api/products/shades"),
 				axios.get("/api/products/specs"),
+				axios.get("/api/products/men"),
+				axios.get("/api/products/women"),
+				axios.get("/api/products/child"),
+				axios.get("/api/products/popular"),
 			]);
 			set({
-				shades: shadesRes.data,
-				specs: specsRes.data,
+				shades: shadesRes.data||[],
+				specs: specsRes.data||[],
+				men: menRes.data||[],
+				women: womenRes.data||[],
+				child: childRes.data||[],
+				popular: popularRes.data||[],
 				loading: false,
 			});
 		} catch (error) {set({ error: error.message, loading: false });}

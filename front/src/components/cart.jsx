@@ -1,26 +1,16 @@
 import {  useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCartStore, useOrderStore } from "../other/product";
+import { useCartStore } from "../other/product";
 import "./cart.css";
 
 const Cart = () => {
     const orderBtn = useRef(null);
     const navigate = useNavigate()
-    const {createOrder} = useOrderStore();
-    const [message, setMassage] = useState(null);
     const [isCartVisible, setisCartVisible] = useState(true);
     const toggleCrat = () => setisCartVisible(!isCartVisible);
     const { cart, incrementQuantity, decrementQuantity } = useCartStore();
     const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
     const totalPrice = cart.reduce((total, item) => total + (item.price*item.quantity), 0);
-
-    const orderItem = async (cart) => {
-        const { success, message } = await createOrder(cart);
-        if(!success){
-            orderBtn.current.disabled=true;
-            setMassage(message)
-        }else{setMassage(message)}
-    };
     
     return(
         <>
@@ -75,9 +65,9 @@ const Cart = () => {
                         <input 
                             type="button"
                             ref={orderBtn}
-                            value={message?`${message}`:"Place Order"}
+                            value={"Place Order"}
                             className="order_item"
-                            onClick={()=>orderItem(cart)}
+                            onClick={()=>navigate('/checkout')}
                         />
                     )}
                 </div>

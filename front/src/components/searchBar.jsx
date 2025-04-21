@@ -17,7 +17,7 @@ const SearchBar = () =>{
 
     const handleSearch = async (inpQuery) => {
         setQuery(inpQuery);
-        if (inpQuery.length > 1) {
+        if (inpQuery.length > 2) {
             searchProducts(inpQuery)
         }
     }
@@ -49,15 +49,18 @@ const SearchBar = () =>{
                     <p className="close" onClick={isSearchVisible? toggleSearch:null}>Cancel</p>
                 </div>
                 <ul className="Suggestion">
-                    {searchResults.map((result) => 
+                    {(query.length>2)&&(searchResults.map((result) => 
                         <li 
                             key={result._id}
                             onClick={()=>navigate(`/single_product/${result._id}`)}
-                            style={{backgroundImage:`url(${result?.imagesURl[0]})`}}
                         >
-                            {result.name} - Rs:{result.price}
+                            <div style={{backgroundImage:`url(${result?.imagesURl[0]})`}}></div>
+                            <u>
+                                <p>{result.name}</p>
+                                <span>Rs:{result.price}</span>
+                            </u>
                         </li>
-                    )}
+                    ))}
                 </ul>
             </ul>
         </>

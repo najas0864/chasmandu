@@ -61,11 +61,41 @@
   list-style-type: none;
 }
 .Suggestion>li{
-  background-size: contain;
-  background-repeat: no-repeat;
   cursor: pointer;
+  display: flex;
+  gap: 10px;
+  border-radius: 10rem;
   height: 3rem;
-  width: 20rem;
-  text-align: right;
-  padding: 10px;
+  padding-right: 1rem;
+  width: auto;
+}
+.Suggestion>li:hover{
+  box-shadow: 0 0 0 5px #030303e6, 0 0 5px 10px #808080;
+}
+.Suggestion>li>div{
+  border-radius: 50px;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 3rem;
+  border: 1px solid #fff;
+}
+.Suggestion>li u{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.Suggestion>li u span{
+  align-self: flex-end;
+}
+.Suggestion>li p{
+  word-break: break-all;
+  height: 15px;
+  overflow: hidden;
+  width: 15rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: inherit;
+  -webkit-box-orient: vertical;
 }

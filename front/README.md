@@ -1,5 +1,5 @@
 # start
-. steps order,delivered,fulfilled,pop or cancle order.[place order and store in db] create page after place order butten in cart.
+. steps order,delivered,fulfilled,pop or cancle order.[place order and store in db] costumize checkout page ui.
 . create function to mail users about new offers and products.
 . signup fix with token using express-session
 . use passport to sign easy

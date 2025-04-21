@@ -12,6 +12,7 @@ import Sunglass from './views/sunglass';
 import SinglePage from './views/singlePage';
 import Sign from './views/formHandel/signup';
 import Login from './views/formHandel/login';
+import CheckOut from './views/checkOut';
 
 const PrivateRoute = ({ children }) => {
   const [cooke, setCooke] = useState(undefined);
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')).render(
       <Route path='/admin' element={<AdminPage/>}/>    {/*<PrivateRoute></PrivateRoute> */}
       <Route path='/all_products' element={<AllProducts/>}/>
       <Route path='/eyeglass' element={<Eyeglass/>}/>
+      <Route path='/checkout' element={<CheckOut/>}/>
       <Route path='/sunglass' element={<Sunglass/>}/>
       <Route path='/single_product/:id' element={<SinglePage/>}/>
       <Route path='/signUp' element={<Sign/>}/> 
