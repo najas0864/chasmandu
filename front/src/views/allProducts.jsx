@@ -82,6 +82,7 @@ const AllProducts = () =>{
         filters.maxPrice=maxVal;
         filterProducts(filters);
         toggleFilter();
+        setCurrentData(filterResults);
     };
     const clearFilter = () => {
         setFilters({ brand: "", minPrice: 0, maxPrice: 0, type: "", color: "", sort: 'price_asc'})
