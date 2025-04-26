@@ -14,21 +14,21 @@ const CheckOut = () => {
         (!success)?setMassage(message):setMassage(message)
     };
     return(
-        <>
+        <div className="checkoutPage">
             <h2>Checkout page</h2>
-            <button onClick={()=>navigate(-1)}>⬅</button>
+            <button className="goBackBth" onClick={()=>navigate(-1)}>⬅</button>
             <p>form to place order </p>
-            <div style={{display:"flex",alignItems:"flex-start"}}>
-                <div className="orderForm" style={{display:"flex",flexDirection:"column",alignItems:"flex-start",flex:"1"}}>
-                    <input type="text" placeholder="full name eg: jhon doe" />
-                    <input type="text" placeholder="email eg: example@gmail.com" />
-                    <input type="text" placeholder="mobile no eg: 9800000000" />
+            <div className="orderFromCover">
+                <div className="orderForm">
+                    <input type="text" placeholder="eg: jhon doe" />
+                    <input type="email" placeholder="eg: example@gmail.com" />
+                    <input type="tel" placeholder="eg: 9800000000" />
                     <input type="text" placeholder="delevery notes" />
-                    <label style={{display:"flex",flexDirection:"column",alignItems:"flex-start"}}>delevery addresh
+                    <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start"}}>delevery addresh
                         <input type="text" placeholder="address eg: kathmandu tirpurashor" />
                         <input type="text" placeholder="street name or location info/landmark" />
-                    </label>
-                    <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start"}}> paynment methods: 
+                    </div>
+                    <div style={{display:"flex"}}> paynment methods: 
                         <label htmlFor="cashOnDelevery">cash-on-delevery
                             <input type="radio" name="payment-methods" value={'cashOnDelevery'} id="cashOnDelevery"/>
                         </label>
@@ -36,6 +36,7 @@ const CheckOut = () => {
                             <input type="radio" name="payment-methods" value={'QRPaynment'} id="QRPaynment"/>
                         </label>
                     </div>
+                    <button onClick={orderItem}>place order</button>
                 </div>
                 <div className="orderItems" style={{display:"flex",flexDirection:"column",alignItems:"flex-start",flex:"1"}}>
                     {cart.length === 0 ? (<p>Your cart is empty</p>) : (cart.map((item,index) => (
@@ -72,12 +73,10 @@ const CheckOut = () => {
                         </li>
                     )))}
                     <p>Total:rs{totalPrice}</p>
-                    <button onClick={orderItem}>place order</button>
                 </div>
             </div>
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             <Foot/>
-        </>
+        </div>
     )
 }
 export default CheckOut;
