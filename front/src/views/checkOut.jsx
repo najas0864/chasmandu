@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Foot from "../components/foot.jsx"
 import { useCartStore, useOrderStore } from "../other/product";
 import "./checkOut.css";
+import Slider from "../components/slider.jsx";
 
 const CheckOut = () => {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ const CheckOut = () => {
         <div className="checkoutPage">
             <h2>Checkout page</h2>
             <button className="goBackBth" onClick={()=>navigate(-1)}>⬅</button>
-            <p>form to place order </p>
+            <center><h2>Place Order.</h2> </center>
             <div className="orderFromCover">
                 <div className="orderForm">
                     <input type="text" placeholder="eg: jhon doe" />
@@ -36,9 +37,9 @@ const CheckOut = () => {
                             <input type="radio" name="payment-methods" value={'QRPaynment'} id="QRPaynment"/>
                         </label>
                     </div>
-                    <button onClick={orderItem}>place order</button>
+                    {cart.length === 0 ?null:(<button className="OrderConfirmBtn" onClick={orderItem}>place order</button>)}
                 </div>
-                <div className="orderItems" style={{display:"flex",flexDirection:"column",alignItems:"flex-start",flex:"1"}}>
+                <div className="orderItems" style={{display:"flex",flexDirection:"column",flex:"1"}}>
                     {cart.length === 0 ? (<p>Your cart is empty</p>) : (cart.map((item,index) => (
                         <li key={index} className="cartItems">
                             <img 
@@ -75,6 +76,7 @@ const CheckOut = () => {
                     <p>Total:rs{totalPrice}</p>
                 </div>
             </div>
+            <Slider products={[{data:"hello"}]}/>   {/*pass trendy products according */}
             <Foot/>
         </div>
     )
