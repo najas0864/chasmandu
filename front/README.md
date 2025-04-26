@@ -1,6 +1,6 @@
 # start
-. steps order,delivered,fulfilled,pop or cancle order.[place order and store in db] costumize checkout page ui.
-. show trendy products in checkout page.
+. show trendy products in checkout page as suggestions as design good ui forr checkout.
+. steps [order,delivered,fulfilled and cancle order]
 . signup fix using express-session [use passport to sign easy]
 . create function to mail users about new offers and products.
 14 good dashboard,
