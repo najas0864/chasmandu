@@ -5,15 +5,26 @@
     gap: 10px;
     overflow-x: auto;
     height: 5rem;
+    list-style-type: none;
 }
-.Filter>p{
+.Filter>li{
     box-shadow: 0 0 3px #fff;
     padding: .5rem;
+    cursor: pointer;
     border-radius: 14px;
+    height: 80%;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: 700;
+    line-height: 1.5rem;
+    width: 5rem;
+}
+.navScalaton{
+    background-image: linear-gradient(45deg,transparent,gray,#FFF);
 }
 .filterBtn {
-    cursor: pointer;
-    border-radius: 6px;
+    margin: 0 1rem;
+    padding: 0.2rem 1rem !important;
     transition: all .1s ease-in-out;
 }
 .filterPopup {
@@ -38,7 +49,7 @@
     flex-direction: column;
     gap: 1rem;
 }
-select#brand,#color {
+select #brand,#color,#method {
     padding: 0.5rem 1rem;
     font-size: large;
     background: inherit;
@@ -52,17 +63,6 @@ select#brand,#color {
 }
 input#price {
     width: 100%;
-}
-.findBtn{
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.findBtn:hover, .findBtn:active{
-    background-color: #0056b3;
 }
 .customSlider{
     position: relative;
@@ -116,9 +116,24 @@ input#price {
 }
 .productMode{
     display: flex;
-    gap: 5px;
-    flex-direction: column;
+    justify-content: space-around;
 }
 .productMode>label>input{
     margin-right: 10px;
+}
+.filterActions{
+    display: flex;
+    justify-content: space-around;
+}
+.filterActions>button{
+    padding: 7px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 22px;
+    cursor: pointer;
+    font-size: larger;
+}
+.filterActions>button:hover, .filterActions>button:active{
+    background-color: #0056b3;
 }

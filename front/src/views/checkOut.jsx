@@ -45,7 +45,7 @@ const CheckOut = () => {
                             <img 
                                 src={item.file|| 'icon.svg'}
                                 className="cartItemImage"
-                                onClick={()=>navigate(`/single_product/${item.id}`)}
+                                onClick={()=>navigate(`/product/${item.id}`)}
                             />
                             <div>
                                 <p title={item.name} className="productName">{item.name}</p>

@@ -51,7 +51,7 @@ const Slider = ({products}) => {
           {products.length === 0 ? (Array.from({ length: 8 }).map((_, index) => <Skelaton key={index} />)) :products.map((item, index) => (
             <div
               key={index}
-              onClick={()=>navigate(`/single_product/${item._id}`)}
+              onClick={()=>navigate(`/product/${item._id}`)}
               style={{backgroundImage: `url(${item.imagesURl?.[0]})`}}
               className="tabs"
             >

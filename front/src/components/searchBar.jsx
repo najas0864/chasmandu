@@ -52,7 +52,7 @@ const SearchBar = () =>{
                     {(query.length>2)&&(searchResults.map((result) => 
                         <li 
                             key={result._id}
-                            onClick={()=>navigate(`/single_product/${result._id}`)}
+                            onClick={()=>navigate(`/product/${result._id}`)}
                         >
                             <div style={{backgroundImage:`url(${result?.imagesURl[0]})`}}></div>
                             <u>

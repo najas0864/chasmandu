@@ -19,7 +19,7 @@ export const DisplayGrid = ({data}) => {
                 <div
                     key={index}
                     className="box"
-                    onClick={()=>navigate(`/single_product/${item._id}`)}
+                    onClick={()=>navigate(`/product/${item._id}`)}
                     style={{backgroundImage: `url(${item.imagesURl?.[0]})`|| 'url(./icon.svg)'}}
                 >
                     <span className="tabContent">

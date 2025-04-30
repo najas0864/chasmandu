@@ -29,11 +29,11 @@ createRoot(document.getElementById('root')).render(
     <Routes>
       <Route path='/' index element={<Home/>}/>
       <Route path='/admin' element={<AdminPage/>}/>    {/*<PrivateRoute></PrivateRoute> */}
-      <Route path='/all_products' element={<AllProducts/>}/>
+      <Route path='/products' element={<AllProducts/>}/>
       <Route path='/eyeglass' element={<Eyeglass/>}/>
       <Route path='/checkout' element={<CheckOut/>}/>
       <Route path='/sunglass' element={<Sunglass/>}/>
-      <Route path='/single_product/:id' element={<SinglePage/>}/>
+      <Route path='/product/:id' element={<SinglePage/>}/>
       <Route path='/signUp' element={<Sign/>}/> 
       <Route path='/signIn' element={<Login/>}/>      
       <Route path="*" element={<NotFound />} />

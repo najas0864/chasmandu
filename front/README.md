@@ -1,5 +1,5 @@
 # start
-. show trendy products in checkout page as suggestions as design good ui forr checkout.
+. show trendy products in checkout page as suggestions as design good ui for checkout.
 . steps [order,delivered,fulfilled and cancle order]
 . signup fix using express-session [use passport to sign easy]
 . create function to mail users about new offers and products.

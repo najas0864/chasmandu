@@ -6,7 +6,7 @@ import Nav from "../components/nav"
 import "./allProducts.css";
 
 const AllProducts = () =>{
-    const { products, filterResults,fetchProducts,fetchProductMeta,filterProducts,shades,specs,men,women,child,popular} = useProduct();
+    const { products, filterResults,filterProducts,fetchProducts,fetchProductMeta,shades,specs,men,women,child,popular,loading} = useProduct();
     
     useEffect(() => {
         fetchProducts();
@@ -84,25 +84,29 @@ const AllProducts = () =>{
         toggleFilter();
         setCurrentData(filterResults);
     };
+    console.log(filterResults);
+    
     const clearFilter = () => {
         setFilters({ brand: "", minPrice: 0, maxPrice: 0, type: "", color: "", sort: 'price_asc'})
         filterProducts(filters);
-    }    
+    }
     return(
         <>
             <Nav/>
-            <div className="Filter">
-                <p>
-                    <svg viewBox="0 0 24.00 24.00" className="filterBtn" onClick={!isFilterVisible ? toggleFilter : null} height={"2rem"} width={"2rem"} fill="#FFF" xmlns="http://www.w3.org/2000/svg" stroke="#FFF">
-                        <path d="M4 5L10 5M10 5C10 6.10457 10.8954 7 12 7C13.1046 7 14 6.10457 14 5M10 5C10 3.89543 10.8954 3 12 3C13.1046 3 14 3.89543 14 5M14 5L20 5M4 12L16 12M16 12C16 13.1046 16.8954 14 18 14C19.1046 14 20 13.1046 20 12C20 10.8954 19.1046 10 18 10C16.8954 10 16 10.8954 16 12ZM8 19L20 19M8 19C8 17.8954 7.10457 17 6 17C4.89543 17 4 17.8954 4 19C4 20.1046 4.89543 21 6 21C7.10457 21 8 20.1046 8 19Z" stroke="#FFF" strokeWidth="2" strokeLinecap="round" ></path>
-                    </svg>
-                </p>
-                <p onClick={()=>setCurrentData(men)}>men</p>
-                <p onClick={()=>setCurrentData(women)}>women</p>
-                <p onClick={()=>setCurrentData(specs)}>specs</p>
-                <p onClick={()=>setCurrentData(child)}>child</p>
-                <p onClick={()=>setCurrentData(shades)}>shades</p>
-                <p onClick={()=>setCurrentData(popular)}>popular</p>
+            <ul className="Filter">
+                {loading?(new Array(8).fill(null).map((_, index) => (<li className="navScalaton" key={index}></li>))):(<>
+                    <li className="filterBtn" onClick={!isFilterVisible ? toggleFilter : null}>
+                        <svg viewBox="0 0 24.00 24.00"  height={"2rem"} width={"2rem"} fill="#FFF" xmlns="http://www.w3.org/2000/svg" stroke="#FFF">
+                            <path d="M4 5L10 5M10 5C10 6.10457 10.8954 7 12 7C13.1046 7 14 6.10457 14 5M10 5C10 3.89543 10.8954 3 12 3C13.1046 3 14 3.89543 14 5M14 5L20 5M4 12L16 12M16 12C16 13.1046 16.8954 14 18 14C19.1046 14 20 13.1046 20 12C20 10.8954 19.1046 10 18 10C16.8954 10 16 10.8954 16 12ZM8 19L20 19M8 19C8 17.8954 7.10457 17 6 17C4.89543 17 4 17.8954 4 19C4 20.1046 4.89543 21 6 21C7.10457 21 8 20.1046 8 19Z" stroke="#FFF" strokeWidth="2" strokeLinecap="round" ></path>
+                        </svg>
+                    </li>
+                    <li onClick={()=>setCurrentData(men)}>men</li>
+                    <li onClick={()=>setCurrentData(women)}>women</li>
+                    <li onClick={()=>setCurrentData(specs)}>specs</li>
+                    <li onClick={()=>setCurrentData(child)}>child</li>
+                    <li onClick={()=>setCurrentData(shades)}>shades</li>
+                    <li onClick={()=>setCurrentData(popular)}>popular</li>
+                </>)}
                 <div className={`filterPopup ${isFilterVisible ? "active" : ""}`}>
                     <p className="close" onClick={toggleFilter}>Cancel</p>
                     <h5>Price</h5>
@@ -168,21 +172,17 @@ const AllProducts = () =>{
                             />Eyewear
                         </label>
                     </div>
-                    <select name="sort" onChange={handleChange} defaultValue="price_asc">
+                    <select id="method" name="sort" onChange={handleChange} defaultValue="price_asc">
                         <option value="price_asc">Price: Low to High</option>
                         <option value="price_desc">Price: High to Low</option>
                         <option value="newest">Newest</option>
                     </select>
                     <div className="filterActions">
-                        <button className="findBtn" onClick={applyFilters}>
-                            Find
-                        </button>
-                        <button className="findBtn" onClick={clearFilter}>
-                            Clear
-                        </button>
+                        <button onClick={applyFilters}>Find</button>
+                        <button onClick={clearFilter}>Clear</button>
                     </div>
                 </div>
-            </div>
+            </ul>
             <Main products={currentData.length===0?products:currentData} names={currentData.length!==0?'Results':'All Products'}/>
             <Foot/>
         </>

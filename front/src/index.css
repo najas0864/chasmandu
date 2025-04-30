@@ -36,6 +36,7 @@ svg:active{
 }
 .close:active{
   transform: scale(0.9);
+  align-self: flex-start;
 }
 .price {
   font-weight: 600;
