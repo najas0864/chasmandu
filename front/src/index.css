@@ -84,6 +84,19 @@ svg:active{
     background-color: darkgray;
   }
 }
+#whatsupMessage {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  background-size: 60%;
+  background-image: url(//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/WhatsApp_Logo_green.svg/250px-WhatsApp_Logo_green.svg.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 0 0.5rem 0.5rem #000;
+}
 /* Extra small devices (phones, 600px and down) */
 /* Medium devices (landscape tablets, 768px and up) */
 /* Large devices (laptops/desktops, 992px and up) */

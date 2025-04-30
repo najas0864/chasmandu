@@ -84,7 +84,6 @@ const AllProducts = () =>{
         toggleFilter();
         setCurrentData(filterResults);
     };
-    console.log(filterResults);
     
     const clearFilter = () => {
         setFilters({ brand: "", minPrice: 0, maxPrice: 0, type: "", color: "", sort: 'price_asc'})

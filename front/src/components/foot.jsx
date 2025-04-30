@@ -11,7 +11,7 @@ const Foot = () => {
           <a href={`tel:+9779817380234`}>Call</a>
           <a href="mailto:najas0864@gmail.com">Gmail</a>
           <a href="https://maps.app.goo.gl/eUdAPS53rUgMwMQL9" target='_blanck' title='Open Location on App'>Location</a>
-          <a href={`https://api.whatsapp.com/send/?phone=9817380234&text=Source:https://chasmandu.onrender.com/ `}target="_blank">WhatsApp</a>
+          <a href={`https://api.whatsapp.com/send/?phone=9817380234&text=Source:https://chasmandu.onrender.com/`}target="_blank">WhatsApp</a>
         </div>
       <div>
         <h4>Socials</h4>
