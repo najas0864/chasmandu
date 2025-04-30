@@ -17,15 +17,15 @@
     text-transform: capitalize;
     font-weight: 700;
     line-height: 1.5rem;
-    width: 5rem;
+    width: 6rem;
 }
 .navScalaton{
     background-image: linear-gradient(45deg,transparent,gray,#FFF);
 }
 .filterBtn {
-    margin: 0 1rem;
     padding: 0.2rem 1rem !important;
     transition: all .1s ease-in-out;
+    box-shadow: 0 0 5px blue !important;
 }
 .filterPopup {
     position: fixed;
@@ -49,7 +49,7 @@
     flex-direction: column;
     gap: 1rem;
 }
-select #brand,#color,#method {
+#brand,#color,#method {
     padding: 0.5rem 1rem;
     font-size: large;
     background: inherit;
