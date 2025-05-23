@@ -46,7 +46,7 @@ const SearchBar = () =>{
                         onChange={e=>handleSearch(e.target.value)}
                         autoComplete="off"
                     />
-                    <p className="close" onClick={isSearchVisible? toggleSearch:null}>Cancel</p>
+                    <p className="close" onClick={isSearchVisible? toggleSearch:null}>Close</p>
                 </div>
                 <ul className="Suggestion">
                     {(query.length>2)&&(searchResults.map((result) => 
