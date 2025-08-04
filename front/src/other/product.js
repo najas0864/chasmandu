@@ -5,7 +5,7 @@ export const useUser = create((set) => ({
 	setUsers: (users) => set({ users }),
 	fetchUsers: async () => {
 		const res = await axios.get("/api/users");
-		const data = await res.data.data;
+		const data = await res?.data?.data;
 		set({ users: data });
 	},
 	createUser: async (newUser) => {
@@ -14,7 +14,7 @@ export const useUser = create((set) => ({
 		}
 		try {
 			const res = await axios.post("/api/users",newUser,{headers: {"Content-Type": "application/json",}});
-			const data = await res.data.data;
+			const data = await res?.data?.data;
 			set((state) => ({ users: [...state.users, data] }));
 			return { success: true, message: "user created successfully" };
 		} catch (error) {
@@ -28,7 +28,7 @@ export const useUser = create((set) => ({
 		const res = await axios.put(`/api/users/${uid}`,updatedProduct, {headers: {"Content-Type": "application/json",}});
 		console.log(res);
 		
-		const data = await res.data.data;
+		const data = await res?.data?.data;
 		if (!data.success) return { success: false, message: data.message };
 
 		set((state) => ({
@@ -41,7 +41,7 @@ export const useUser = create((set) => ({
 		const res = await axios.delete(`/api/users/${uid}`);
 		console.log(res);
 		
-		const data = await res.data;
+		const data = await res?.data;
 		if (!data.success) return { success: false, message: data.message };
 
 		set((state) => ({ users: state.users.filter((user) => user._id !== uid) }));
