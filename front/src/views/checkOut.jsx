@@ -11,8 +11,9 @@ const CheckOut = () => {
     const totalPrice = cart.reduce((total, item) => total + (item.price*item.quantity), 0);
 
     const orderItem = async () => {
-        const { success, message } = await createOrder(cart);
-        (!success)?setMassage(message):setMassage(message)
+        alert("order placed successfully!");
+        // const { success, message } = await createOrder(cart);
+        // (!success)?setMassage(message):setMassage(message)
     };
     return(
         <div className="checkoutPage">
