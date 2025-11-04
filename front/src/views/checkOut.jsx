@@ -11,7 +11,7 @@ const CheckOut = () => {
     const totalPrice = cart.reduce((total, item) => total + (item.price*item.quantity), 0);
 
     const orderItem = async () => {
-        alert("order placed successfully!");
+        alert("product not valid!");
         // const { success, message } = await createOrder(cart);
         // (!success)?setMassage(message):setMassage(message)
     };
