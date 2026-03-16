@@ -28,11 +28,11 @@
   padding: 5px 7px;
   border-radius: 7px;
   text-decoration: underline;
-  transition: transform .2s linear;
+  transition: all .5s ease-in-out;
 }
 
 .nav-links li:hover,.nav-links li:active {
-  transform: translate(0 , -1px) scale(1.2);
+  transform: translate(1rem , 0px)scale(1.2);
   text-decoration-color: blue;
   text-decoration-thickness: 2px;
 }
@@ -52,7 +52,7 @@
   width: 2rem;
   height: 3px;
   border-radius: 3px;
-  transition: all .3s ease-in-out;
+  transition: all .5s ease-in-out;
   background-color: #FFF;
 }
 .menu-icon.active>span{
@@ -60,13 +60,13 @@
 }
 .menu-icon.active>span:nth-child(1){
   transform: translate(0, 8px) rotate(-135deg) ;
-  transition-delay: .2s;
+  transition-delay: .02s;
 }
 .menu-icon.active>span:nth-child(2){
   transform: scale(0);
 }
 .menu-icon.active>span:nth-child(3){
-  transition-delay: .2s;
+  transition-delay: .02s;
   transform: translate(0, -8px) rotate(135deg) ;
 }
 
@@ -109,11 +109,18 @@
     flex-direction: column;
     transform: translateX(-20rem);
     z-index: 3;
-    transition: transform .3s ease-in-out;
+    transition: all .5s ease-in-out;
   }
-
+  .nav-links a{
+    width: fit-content;
+  }
   .nav-links.active {
     transform: translateX(0);
+    width: 100%;
+  }
+  .nav-links.active li{
+    padding: 15px;
+    width: fit-content;
   }
 
   .menu-icon {

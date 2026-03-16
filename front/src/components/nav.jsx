@@ -11,13 +11,9 @@ const Nav = () => {
   const [isMobile, setIsMobile] = useState(false);
   const toggleMenu = () => {setIsMobile(!isMobile)};
   useEffect(() => {
-    function handleClickOutside(e) {
-      if (isMobile && !btnRef.current.contains(e.target) && menuRef.current && !menuRef.current.contains(e.target)) {setIsMobile(false)}
-    }
+    const handleClickOutside = (e) => {if(isMobile && e.target === menuRef.current){setIsMobile(!isMobile)}};
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobile]);
   return (
     <nav className="navbar">

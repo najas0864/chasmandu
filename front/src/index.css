@@ -14,8 +14,7 @@
   user-select: none;
 }
 ::-webkit-scrollbar{
-  scrollbar-width: none;
-  display: none;
+  scrollbar-width: thin;
 }
 .red{
   color: red;
