@@ -67,6 +67,10 @@ export const getMenProduct = async (req, res) => {
 	const men = await Product.find({ forThem: 'men' });
 	res.json(men);
 };
+export const randomProducts = async (req, res)=>{
+	const random = await Product.aggregate([{ $sample: { size: 1 } }]);
+	res.json(random);
+}
 export const getRelatedProducts = async (req, res) => {
 	const { id } = req.params;
 	try {

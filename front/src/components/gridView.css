@@ -8,33 +8,47 @@
     height: calc(100vh - 2rem);
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
+.box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity .3s ease;
+}
 .box , .skeleton{
     display: flex;
     min-height: 200px;
     cursor: pointer;
     overflow: hidden;
-    object-fit: cover;
+    user-select: none;
     position: relative;
     border-radius: 14px;
-    align-items: flex-end;
-    background-size: cover;
     word-break: break-word;
-    transition: all .1s linear;    
-    background-position: center;
-    background-repeat: no-repeat;
+    align-items: flex-end;
     box-shadow: inset 0 0 5px #FFF;
+    transition: all .4s ease;    
 }
-.box:hover {
-    transform: translate(0, -5px);
+.box:hover .box::after{
+    transform: scale(1.1);
     filter: brightness(1.2);
 }
 .box:hover .skeleton {
     opacity: 1;
 }
+.tabContent{
+    opacity: 0;
+    z-index: 1;
+}
 .box:hover .tabContent {
     background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent);
     color: #ffffff;
-    z-index: 1;
+    opacity: 1;
 }
 .box:nth-child(4n) , .skeleton:nth-child(4n){
     grid-column: span 2;

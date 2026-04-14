@@ -33,34 +33,24 @@ const Cart = () => {
                                     className="cartItemImage"
                                     onClick={()=>navigate(`/product/${item.id}`)}
                                 />
-                                <div>
+                                <div className="cartItemDetails">
                                     <p title={item.name} className="productName">{item.name}</p>
                                     <div>
                                         <span className="price">Rs: {item.price*item.quantity}</span>
                                         <div className="qtyAlter">
-                                            <input
-                                                type="button"
-                                                value="+"
-                                                onClick={()=>incrementQuantity(item.id)}
-                                            />
-                                            <input 
-                                                disabled
-                                                type="button"
-                                                value={item.quantity}
-                                            />
-                                            <input 
-                                                type="button"
-                                                title={item.quantity===1?'Removing Item❔':null}
+                                            <button onClick={()=>incrementQuantity(item.id)}>+</button>
+                                            <button>{item.quantity}</button>
+                                            <button 
+                                                style={{color:item.quantity===1?'red':'inherit'}}
                                                 onClick={()=>decrementQuantity(item.id)}
-                                                value={item.quantity===1?'x':'-'}
-                                            />
+                                            >{item.quantity===1?'x':'-'}</button>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         )))}
                     </div>
-                    <p style={{textAlign:"left"}}>Total Rs : {totalPrice}</p>
+                    <p className="price" style={{textAlign:"left"}}>Total Rs : {totalPrice}</p>
                     {(cart.length>0)&&(
                         <input 
                             type="button"

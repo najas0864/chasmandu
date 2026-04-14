@@ -26,25 +26,25 @@
 }  
 
 .cartItems{
-  padding: 7px;
-  height: 5rem;
+  padding: 10px;
   display: flex;
   gap: .5rem;
-  border-radius: 6px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 5px #00800099;
 }
-.cartItems>div{
+.cartItems:not(:last-child){
+  margin-bottom: 1rem;
+}
+.cartItemDetails{
   flex: 1;
   display:flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.cartItems>div>div{
+.cartItemDetails>div{
   display: flex;
   align-items: center;
   justify-content: space-around;
-}
-.cartItems:hover{
-  box-shadow: inset 0 0 5px #fff;
 }
 .productName{
   display: -webkit-box;
@@ -52,9 +52,9 @@
   line-clamp: inherit;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  max-width: 6rem;
+  align-content: center;
+  min-width: 6rem;
   text-transform: capitalize;
-  height: 2.8rem;
 }
 .order_item{
   cursor: pointer;
@@ -69,20 +69,22 @@
 }
 .qtyAlter{
   display: flex;
-  border-radius: 7px;
+  border-radius: 8px;
   overflow: hidden;
 }
-.qtyAlter>input[type=button]{
+.qtyAlter>button{
   width: 2rem;
+  height: 1.8rem;
   cursor: pointer;
   border: none;
+  border-radius: 0;
   color: #FFFFFF;
-  background-color: #69696969;
+  background-color: #69696988;
   font-size: larger;
   font-variant: small-caps;
 }
-.qtyAlter>button::selection{
-  display: none;
+.qtyAlter>button:active{
+  background-color: #696969cc;
 }
 .qtyBox{
   width: 3rem;
@@ -96,6 +98,7 @@
   width: 4rem;
   height: 4rem;
   cursor: pointer;
+  border-radius: 14px;
   z-index: 0;
   object-fit: cover;
   background-size: cover;

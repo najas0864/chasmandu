@@ -2,18 +2,46 @@
     background-size: 35px 35px;
     background-image: repeating-radial-gradient(#222, #222 10px, #333 10px, #333 20px, #444 20px, #444 30px);
 }
-.goBackBth{
-    padding: 0 10px;
-    font-weight: 700;
-    font-size: xx-large;
-    line-height: 30px;
+.CheckoutNav{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+    padding: 1rem;
 }
 .orderFromCover{
+    height: 80vh;
     padding: 1rem;
     display: flex;
     gap: 1rem;
-    margin: 10px 0;
-
+}
+.orderItems {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    overflow-y: scroll;
+}
+.payMethod{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #67676785;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+.payMethod span>input[type="radio"]{
+    display: none;
+}
+.payMethod span>label{
+    display: flex;
+    background: #35353585;
+    border-radius: 1rem;
+    padding: 1rem;
+    min-width: 200px;
+}
+.payMethod span input:checked~label{
+    background-color: #d1d1d1;
+    color: #222;
 }
 .orderForm{
     display: flex;
@@ -36,6 +64,13 @@
     border-bottom: 2px solid #fff;
     outline: none;
     padding: 5px;
+}
+.checkOutPrice{
+    position: sticky;
+    bottom: 0;
+    background: gray;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
 }
 .OrderConfirmBtn{
     padding: 5px 12px;

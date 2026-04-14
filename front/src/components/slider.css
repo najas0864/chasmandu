@@ -52,7 +52,6 @@
     transition: all .3s ease-in-out;
 }
 .itemName{
-    height: 14px;
     font-size: 16px;
     font-weight: 700;
     overflow: hidden;
@@ -62,7 +61,6 @@
     text-transform: capitalize;
     -webkit-box-orient: vertical;
 }
-
 @media (max-width: 600px) {
     .tabs {
         min-width: 13rem;

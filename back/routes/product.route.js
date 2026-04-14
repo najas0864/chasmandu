@@ -16,12 +16,14 @@ import {
     getChildProduct,
     getWomenProduct,
     getMenProduct,
+    randomProducts,
 } from "../controllers/product.controller.js";
 
 const router = express.Router();
 
 router.get('/',getProducts);
 router.get("/short",shortProducts);
+router.get("/random",randomProducts);
 router.get("/search",searchProducts);
 router.get("/specs",getSpecsProduct);
 router.get("/popular",getPopularProduct);
