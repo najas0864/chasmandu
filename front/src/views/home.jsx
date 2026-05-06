@@ -15,7 +15,7 @@ const Home = () =>{
         <>
             <Nav/>
             <Header/>
-            <Main products={products} names={title}/>
+            <Main style={{overflow: "auto"}} products={products} names={title}/>
             <Foot/>
         </>
     )
