@@ -5,19 +5,19 @@ export const sendMails = async (email,otp)=> {
     const transporter = createTransport({
         host:'smtp.gmail.com',
         service: 'gmail',
-        port:465,
+        port: process.env.SMTP_PORT,
         secure:true,
         tls:{
           servername:'smtp.gmail.com',
           rejectUnauthorized: true,
         },
         auth: {
-          user: 'najas0864@gmail.com',
-          pass: 'legt bipn cawc rukk',
+          user: process.env.EMAIL,
+          pass: process.env.SMTP_EMAIL_PASS,
         },
     });
     await transporter.sendMail({
-      from: 'najas0864@gmail.com',
+      from: process.env.EMAIL,
       to: email,
       subject: 'OTP Verification',
       html: `
