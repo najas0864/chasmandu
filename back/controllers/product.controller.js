@@ -116,7 +116,10 @@ export const createProducts = [upload.array('imageURL', 20), async (req,res) => 
         return res.status(409).json({ success: false, message: "Product name already exists" });
 	}
 	try {
-		const imageUrls = req.files.map(file => file.path);
+		const imageUrls = req.files.map(file => getCloudinaryUrl(file.path));
+		const url = getCloudinaryUrl(req.params.id);
+		
+		
 		const newProduct = new Product({name,price,brand,model,color,material,shape,size,stock,forThem,type,description,imagesURl:imageUrls});
 		await newProduct.save();
 		res.status(201).json({ success: true, data: newProduct });

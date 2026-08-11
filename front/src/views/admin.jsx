@@ -97,8 +97,17 @@ const AdminPage = () => {
             (!success)?setMessage(message):setMessage(message);
         }
     };
+    const removeImage = (id, fileName) => {
+        if (fileName) URL.revokeObjectURL(fileName);
+        setPushFileLen(addedFileLength-1);
+        setPushFilePrev(fileName => fileName.filter((_, index) => index !== id));
+        // remove datsa too from addImagePreviews and prevent upload after deleting remove that data from input.
+        // make change in current component too.
+    }
     const delProductImage = async (pid, fileName) => {
         if(confirm("Are you sure ?")){
+            console.log(pid)
+            if(typeof pid === 'number') return removeImage(pid,fileName);
             const { success, message } = await deleteImage(pid,fileName);
             (!success)?setMessage(message):setMessage(message);
         }
@@ -273,6 +282,7 @@ const AdminPage = () => {
                                 key={index}
                                 src={preview}
                                 alt={`Preview ${index}`}
+                                onDoubleClick={()=>delProductImage(index, preview)}
                                 style={{ boxShadow: "0 0 0 3px #fff, 0 0 0 9px red" }}
                             />
                         ))}
